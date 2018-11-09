@@ -35,6 +35,7 @@ def MAX_bonus_points():
         if course.hoorcolleges + course.werkcolleges + course.practica > 1:
             spreading_bonus += 20
     MAX_bonus += spreading_bonus
+    
     # Every student without overlap in courses gets 1 points
     student_bonus = 0
     # student_bonus += len(students)
@@ -43,7 +44,7 @@ def MAX_bonus_points():
     # return max amount of bonus points (Upper Bound)
     print(MAX_bonus)
     return MAX_bonus
-def MAX_malus_point():
+def MAX_malus_points():
 
     # keep track of max amount malus MAX_bonus_points
     MAX_malus = 0
