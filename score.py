@@ -13,7 +13,8 @@ rooms = []
 courses = []
 score = 0
 # schedule
-total_schedule(rooms,courses)
+total_schedule(rooms, courses)
+
 
 # adjusts score based on matrix
 def matrix_checker():
@@ -22,6 +23,7 @@ def matrix_checker():
         #continue
 
 # adjust score based on students
+
 
 # calculate max amount of bonus points
 def MAX_bonus_points():
@@ -35,15 +37,18 @@ def MAX_bonus_points():
         if course.hoorcolleges + course.werkcolleges + course.practica > 1:
             spreading_bonus += 20
     MAX_bonus += spreading_bonus
-    
+
     # Every student without overlap in courses gets 1 points
     student_bonus = 0
+
     # student_bonus += len(students)
     MAX_bonus += student_bonus
 
     # return max amount of bonus points (Upper Bound)
     print(MAX_bonus)
     return MAX_bonus
+
+
 def MAX_malus_points():
 
     # keep track of max amount malus MAX_bonus_points
@@ -67,19 +72,23 @@ def MAX_malus_points():
     # Each course with x activities gives malus points if activities are scheduled on the same day
     # activities on x-1 days is 10 points, x-2 days is 20 points etcetera
     activity_malus = 0
+
     for course in courses:
         activities = course.hoorcolleges + course.werkcolleges + course.practica
         activity_malus += (activities-1) * 10
+
     MAX_malus += activity_malus
 
     # Every course conflict of a student gets 1 malus points
     student_malus = 0
+
     # TODO IF STUDENTS ARE UPLOADED
     MAX_malus += student_malus
 
     # return max amount of malus points (lower Bound)
     print(MAX_malus)
     return MAX_malus
+
 
 # return total score
 print(score)
