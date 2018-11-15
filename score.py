@@ -6,49 +6,63 @@ Johan Diepstraten, Ya'gel Schoonderbeek, Sam Verhezen
 Program assigns a score to schedule.
 """
 
-from roostermaker import *
+from scheduler2 import *
 import csv
 
 # keep track of stats
 rooms = []
 courses = []
+matrix = []
 score = 0
 
 # schedule
-read_info(rooms,courses)
-total_schedule(rooms, courses)
+read_info(rooms,courses, matrix)
 course_names = [course.name for course in courses]
+total_schedule(rooms, courses,course_names)
+
 
 # adjusts score based on matrix
-def matrix_checker():
-    malus_points = 0
+# def matrix_checker(course, hour, day):
+#     # malus_points = 0
+#     #
+#     # reader = open("matrix.csv",'r')
+#     # matrix = []
+#     #
+#     # for line in reader:
+#     #     matrix.append(line.split(";"))
+#     x = course_names.index(course)
+#
+#     # go through matrix
+#     for i in range(1,len(matrix)):
+#         if matrix[i][x] == 'x':
+#             course2 = courses[course_names.index(matrix[i][0])]
+#             for lok in range(7):
+#                  if rooms[lok].days[day].hours[hour].courses[0] == course2:
+#                      return True
+#
+#     for j in range(i, len(matrix[0])):
+#
+#             # if courses are connected
+#             if matrix[x][j] == 'x':
+#                 course2 = courses[course_names.index(matrix[0][j])]
+#                 for lok in range(7):
+#                     if rooms[lok].days[day].hours[hour].courses[0] == course2:
+#                         return True
+#     return False
 
-    reader = open("matrix.csv",'r')
-    matrix = []
-
-    for line in reader:
-        matrix.append(line.split(";"))
-
-    # go through matrix
-    for i in range(1,len(matrix)):
-        for j in range(i, len(matrix[0])):
-
-            # if courses are connected
-            if matrix[i][j] == 'x':
-
-                # check if they overlap
-                overlapping = False
-                course1 = courses[course_names.index(matrix[i][0])]
-                course2 = courses[course_names.index(matrix[0][j])]
-
-                # iterate through course schedules
-                for date1 in course1.dates:
-                    for date2 in course2.dates:
-                        if date1 == date2:
-                            overlapping = True
-                            malus_points  -= 1000000
-
-    return malus_points
+    #             # check if they overlap
+    #             overlapping = False
+    #             course1 = courses[course_names.index(matrix[i][0])]
+    #             course2 = courses[course_names.index(matrix[0][j])]
+    #
+    #             # iterate through course schedules
+    #             for date1 in course1.dates:
+    #                 for date2 in course2.dates:
+    #                     if date1 == date2:
+    #                         overlapping = True
+    #                         malus_points  -= 1000000
+    #
+    # return malus_points
 
 # check hoorcolleges are before practica/werkcolleges
 def order_checker():
@@ -145,6 +159,6 @@ def MAX_malus_points():
 
 
 # return total score
-score += matrix_checker()
+# score += matrix_checker()
 score += order_checker()
 print(score)
