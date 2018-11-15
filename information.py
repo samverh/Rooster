@@ -38,15 +38,21 @@ class Room_info:
         self.days = [Day(),Day(),Day(),Day(),Day()]
 
 # function thats read info files into code
-def read_info(rooms,courses,matrix):
-    coursefile = open("vakken.txt",'r')
-    roomfile = open("lokalen.txt",'r')
-    matrixfile = open("matrix.csv",'r')
-    for line in coursefile:
-        info = line.split(";")
-        courses.append(Course(info[0],int(info[1]),int(info[2]),int(info[3]),int(info[4]),int(info[5]),int(info[6])))
-    for line in roomfile:
-        info = line.split(",")
-        rooms.append(Room_info(info[0],int(info[1])))
-    for line in matrixfile:
-        matrix.append(line.split(";"))
+rooms = []
+courses = []
+matrix = []
+
+coursefile = open("vakken.txt",'r')
+roomfile = open("lokalen.txt",'r')
+matrixfile = open("matrix.csv",'r')
+
+for line in coursefile:
+    info = line.split(";")
+    courses.append(Course(info[0],int(info[1]),int(info[2]),int(info[3]),int(info[4]),int(info[5]),int(info[6])))
+for line in roomfile:
+    info = line.split(",")
+    rooms.append(Room_info(info[0],int(info[1])))
+for line in matrixfile:
+    matrix.append(line.split(";"))
+
+course_names = [course.name for course in courses]

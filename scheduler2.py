@@ -10,7 +10,7 @@ import random as rd
 import csv
 
 # print how the hours are scheduled
-def roomsinfo(rooms,courses):
+def roomsinfo():
     double = 0
     free = 0
     good = 0
@@ -27,7 +27,7 @@ def roomsinfo(rooms,courses):
     print("Free hours: {}\nSingle course scheduled hours: {}\nHours with multiple courses: {}".format(free,good,double))
 
 # prints stats of schedule
-def info_print(courses):
+def info_print():
     # general info
     nec_schedules
     for course in courses:
@@ -38,7 +38,7 @@ def info_print(courses):
     print("\nAFTER SCHEDULING\nScheduled hours: {}".format(schedulings))
     roomsinfo(rooms,courses)
 
-def matrix_checker(coursename, date, course_names):
+def matrix_checker(coursename, date):
 
     x = course_names.index(coursename) + 1
 
@@ -59,7 +59,9 @@ def matrix_checker(coursename, date, course_names):
                     if date2 == date:
                         return True
     return False
-def assign_roomdate(rooms,poss_days):
+
+# assigns room and date for course_lecture
+def assign_roomdate(poss_days):
     room = rooms[rd.randint(0,6)]
     randd = rd.choice(poss_days)
     day = room.days[randd]
@@ -70,13 +72,13 @@ def assign_roomdate(rooms,poss_days):
     return room, randd, day, randh, hour, date
 
 # schedules on given days
-def scheduler(course,rooms,lect_type,poss_days,course_names):
+def scheduler(course,lect_type,poss_days):
     # choose day and hour
-    room, randd, day, randh, hour, date = assign_roomdate(rooms,poss_days)
+    room, randd, day, randh, hour, date = assign_roomdate(poss_days)
 
     # make sure hour is free # We zouden ook uren, dagen en lokalen uit de lijst kunnen halen zodra ze vol zitten
-    while hour.scheduled and matrix_checker(course.name, date,course_names):
-        room, randd, day, randh, hour, date = assign_roomdate()
+    while hour.scheduled and matrix_checker(course.name, date):
+        room, randd, day, randh, hour, date = assign_roomdate(poss_days)
 
     hour.courses.append(course.name + ' - ' + lect_type)
     hour.scheduled = True
@@ -102,28 +104,37 @@ def days_returner(course):
         return all[:2], all[2:], all[2:]
 
 # course scheduler
-def course_scheduler(rooms, course,course_names):
+def course_scheduler(course):
     hc_days, wc_days, pr_days = days_returner(course)
 
     # schedule all types
     for i in range(course.hoorcolleges):
-        scheduler(course,rooms,"Hoorcollege",hc_days,course_names)
+        scheduler(course,"Hoorcollege",hc_days)
     for j in range(course.werkcolleges):
-        scheduler(course,rooms,"Werkcollege",wc_days,course_names)
+        scheduler(course,"Werkcollege",wc_days)
     for k in range(course.practica):
-        scheduler(course,rooms,"Practica",pr_days,course_names)
+        scheduler(course,"Practica",pr_days)
 
 # makes total_schedule
-def total_schedule(rooms,courses,course_names):
+def total_schedule():
     # keep track of amount of scheduled classes
     schedulings = 0
 
     # schedule all required classes
     for course in courses:
         # schedule all hoorcolleges
-        course_scheduler(rooms, course,course_names)
+        course_scheduler(course)
 
-    return rooms, courses
+def clear_schedule():
+    for room in rooms:
+        for day in room.days:
+            for hour in day.hours:
+                hour.scheduled = False
+                hour.courses = 0
+
+    for course in courses:
+        course.dates = []
+        course.types = []
 
 def print_schedule():
     with open('schedule.csv', 'w') as outf:

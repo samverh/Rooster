@@ -9,62 +9,32 @@ Program assigns a score to schedule.
 from scheduler2 import *
 import csv
 
-# keep track of stats
-rooms = []
-courses = []
-matrix = []
-score = 0
-
-# schedule
-read_info(rooms,courses, matrix)
-course_names = [course.name for course in courses]
-total_schedule(rooms, courses,course_names)
-
-
 # adjusts score based on matrix
-# def matrix_checker(course, hour, day):
-#     # malus_points = 0
-#     #
-#     # reader = open("matrix.csv",'r')
-#     # matrix = []
-#     #
-#     # for line in reader:
-#     #     matrix.append(line.split(";"))
-#     x = course_names.index(course)
-#
-#     # go through matrix
-#     for i in range(1,len(matrix)):
-#         if matrix[i][x] == 'x':
-#             course2 = courses[course_names.index(matrix[i][0])]
-#             for lok in range(7):
-#                  if rooms[lok].days[day].hours[hour].courses[0] == course2:
-#                      return True
-#
-#     for j in range(i, len(matrix[0])):
-#
-#             # if courses are connected
-#             if matrix[x][j] == 'x':
-#                 course2 = courses[course_names.index(matrix[0][j])]
-#                 for lok in range(7):
-#                     if rooms[lok].days[day].hours[hour].courses[0] == course2:
-#                         return True
-#     return False
+def matrix_checker():
+    malus_points = 0
 
-    #             # check if they overlap
-    #             overlapping = False
-    #             course1 = courses[course_names.index(matrix[i][0])]
-    #             course2 = courses[course_names.index(matrix[0][j])]
-    #
-    #             # iterate through course schedules
-    #             for date1 in course1.dates:
-    #                 for date2 in course2.dates:
-    #                     if date1 == date2:
-    #                         overlapping = True
-    #                         malus_points  -= 1000000
-    #
-    # return malus_points
+    for course in courses:
+        x = course_names.index(course.name) + 1
 
-# check hoorcolleges are before practica/werkcolleges
+        # go through matrix
+        for i in range(1,len(matrix)):
+            if matrix[i][x] == 'x':
+                course2 = courses[course_names.index(matrix[i][0])]
+                for date in course.dates:
+                    if date in course2.dates:
+                        malus_points -= 1000000
+
+        for j in range(i, len(matrix[0])):
+                # if courses are connected
+                if matrix[x][j] == 'x':
+                    course2 = courses[course_names.index(matrix[0][j])]
+                    for date in course.dates:
+                        if date in course2.dates:
+                            malus_points -= 1000000
+
+    return malus_points
+
+#check hoorcolleges are before practica/werkcolleges
 def order_checker():
     order_points = 0
 
@@ -158,7 +128,10 @@ def MAX_malus_points():
     return MAX_malus
 
 
+
 # return total score
-# score += matrix_checker()
-score += order_checker()
+total_schedule()
+score = matrix_checker() +  order_checker()
 print(score)
+
+clear_schedule()
