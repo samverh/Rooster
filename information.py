@@ -27,7 +27,7 @@ class Course:
 class Hour:
     def __init__(self):
         self.scheduled = False
-        self.courses = []
+        self.course = ""
 class Day:
     def __init__(self):
         self.hours = [Hour(),Hour(),Hour(), Hour()]
