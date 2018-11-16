@@ -38,6 +38,7 @@ def info_print():
     print("\nAFTER SCHEDULING\nScheduled hours: {}".format(schedulings))
     roomsinfo(rooms,courses)
 
+# explain true and false...
 def matrix_checker(coursename, date):
 
     x = course_names.index(coursename) + 1
@@ -80,7 +81,7 @@ def scheduler(course,lect_type,poss_days):
     while hour.scheduled and matrix_checker(course.name, date):
         room, randd, day, randh, hour, date = assign_roomdate(poss_days)
 
-    hour.courses.append(course.name + ' - ' + lect_type)
+    hour.course = course.name + ' - ' + lect_type
     hour.scheduled = True
     # randd en randh bestaat niet meer?
     course.dates.append(date)
@@ -130,7 +131,7 @@ def clear_schedule():
         for day in room.days:
             for hour in day.hours:
                 hour.scheduled = False
-                hour.courses = 0
+                hour.course = ""
 
     for course in courses:
         course.dates = []
@@ -139,11 +140,11 @@ def clear_schedule():
 def print_schedule():
     with open('schedule.csv', 'w') as outf:
         header = ['Timeslot','Room', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-        writer = csv.DictWriter(outf, fieldnames=header)
+        writer = csv.DictWriter(outf, header)
         hourslots = ["9-11", "11-13", "13-15", "15-17"]
         for i in range(4):
             for j in range(7):
                 weekdays = []
                 for k in range(5):
-                    weekdays.append(rooms[j].days[k].hours[i].courses[0])
-                writer.writerow({hourslots[i], rooms[j].name, weekdays[0], weekdays[1], weekdays[2], weekdays[3], weekdays[4]})
+                    weekdays.append(rooms[j].days[k].hours[i].course)
+                writer.writerow({hourslots[i], rooms[j].room, weekdays[0], weekdays[1], weekdays[2], weekdays[3], weekdays[4]})

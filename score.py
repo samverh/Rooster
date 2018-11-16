@@ -133,5 +133,5 @@ def MAX_malus_points():
 total_schedule()
 score = matrix_checker() +  order_checker()
 print(score)
-
+print_schedule()
 clear_schedule()
