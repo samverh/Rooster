@@ -107,14 +107,19 @@ def days_returner(course):
 # course scheduler
 def course_scheduler(course):
     hc_days, wc_days, pr_days = days_returner(course)
-
+    i = 0
     # schedule all types
     for i in range(course.hoorcolleges):
         scheduler(course,"Hoorcollege",hc_days)
+        i += 1
     for j in range(course.werkcolleges):
         scheduler(course,"Werkcollege",wc_days)
+        i += 1
     for k in range(course.practica):
         scheduler(course,"Practica",pr_days)
+        i += 1
+
+    return i
 
 # makes total_schedule
 def total_schedule():
@@ -124,8 +129,8 @@ def total_schedule():
     # schedule all required classes
     for course in courses:
         # schedule all hoorcolleges
-        course_scheduler(course)
-
+        schedulings += course_scheduler(course)
+    print(schedulings)
 def clear_schedule():
     for room in rooms:
         for day in room.days:
@@ -140,11 +145,13 @@ def clear_schedule():
 def print_schedule():
     with open('schedule.csv', 'w') as outf:
         header = ['Timeslot','Room', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-        writer = csv.DictWriter(outf, header)
+        writer = csv.DictWriter(outf, fieldnames=header)
+        writer.writeheader()
         hourslots = ["9-11", "11-13", "13-15", "15-17"]
         for i in range(4):
             for j in range(7):
                 weekdays = []
                 for k in range(5):
                     weekdays.append(rooms[j].days[k].hours[i].course)
-                writer.writerow({hourslots[i], rooms[j].room, weekdays[0], weekdays[1], weekdays[2], weekdays[3], weekdays[4]})
+                writer.writerow({"Timeslot": hourslots[i], "Room": rooms[j].room, "Monday":weekdays[0], "Tuesday": weekdays[1],\
+                "Wednesday": weekdays[2], "Thursday": weekdays[3], "Friday": weekdays[4]})
