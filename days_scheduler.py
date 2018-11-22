@@ -86,7 +86,7 @@ def assign_roomdate(poss_days,rooms):
 
 
 # schedules on given days
-def scheduler(course, lect_type, poss_days, rooms, courses, course_names, matrix):
+def scheduler(course, lect_type, group_id, poss_days, rooms, courses, course_names, matrix):
     # choose day and hour
     room, randd, day, randh, hour, date = assign_roomdate(poss_days,rooms)
 
@@ -95,9 +95,14 @@ def scheduler(course, lect_type, poss_days, rooms, courses, course_names, matrix
         room, randd, day, randh, hour, date = assign_roomdate(poss_days,rooms)
 
     # add activity to hour and course
-    hour.course = course.name + ';' + lect_type
-    hour.scheduled = True
-    course.activities.append(inf.Activity(lect_type, date, [" "], 'a'))
+    if group_id == 'x':
+        hour.course = course.name + ' | ' + lect_type
+        hour.scheduled = True
+        course.activities.append(inf.Activity(lect_type, date, [" "], group_id))
+    else:
+        hour.course = course.name + ' | ' + lect_type + ' | ' + group_id
+        hour.scheduled = True
+        course.activities.append(inf.Activity(lect_type, date, [" "], group_id))
 
 
 # return possible days for all types
@@ -112,7 +117,7 @@ def days_returner(course):
         return all, [], []
     # more hoorcolleges
     elif course.hoorcolleges > course.practica + course.werkcolleges:
-        return all[:3], all[3:], all[3:]
+        return all[:2], all[2:], all[2:]
     # less hoorcolleges
     else:
         return all[:2], all[2:], all[2:]
@@ -124,14 +129,24 @@ def course_scheduler(course,rooms,courses,course_names,matrix):
     i = 0
     # schedule all types
     for i in range(course.hoorcolleges):
-        scheduler(course, "Hoorcollege", hc_days, rooms, courses, course_names, matrix)
+        scheduler(course, "Hoorcollege", 'x', hc_days, rooms, courses, course_names, matrix)
         i += 1
     for j in range(course.werkcolleges):
-        scheduler(course, "Werkcollege", wc_days, rooms, courses, course_names, matrix)
-        i += 1
+        m, r = 0, course.e_students
+        while r > 0:
+            m += 1
+            r -= course.max_werkcolleges
+        for j_2 in range(m):
+            scheduler(course, "Werkcollege", chr(97+j_2), wc_days, rooms, courses, course_names, matrix)
+            i += 1
     for k in range(course.practica):
-        scheduler(course, "Practica", pr_days, rooms, courses, course_names, matrix)
-        i += 1
+        m, r = 0, course.e_students
+        while r > 0:
+            m += 1
+            r -= course.max_practica
+        for k_2 in range(m):
+            scheduler(course, "Practica", chr(97+k_2), pr_days, rooms, courses, course_names, matrix)
+            i += 1
 
     return i
 

@@ -61,11 +61,47 @@ def student_checker(rooms, courses, course_names):
         for day in room.days:
             for hour in day.hours:
                 if hour.scheduled:
-                    course_name = hour.course.split(";")[0]
-                    ind = course_names.index(course_name)
-                    expected = courses[ind].e_students
+                    course_name, type = hour.course.split(" | ")[:2]
+                    course = courses[course_names.index(course_name)]
+                    expected = course.e_students
+                    if type == "Werkcollege":
+                        expected = course.max_werkcolleges
+                    elif type == "Practica":
+                        expected = course.max_practica
+
                     if max < expected:
-                        malus = malus + max - expected
+                        malus += max - expected
+
+    return malus
+
+
+# TODO: checkt voor elke group_id dat er maximale spreiding is
+def distribution_checker(courses):
+    malus = 0
+    id_dates = []
+
+    for course in courses:
+        total = course.hoorcolleges + course.werkcolleges + course.practica
+        id_s = 1
+
+        for activity in course.activities:
+            if group_id != 'x':
+                if int(group_id) - 96 > id_s:
+                    id_s += 1
+
+        id_dates = [[] for i in range(id_s)]
+
+        for activity in course.activities:
+            if activity.group_id == 'x':
+                for dates in id_dates:
+                    dates.append(activity.date)
+            else:
+                id = int(activity.group_id) - 97
+                id_dates[id].append(activity.date)
+
+    for dates in id_dates:
+        if len(dates) == 2:
+            continue
 
     return malus
 
