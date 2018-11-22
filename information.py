@@ -11,7 +11,7 @@ import string
 
 # class for info of a course
 class Activity:
-    def __init__(self,id,students,date,group_id):
+    def __init__(self,id,date,students,group_id):
         self.id = id
         self.date = date
         self.students = students

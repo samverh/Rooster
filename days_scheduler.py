@@ -9,11 +9,13 @@ import random as rd
 import information as inf
 import csv
 
+
 # print how the hours are scheduled
 def roomsinfo():
     double = 0
     free = 0
     good = 0
+
     for room in rooms:
         for i in range(5):
             for j in range(4):
@@ -24,27 +26,33 @@ def roomsinfo():
                     good += 1
                 else:
                     double += 1
-    print("Free hours: {}\nSingle course scheduled hours: {}\nHours with multiple courses: {}".format(free,good,double))
+    print("Free hours:", free)
+    print("Single course scheduled hours:", good)
+    print("Hours with multiple courses:", double)
+
 
 # prints stats of schedule
 def info_print():
     # general info
-    nec_schedules
+    nec_schedules = 0
     for course in courses:
-        nec_schedules += course.practica + course.werkcolleges + course.hoorcolleges
-    print("GENERAL INFO:\nAvailable hours: {}\nLectures to be scheduled: {}\n".format(4*5*7,nec_schedules))
+        nec_schedules += course.practica + \
+            course.werkcolleges + course.hoorcolleges
+    print("GENERAL INFO:\nAvailable hours:", 4*5*7)
+    print("Lectures to be scheduled:", nec_schedules, "\n")
 
     # print amount of schedulings & stats after scheduling
-    print("\nAFTER SCHEDULING\nScheduled hours: {}".format(schedulings))
-    roomsinfo(rooms,courses)
+    print("\nAFTER SCHEDULING")
+    roomsinfo(rooms, courses)
+
 
 # explain true and false...
-def matrix_checker(coursename, date):
+def matrix_checker(coursename, date, courses, course_names, matrix):
 
     x = course_names.index(coursename) + 1
 
     # go through matrix
-    for i in range(1,len(matrix[0])):
+    for i in range(1, len(matrix[0])):
         if matrix[i][x] == 'x':
             course2 = courses[course_names.index(matrix[i][0])]
             for activity in course2.activities:
@@ -61,30 +69,33 @@ def matrix_checker(coursename, date):
 
     return False
 
+
 # assigns room and date for course_lecture
-def assign_roomdate(poss_days):
-    room = rooms[rd.randint(0,6)]
+def assign_roomdate(poss_days,rooms):
+    room = rooms[rd.randint(0, 6)]
     randd = rd.choice(poss_days)
     day = room.days[randd]
-    randh = rd.randint(0,3)
+    randh = rd.randint(0, 3)
     hour = day.hours[randh]
-    date = int("{}{}".format(randd,randh))
+    date = int("{}{}".format(randd, randh))
 
     return room, randd, day, randh, hour, date
 
+
 # schedules on given days
-def scheduler(course,lect_type,poss_days):
+def scheduler(course, lect_type, poss_days, rooms, courses, course_names, matrix):
     # choose day and hour
-    room, randd, day, randh, hour, date = assign_roomdate(poss_days)
+    room, randd, day, randh, hour, date = assign_roomdate(poss_days,rooms)
 
-    # make sure hour is free # We zouden ook uren, dagen en lokalen uit de lijst kunnen halen zodra ze vol zitten
-    while hour.scheduled or matrix_checker(course.name, date):
-        room, randd, day, randh, hour, date = assign_roomdate(poss_days)
+    # make sure hour is free
+    while hour.scheduled or matrix_checker(course.name, date, courses, course_names, matrix):
+        room, randd, day, randh, hour, date = assign_roomdate(poss_days,rooms)
 
+    # add activity to hour and course
     hour.course = course.name + ' - ' + lect_type
     hour.scheduled = True
-    # randd en randh bestaat niet meer?
-    course.activities.append(inf.Activity(lect_type,date,[" "],'a'))
+    course.activities.append(inf.Activity(lect_type, date, [" "], 'a'))
+
 
 # return possible days for all types
 def days_returner(course):
@@ -103,36 +114,39 @@ def days_returner(course):
     else:
         return all[:2], all[2:], all[2:]
 
+
 # course scheduler
-def course_scheduler(course):
+def course_scheduler(course,rooms,courses,course_names,matrix):
     hc_days, wc_days, pr_days = days_returner(course)
     i = 0
     # schedule all types
     for i in range(course.hoorcolleges):
-        scheduler(course,"Hoorcollege",hc_days)
+        scheduler(course, "Hoorcollege", hc_days, rooms, courses, course_names, matrix)
         i += 1
     for j in range(course.werkcolleges):
-        scheduler(course,"Werkcollege",wc_days)
+        scheduler(course, "Werkcollege", wc_days, rooms, courses, course_names, matrix)
         i += 1
     for k in range(course.practica):
-        scheduler(course,"Practica",pr_days)
+        scheduler(course, "Practica", pr_days, rooms, courses, course_names, matrix)
         i += 1
 
     return i
 
+
 # makes total_schedule
-def total_schedule():
+def total_schedule(rooms, courses, course_names, matrix):
     # keep track of amount of scheduled classes
     schedulings = 0
 
     # schedule all required classes
     for course in courses:
         # schedule all hoorcolleges
-        schedulings += course_scheduler(course)
+        schedulings += course_scheduler(course,rooms,courses,course_names,matrix)
     print("Schedulings:", schedulings)
 
+
 # clears schedule
-def clear_schedule():
+def clear_schedule(rooms,courses):
     for room in rooms:
         for day in room.days:
             for hour in day.hours:
@@ -143,10 +157,12 @@ def clear_schedule():
         course.dates = []
         course.types = []
 
+
 # prints schedule into csv file
-def print_schedule():
+def print_schedule(rooms):
     with open('schedule.csv', 'w') as outf:
-        header = ['Timeslot','Room', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        header = ['Timeslot', 'Room', 'Monday', 'Tuesday'] + \
+            ['Wednesday', 'Thursday', 'Friday']
         writer = csv.DictWriter(outf, fieldnames=header)
         writer.writeheader()
         hourslots = ["9-11", "11-13", "13-15", "15-17"]
@@ -155,5 +171,4 @@ def print_schedule():
                 weekdays = []
                 for k in range(5):
                     weekdays.append(rooms[j].days[k].hours[i].course)
-                writer.writerow({"Timeslot": hourslots[i], "Room": rooms[j].room, "Monday":weekdays[0], "Tuesday": weekdays[1],\
-                "Wednesday": weekdays[2], "Thursday": weekdays[3], "Friday": weekdays[4]})
+                writer.writerow({"Timeslot": hourslots[i], "Room": rooms[j].room, "Monday":weekdays[0], "Tuesday": weekdays[1], "Wednesday": weekdays[2], "Thursday": weekdays[3], "Friday": weekdays[4]})

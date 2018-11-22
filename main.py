@@ -32,8 +32,8 @@ for line in matrixfile:
 course_names = [course.name for course in courses]
 
 # return total score
-day_sch.total_schedule()
-score = sc.matrix_checker() +  sc.order_checker()
+day_sch.total_schedule(rooms, courses, course_names, matrix)
+score = sc.matrix_checker(courses, course_names, matrix) + sc.order_checker(courses)
 print("Score:", score)
-day_sch.print_schedule()
-day_sch.clear_schedule()
+day_sch.print_schedule(rooms)
+day_sch.clear_schedule(rooms, courses)

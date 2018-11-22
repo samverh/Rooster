@@ -6,17 +6,16 @@ Johan Diepstraten, Ya'gel Schoonderbeek, Sam Verhezen
 Program assigns a score to schedule.
 """
 
-import csv
 
 # adjusts score based on matrix
-def matrix_checker():
+def matrix_checker(courses, course_names, matrix):
     malus_points = 0
 
     for course in courses:
         x = course_names.index(course.name) + 1
 
         # go through matrix
-        for i in range(1,len(matrix[0])):
+        for i in range(1, len(matrix[0])):
             if matrix[i][x] == 'x':
                 course2 = courses[course_names.index(matrix[i][0])]
                 for activity in course.activities:
@@ -26,25 +25,26 @@ def matrix_checker():
 
     return malus_points
 
-#check hoorcolleges are before practica/werkcolleges
-def order_checker():
+
+# check hoorcolleges are before practica/werkcolleges
+def order_checker(courses):
     order_points = 0
 
     for course in courses:
         first_hoorcollege = -1
-        first_practicum = 4
-        first_werkcollege = 4
+        first_practicum = 44
+        first_werkcollege = 44
 
         for activity in course.activities:
             if activity.id == "Werkcollege":
-                first_werkcollege = min(activity.date,first_werkcollege)
+                first_werkcollege = min(activity.date, first_werkcollege)
             elif activity.id == "Practica":
-                first_practica = min(activity.date,first_practica)
+                first_practicum = min(activity.date, first_practicum)
             elif activity.id == "Hoorcollege":
                 if first_hoorcollege < 0:
                     first_hoorcollege = activity.date
                 else:
-                    first_hoorcollege = min(activity.date,first_hoorcollege)
+                    first_hoorcollege = min(activity.date, first_hoorcollege)
 
         if (first_werkcollege < first_hoorcollege) or (first_practicum < first_hoorcollege):
             order_points -= 10000
