@@ -10,6 +10,13 @@ import os
 import string
 
 # class for info of a course
+class Activity:
+    def __init__(self,id,students,date,group_id):
+        self.id = id
+        self.date = date
+        self.students = students
+        self.group_id = group_id
+
 class Course:
     def __init__(self,name,hoorcolleges,werkcolleges,max_werkcolleges,practica,\
     max_practica,e_students):
@@ -20,8 +27,7 @@ class Course:
         self.max_werkcolleges = max_werkcolleges
         self.max_practica = max_practica
         self.e_students = e_students
-        self.dates = []
-        self.types = []
+        self.activities = []
 
 # nested class to store info of schedule of a room
 class Hour:
@@ -36,23 +42,3 @@ class Room_info:
         self.room = name
         self.cap = capaciteit
         self.days = [Day(),Day(),Day(),Day(),Day()]
-
-# function thats read info files into code
-rooms = []
-courses = []
-matrix = []
-
-coursefile = open("vakken.txt",'r')
-roomfile = open("lokalen.txt",'r')
-matrixfile = open("matrix.csv",'r')
-
-for line in coursefile:
-    info = line.split(";")
-    courses.append(Course(info[0],int(info[1]),int(info[2]),int(info[3]),int(info[4]),int(info[5]),int(info[6])))
-for line in roomfile:
-    info = line.split(",")
-    rooms.append(Room_info(info[0],int(info[1])))
-for line in matrixfile:
-    matrix.append(line.split(";"))
-
-course_names = [course.name for course in courses]

@@ -6,7 +6,6 @@ Johan Diepstraten, Ya'gel Schoonderbeek, Sam Verhezen
 Program assigns a score to schedule.
 """
 
-from scheduler2 import *
 import csv
 
 # adjusts score based on matrix
@@ -17,19 +16,12 @@ def matrix_checker():
         x = course_names.index(course.name) + 1
 
         # go through matrix
-        for i in range(1,len(matrix)):
+        for i in range(1,len(matrix[0])):
             if matrix[i][x] == 'x':
                 course2 = courses[course_names.index(matrix[i][0])]
-                for date in course.dates:
-                    if date in course2.dates:
-                        malus_points -= 1000000
-
-        for j in range(i, len(matrix[0])):
-                # if courses are connected
-                if matrix[x][j] == 'x':
-                    course2 = courses[course_names.index(matrix[0][j])]
-                    for date in course.dates:
-                        if date in course2.dates:
+                for activity in course.activities:
+                    for activity2 in course2.activities:
+                        if activity2.date == activity.date:
                             malus_points -= 1000000
 
     return malus_points
@@ -39,22 +31,20 @@ def order_checker():
     order_points = 0
 
     for course in courses:
-        first_hoorcollege = 0
-        first_practicum = 6
-        first_werkcollege = 6
+        first_hoorcollege = -1
+        first_practicum = 4
+        first_werkcollege = 4
 
-        try:
-            first_hoorcollege = course.dates[course.types.index("Hoorcollege")]
-        except ValueError:
-            continue
-        try:
-            first_practicum = course.dates[course.types.index("Practica")]
-        except ValueError:
-            continue
-        try:
-            first_werkcollege = course.dates[course.types.index("Werkcollege")]
-        except ValueError:
-            continue
+        for activity in course.activities:
+            if activity.id == "Werkcollege":
+                first_werkcollege = min(activity.date,first_werkcollege)
+            elif activity.id == "Practica":
+                first_practica = min(activity.date,first_practica)
+            elif activity.id == "Hoorcollege":
+                if first_hoorcollege < 0:
+                    first_hoorcollege = activity.date
+                else:
+                    first_hoorcollege = min(activity.date,first_hoorcollege)
 
         if (first_werkcollege < first_hoorcollege) or (first_practicum < first_hoorcollege):
             order_points -= 10000
@@ -126,12 +116,3 @@ def MAX_malus_points():
     # return max amount of malus points (lower Bound)
     print(MAX_malus)
     return MAX_malus
-
-
-
-# return total score
-total_schedule()
-score = matrix_checker() +  order_checker()
-print(score)
-print_schedule()
-clear_schedule()
