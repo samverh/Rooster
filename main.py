@@ -29,6 +29,15 @@ for line in roomfile:
 for line in matrixfile:
     matrix.append(line.split(";"))
 
+# Create evening timeslot in largest room
+big_room_cap = 0
+for room in rooms:
+    if room.cap > big_room_cap:
+        big_room_cap = room.cap
+        big_room = room
+for day in big_room.days:
+    day.hours.append(inf.Hour())
+
 course_names = [course.name for course in courses]
 
 # return total score

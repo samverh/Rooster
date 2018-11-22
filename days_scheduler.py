@@ -75,7 +75,10 @@ def assign_roomdate(poss_days,rooms):
     room = rooms[rd.randint(0, 6)]
     randd = rd.choice(poss_days)
     day = room.days[randd]
-    randh = rd.randint(0, 3)
+    if room.cap == 117:
+        randh = rd.randint(0,4)
+    else:
+        randh = rd.randint(0,3)
     hour = day.hours[randh]
     date = int("{}{}".format(randd, randh))
 
@@ -165,10 +168,12 @@ def print_schedule(rooms):
             ['Wednesday', 'Thursday', 'Friday']
         writer = csv.DictWriter(outf, fieldnames=header)
         writer.writeheader()
-        hourslots = ["9-11", "11-13", "13-15", "15-17"]
+        hourslots = ["9-11", "11-13", "13-15", "15-17", "17-19"]
         for i in range(4):
             for j in range(7):
                 weekdays = []
                 for k in range(5):
                     weekdays.append(rooms[j].days[k].hours[i].course)
                 writer.writerow({"Timeslot": hourslots[i], "Room": rooms[j].name, "Monday":weekdays[0], "Tuesday": weekdays[1], "Wednesday": weekdays[2], "Thursday": weekdays[3], "Friday": weekdays[4]})
+        writer.writerow({"Timeslot": hourslots[4], "Room": rooms[5].name, "Monday":weekdays[0], "Tuesday": weekdays[1],\
+        "Wednesday": weekdays[2], "Thursday": weekdays[3], "Friday": weekdays[4]})
