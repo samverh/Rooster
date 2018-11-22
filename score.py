@@ -74,6 +74,18 @@ def student_checker(rooms, courses, course_names):
 
     return malus
 
+# adjust score based on use evening timeslot
+def evening_checker(rooms):
+    malus = 0
+    room = rooms[5]
+
+    for day in room.days:
+        hour = day.hours[4]
+        if hour.scheduled:
+            malus -= 20
+
+    return malus
+
 
 # TODO: checkt voor elke group_id dat er maximale spreiding is
 def distribution_checker(courses):
