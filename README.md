@@ -9,6 +9,8 @@ Roostermaker.py creates a schedule for the courses in vakken.txt in the rooms fr
 
 # Structure
 
+all python codes are in the main folder "Rooster", together with the input values and the output schedule file. 
+
 # Testing
 
 To run the code run function
