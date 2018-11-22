@@ -1,7 +1,7 @@
 # Rooster
 Team Tortuga: Rooster
 
-Roostermaker.py creates a schedule for the courses in vakken.txt in the rooms from lokalen.txt. The program uses the structures defined in information.py
+Roostermaker.py creates a schedule for the courses in vakken.txt in the rooms from lokalen.txt. The program uses the structures defined in information.py. A score is assigned to the created schedule in score.py
 
 # Getting Started
 
