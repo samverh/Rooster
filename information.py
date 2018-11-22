@@ -39,6 +39,6 @@ class Day:
         self.hours = [Hour(),Hour(),Hour(), Hour()]
 class Room_info:
     def __init__(self,name,capaciteit):
-        self.room = name
+        self.name = name
         self.cap = capaciteit
         self.days = [Day(),Day(),Day(),Day(),Day()]

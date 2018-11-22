@@ -51,7 +51,24 @@ def order_checker(courses):
 
     return order_points
 
+
 # adjust score based on students
+def student_checker(rooms, courses, course_names):
+    malus = 0
+
+    for room in rooms:
+        max = room.cap
+        for day in room.days:
+            for hour in day.hours:
+                if hour.scheduled:
+                    course_name = hour.course.split(";")[0]
+                    ind = course_names.index(course_name)
+                    expected = courses[ind].e_students
+                    if max < expected:
+                        malus = malus + max - expected
+
+    return malus
+
 
 # calculate max amount of bonus points
 def MAX_bonus_points():

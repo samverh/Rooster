@@ -92,7 +92,7 @@ def scheduler(course, lect_type, poss_days, rooms, courses, course_names, matrix
         room, randd, day, randh, hour, date = assign_roomdate(poss_days,rooms)
 
     # add activity to hour and course
-    hour.course = course.name + ' - ' + lect_type
+    hour.course = course.name + ';' + lect_type
     hour.scheduled = True
     course.activities.append(inf.Activity(lect_type, date, [" "], 'a'))
 
@@ -171,4 +171,4 @@ def print_schedule(rooms):
                 weekdays = []
                 for k in range(5):
                     weekdays.append(rooms[j].days[k].hours[i].course)
-                writer.writerow({"Timeslot": hourslots[i], "Room": rooms[j].room, "Monday":weekdays[0], "Tuesday": weekdays[1], "Wednesday": weekdays[2], "Thursday": weekdays[3], "Friday": weekdays[4]})
+                writer.writerow({"Timeslot": hourslots[i], "Room": rooms[j].name, "Monday":weekdays[0], "Tuesday": weekdays[1], "Wednesday": weekdays[2], "Thursday": weekdays[3], "Friday": weekdays[4]})
