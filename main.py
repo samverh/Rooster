@@ -46,5 +46,8 @@ day_sch.total_schedule(rooms, courses, course_names, matrix)
 score = sc.matrix_checker(courses, course_names, matrix) + sc.order_checker(courses)
 score += sc.student_checker(rooms, courses, course_names) + sc.distribution_checker(courses) + sc.evening_checker(rooms)
 print("Score:", score)
+print("\n\n")
+for course in courses:
+    print(course.name + ":", course.goodbad)
 day_sch.print_schedule(rooms)
 day_sch.clear_schedule(rooms, courses)

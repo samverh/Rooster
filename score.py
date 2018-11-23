@@ -71,6 +71,7 @@ def student_checker(rooms, courses, course_names):
 
                     if max < expected:
                         malus += max - expected
+                        course.goodbad += max - expected
 
     print("Student points:", malus)
     return malus
@@ -88,13 +89,16 @@ def evening_checker(rooms):
     print("Evening points:", malus)
     return malus
 
-# checkt voor elke group_id dat er maximale spreiding is
+# bonus points for maximum distribution
+# malus points for activities on same day
 def distribution_checker(courses):
     bonus = 0
     malus = 0
     id_dates = []
 
     for course in courses:
+        course_total = 0
+
         total = course.hoorcolleges + course.werkcolleges + course.practica
         id_s = 1
 
@@ -114,29 +118,44 @@ def distribution_checker(courses):
                 id_dates[id].append(activity.date)
 
         for dates in id_dates:
+            sorted = [int(date/10) for date in dates]
+            sorted.sort()
+
             if len(dates) == 2:
-                day1, day2 = dates
-                day1, day2 = int(day1/10), int(day2/10)
-                if abs(day1-day2) == 3:
+                day1, day2 = sorted
+                if day2 - day1 == 3:
                     bonus += 20
+                    course_total += 20
+                if day1 == day2:
+                    malus -= 10
+                    course_total -= 10
 
             elif len(dates) == 3:
-                sorted = [date for date in dates]
-                sorted.sort()
-
                 day1, day2, day3 = sorted
-                day1, day2, day3 = int(day1/10), int(day2/10), int(day3/10)
                 if day1 == 0 and day2 == 2 and day3 == 4:
                     bonus += 20
+                    course_total += 20
+
+                difference = 3 - len(set(sorted))
+                malus -= difference * 10
 
             elif len(dates) == 4:
-                sorted = [date for date in dates]
-                sorted.sort()
-
                 day1, day2, day3, day4 = sorted
-                day1, day2, day3, day4 = int(day1/10), int(day2/10), int(day3/10), int(day4/10)
                 if day1 == 0 and day2 == 1 and day3 == 3 and day4 == 4:
                     bonus += 20
+                    course_total += 20
+
+                difference = 4 - len(set(sorted))
+                malus -= difference * 10
+                course_total -= difference * 10
+
+            elif len(dates) > 4:
+                sorted = [int(date/10) for date in dates]
+                difference = len(sorted) - len(set(sorted))
+                malus -= difference * 10
+                course_total -= difference * 10
+
+        course.goodbad += course_total
 
     print("Distribution points:", bonus)
     print("Activities on one day:", malus)

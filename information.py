@@ -28,6 +28,7 @@ class Course:
         self.max_practica = max_practica
         self.e_students = e_students
         self.activities = []
+        self.goodbad = 0
 
 # nested class to store info of schedule of a room
 class Hour:
