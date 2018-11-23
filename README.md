@@ -1,27 +1,32 @@
 # Rooster
-Team Tortuga: Rooster
+Class: Heuristieken - Universiteit van Amsterdam
+Subject: Lesroosters
 
-Roostermaker.py creates a schedule for the courses in vakken.txt in the rooms from lokalen.txt. The program uses the structures defined in information.py. A score is assigned to the created schedule in score.py
+Scheduling classes at the university is a difficult task that this program facilitates using heuristics. The classes are scheduled taking into account the expected student count, undesired timeslots, preferred sequence of activities and overlapping courses. It provides an optimal schedule using a genetic algorithm.
 
-# Getting Started
 
-# Prerequisites
-pandas library
+((Roostermaker.py creates a schedule for the courses in vakken.txt in the rooms from lokalen.txt. The program uses the structures defined in information.py. A score is assigned to the created schedule in score.py))
 
-# Structure
+## Getting Started
+### Prerequisites
+The program requires the pandas library to run successfully, download pandas the following:
 
-all python codes are in the main folder "Rooster", together with the input values and the output schedule file. 
+```
+pip install pandas
+```
 
-# Testing
+### Structure
+All python codes are in the main folder "Rooster", together with the input values and the output schedule file.
 
-To run the code run function
+### Testing
+To run the program, run the main function:
 
-python score.py
+```
+python main.py
+```
 
-# Authors
+## Authors
+* Sam Verhezen, Ya'gel Schoonderbeek & Johan Diepstraten
 
-Sam Verhezen, Ya'gel Schoonderbeek & Johan Diepstraten
-
-# Acknowledgements
-
-Special Thanks to our Techassistant Bart van Baal
+## Acknowledgements
+* Special thanks to our techassistant Bart van Baal

@@ -3,21 +3,26 @@ Heuristieken UvA 2018-2019
 Lesroosters
 Johan Diepstraten, Ya'gel Schoonderbeek, Sam Verhezen
 
-Program assigns a score to schedule.
+Program assigns a score to the schedule.
 """
 
 
-# adjusts score based on matrix
 def matrix_checker(courses, course_names, matrix):
+    """
+    Adjusts score based on matrix.
+    """
     malus_points = 0
 
+    # iterate through positions of every course in matrix
     for course in courses:
         x = course_names.index(course.name) + 1
 
-        # go through matrix
+        # determine courses with which no overlap may occur
         for i in range(1, len(matrix[0])):
-            if matrix[i][x] == 'x':
+            if matrix[i][x] == "x":
                 course2 = courses[course_names.index(matrix[i][0])]
+
+                # assign penalty points if overlap does occur
                 for activity in course.activities:
                     for activity2 in course2.activities:
                         if activity2.date == activity.date:
@@ -26,8 +31,10 @@ def matrix_checker(courses, course_names, matrix):
     return malus_points
 
 
-# check hoorcolleges are before practica/werkcolleges
 def order_checker(courses):
+    """
+    Checks if preferred sequence of course activities is respected.
+    """
     order_points = 0
 
     for course in courses:
@@ -36,13 +43,18 @@ def order_checker(courses):
         first_werkcollege = 44
 
         for activity in course.activities:
+
             if activity.id == "Werkcollege":
                 first_werkcollege = min(activity.date, first_werkcollege)
+
             elif activity.id == "Practica":
                 first_practicum = min(activity.date, first_practicum)
+
             elif activity.id == "Hoorcollege":
+
                 if first_hoorcollege < 0:
                     first_hoorcollege = activity.date
+
                 else:
                     first_hoorcollege = min(activity.date, first_hoorcollege)
 
@@ -52,20 +64,25 @@ def order_checker(courses):
     return order_points
 
 
-# adjust score based on students
 def student_checker(rooms, courses, course_names):
+    """
+    Adjusts score based on students.
+    """
     malus = 0
 
     for room in rooms:
         max = room.cap
         for day in room.days:
             for hour in day.hours:
+
                 if hour.scheduled:
                     course_name, type = hour.course.split(" | ")[:2]
                     course = courses[course_names.index(course_name)]
                     expected = course.e_students
+
                     if type == "Werkcollege":
                         expected = course.max_werkcolleges
+
                     elif type == "Practica":
                         expected = course.max_practica
 
@@ -74,15 +91,20 @@ def student_checker(rooms, courses, course_names):
                         course.goodbad += max - expected
 
     print("Student points:", malus)
+    
     return malus
 
-# adjust score based on use evening timeslot
+
 def evening_checker(rooms, courses, course_names):
+    """
+    Adjusts score based on usage of evening timeslot.
+    """
     malus = 0
     room = rooms[5]
 
     for day in room.days:
         hour = day.hours[4]
+
         if hour.scheduled:
             course_name = hour.course.split(" | ")[0]
             course = courses[course_names.index(course_name)]
@@ -90,11 +112,18 @@ def evening_checker(rooms, courses, course_names):
             course.goodbad -= 20
 
     print("Evening points:", malus)
+
     return malus
 
-# bonus points for maximum distribution
-# malus points for activities on same day
+
 def distribution_checker(courses):
+    """
+    Assigns bonus points for maximum distribution of course activities across
+    the weekdays.
+    Assigns penalty points for course activities on the same day.
+    """
+
+    # start off with zero points and create list for all date id's
     bonus = 0
     malus = 0
     id_dates = []
@@ -106,14 +135,14 @@ def distribution_checker(courses):
         id_s = 1
 
         for activity in course.activities:
-            if activity.group_id != 'x':
+            if activity.group_id != "x":
                 if ord(activity.group_id) - 96 > id_s:
                     id_s += 1
 
         id_dates = [[] for i in range(id_s)]
 
         for activity in course.activities:
-            if activity.group_id == 'x':
+            if activity.group_id == "x":
                 for dates in id_dates:
                     dates.append(activity.date)
             else:
@@ -163,4 +192,5 @@ def distribution_checker(courses):
 
     print("Distribution points:", bonus)
     print("Activities on one day:", malus)
+
     return bonus + malus

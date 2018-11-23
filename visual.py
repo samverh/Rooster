@@ -1,22 +1,26 @@
+"""
+Heuristieken UvA 2018-2019
+Lesroosters
+Johan Diepstraten, Ya'gel Schoonderbeek, Sam Verhezen
+
+Program visualizes the CSV output made by main.py via a webpage.
+"""
+
 import pandas as pd
 import numpy as np
 
-rooster = pd.read_csv("schedule.csv")
+# import csv file containing schedule and replace empty values by empty string
+rooster = pd.read_csv("schedule.csv").replace(np.nan, "")
 
-# for row in rooster.iterrows():
-#     for r in row:
-#         print(r['Room'])
-#     # for i in row:
-#         # print(i)
-#             # i = " - "
-#     # print(row)
-roooster = rooster.replace(np.nan, "")
-htmlrooster = roooster.to_html()
+# convert the dataframe to an html formatted table
+htmlrooster = rooster.to_html()
 
+# write an html file and insert the table
+with open("rooster.html", 'w') as html_file:
 
-with open("rooster1.html", 'w') as html_file:
-
-  html_file.write("<html><head><link href='rooster.css' rel='stylesheet'/><title>TEAM TORTUGA</title></head>")
-  html_file.write("<body><div><text>Rooster Team Tortuga</text></div><div>")
-  html_file.write(htmlrooster)
-  html_file.write("</div></body></html>")
+    html_file.write("<html>\n  <head>\n\
+      <link href='rooster.css' rel='stylesheet'/>\n\
+      <title>TEAM TORTUGA</title>\n  </head>\n")
+    html_file.write("  <body>\n    <div><text>Rooster Team Tortuga</text></div>\n\    <div>\n")
+    html_file.write(htmlrooster)
+    html_file.write("\n</div>\n</body>\n</html>")

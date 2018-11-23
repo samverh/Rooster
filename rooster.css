@@ -1,15 +1,17 @@
-
+/* add hover for table rows */
 tr:hover
 {
   background-color: rgba(255,255,255,0.4) !important;
 }
 
+/* add hover for table columns */
 td:hover
 {
   background-color: rgba(255,255,255,0.4);
 
 }
 
+/* add zebra pattern for timeslots */
 tr:nth-child(n+8):nth-child(-n+14)
 {
   background-color: rgba(255,255,255,0.15);
@@ -19,10 +21,6 @@ tr:nth-child(n+22):nth-child(-n+28)
 {
   background-color: rgba(255,255,255,0.15);
 }
-/* tr:nth-child(n+20):nth-child(-n+23)
-{
-  background-color: #f2f2f2;
-} */
 
 table
 {
@@ -43,10 +41,6 @@ th
 	background-color: rgba(255,255,255,0.01);
   font-size: 15px;
 }
-/* th {
-    background-color: teal;
-    color: white;
-} */
 
 th, td {
     padding: 10px;
@@ -54,10 +48,6 @@ th, td {
     border-bottom: 1px solid #ddd;
     color: #fff;
 }
-/*
-table {
-    border-collapse: collapse;
-} */
 
 table, th, td
 {
