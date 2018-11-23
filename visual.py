@@ -1,7 +1,18 @@
 import pandas as pd
+import numpy as np
 
 rooster = pd.read_csv("schedule.csv")
-htmlrooster = rooster.to_html()
+
+# for row in rooster.iterrows():
+#     for r in row:
+#         print(r['Room'])
+#     # for i in row:
+#         # print(i)
+#             # i = " - "
+#     # print(row)
+roooster = rooster.replace(np.nan, " - ")
+htmlrooster = roooster.to_html()
+
 
 with open("rooster1.html", 'w') as html_file:
 
