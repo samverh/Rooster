@@ -10,7 +10,7 @@ rooster = pd.read_csv("schedule.csv")
 #         # print(i)
 #             # i = " - "
 #     # print(row)
-roooster = rooster.replace(np.nan, " - ")
+roooster = rooster.replace(np.nan, "")
 htmlrooster = roooster.to_html()
 
 

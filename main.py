@@ -10,6 +10,7 @@ import information as inf
 import random_scheduler as random_sch
 import days_scheduler as day_sch
 import score as sc
+import visual as vis
 
 # function thats read info files into code
 rooms = []
