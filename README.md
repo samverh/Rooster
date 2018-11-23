@@ -6,6 +6,7 @@ Roostermaker.py creates a schedule for the courses in vakken.txt in the rooms fr
 # Getting Started
 
 # Prerequisites
+pandas library
 
 # Structure
 
