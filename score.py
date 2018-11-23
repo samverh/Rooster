@@ -77,14 +77,17 @@ def student_checker(rooms, courses, course_names):
     return malus
 
 # adjust score based on use evening timeslot
-def evening_checker(rooms):
+def evening_checker(rooms, courses, course_names):
     malus = 0
     room = rooms[5]
 
     for day in room.days:
         hour = day.hours[4]
         if hour.scheduled:
+            course_name = hour.course.split(" | ")[0]
+            course = courses[course_names.index(course_name)]
             malus -= 20
+            course.goodbad -= 20
 
     print("Evening points:", malus)
     return malus
@@ -138,6 +141,7 @@ def distribution_checker(courses):
 
                 difference = 3 - len(set(sorted))
                 malus -= difference * 10
+                course.goodbad -= difference * 10
 
             elif len(dates) == 4:
                 day1, day2, day3, day4 = sorted
