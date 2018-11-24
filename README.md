@@ -26,7 +26,9 @@ python main.py
 ```
 
 ## Authors
-* Sam Verhezen, Ya'gel Schoonderbeek & Johan Diepstraten
+* Johan Diepstraten
+* Ya'gel Schoonderbeek
+* Sam Verhezen
 
 ## Acknowledgements
 * Special thanks to our techassistant Bart van Baal
