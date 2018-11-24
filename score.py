@@ -28,6 +28,8 @@ def matrix_checker(courses, course_names, matrix):
                         if activity2.date == activity.date:
                             malus_points -= 1000000
 
+    print("Malus points for matrix:", malus_points)
+
     return malus_points
 
 
@@ -61,6 +63,8 @@ def order_checker(courses):
         if (first_werkcollege < first_hoorcollege) or (first_practicum < first_hoorcollege):
             order_points -= 10000
 
+    print("Malus points for order:", order_points)
+
     return order_points
 
 
@@ -91,7 +95,7 @@ def student_checker(rooms, courses, course_names):
                         course.goodbad += max - expected
 
     print("Student points:", malus)
-    
+
     return malus
 
 

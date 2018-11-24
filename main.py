@@ -47,7 +47,7 @@ for day in big_room.days:
 course_names = [course.name for course in courses]
 
 # return total score
-day_sch.total_schedule(rooms, courses, course_names, matrix)
+random_sch.total_schedule(rooms, courses, course_names, matrix)
 score = sc.matrix_checker(courses, course_names, matrix) + sc.order_checker(courses)
 score += sc.student_checker(rooms, courses, course_names)
 score += sc.distribution_checker(courses)
