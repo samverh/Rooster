@@ -27,8 +27,7 @@ def matrix_checker(courses, course_names, matrix):
                     for activity2 in course2.activities:
                         if activity2.date == activity.date:
                             malus_points -= 1000000
-
-    print("Malus points for matrix:", malus_points)
+                            course.goodbad -= 1000000
 
     return malus_points
 
@@ -62,8 +61,7 @@ def order_checker(courses):
 
         if (first_werkcollege < first_hoorcollege) or (first_practicum < first_hoorcollege):
             order_points -= 10000
-
-    print("Malus points for order:", order_points)
+            course.goodbad -= 10000
 
     return order_points
 
@@ -94,8 +92,6 @@ def student_checker(rooms, courses, course_names):
                         malus += max - expected
                         course.goodbad += max - expected
 
-    print("Student points:", malus)
-
     return malus
 
 
@@ -114,8 +110,6 @@ def evening_checker(rooms, courses, course_names):
             course = courses[course_names.index(course_name)]
             malus -= 20
             course.goodbad -= 20
-
-    print("Evening points:", malus)
 
     return malus
 
@@ -194,7 +188,4 @@ def distribution_checker(courses):
 
         course.goodbad += course_total
 
-    print("Distribution points:", bonus)
-    print("Activities on one day:", malus)
-
-    return bonus + malus
+    return bonus, malus
