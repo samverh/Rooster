@@ -11,6 +11,7 @@ import random as rd
 import information as inf
 import schedule_basics as bas
 import score as sc
+import schedule_basics as bas_sch
 
 
 def random_hour_finder(rooms):
@@ -35,9 +36,10 @@ def random_hour_finder(rooms):
 
 
 def switcher(room1, date1, room2, date2, courses, course_names):
-    hour1 = room1.days[int(date1/10)].hours[date1%10]
-    hour2 = room2.days[int(date2/10)].hours[date2%10]
-
+    hour1 = room1.days[date1//10].hours[date1%10]
+    hour2 = room2.days[date2//10].hours[date2%10]
+    print(hour1.course)
+    print(hour2.course)
     if (not hour1.scheduled and not hour2.scheduled):
         return True
 
@@ -86,11 +88,21 @@ def calc_score(courses, rooms, course_names, matrix):
 
 def climber(courses, rooms, course_names, max_iterations, old_score, matrix):
     i = 0
-
     while i < max_iterations:
         room1, date1 = random_hour_finder(rooms)
+        print(room1.name, date1)
         room2, date2 = random_hour_finder(rooms)
+        print(room2.name, date2)
         switcher(room1, date1, room2, date2, courses, course_names)
-        switcher(room1, date1, room2, date2, courses, course_names)
-        print(old_score, calc_score(courses, rooms, course_names, matrix), "\n")
+        # switcher(room1, date1, room2, date2, courses, course_names)
+        new_score = calc_score(courses, rooms, course_names, matrix)
+        print(old_score, "|", new_score)
+        if new_score > old_score:
+            old_score = new_score
+        else:
+            switcher(room1, date1, room2, date2, courses, course_names)
+
         i += 1
+    calc_score(courses, rooms, course_names, matrix)
+
+    return old_score, max_iterations

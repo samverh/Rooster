@@ -9,8 +9,10 @@ This program is the main function for scheduling classes.
 import information as inf
 import random_scheduler as random_sch
 import days_scheduler as day_sch
+import schedule_basics as bas_sch
 import score as sc
 import visual as vis
+import hillclimber as hill
 
 # read information files into code
 rooms = []
@@ -50,13 +52,21 @@ course_names = [course.name for course in courses]
 random_sch.total_schedule(rooms, courses, course_names, matrix)
 score = sc.matrix_checker(courses, course_names, matrix) + sc.order_checker(courses)
 score += sc.student_checker(rooms, courses, course_names)
-score += sc.distribution_checker(courses)
+bonus, malus = sc.distribution_checker(courses)
+score += bonus + malus
 score += sc.evening_checker(rooms, courses, course_names)
-print("Score:", score)
-print("\n\n")
-
+print("Score before hillclimber:", score)
+print("\n")
+hill_score, iterations = hill.climber(courses, rooms, course_names, 1, score, matrix)
+print("iterations: ", iterations)
+print("Score after hillclimber: ", hill_score)
+print("\n")
+goodbad = 0
 for course in courses:
     print(course.name + ":", course.goodbad)
+    goodbad += course.goodbad
+print("sum course.goodbad: ", goodbad)
 
-day_sch.print_schedule(rooms)
-day_sch.clear_schedule(rooms, courses)
+
+bas_sch.print_schedule(rooms)
+bas_sch.clear_schedule(rooms, courses)
