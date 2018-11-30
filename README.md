@@ -1,9 +1,29 @@
 # Rooster
 Class: Heuristieken - Universiteit van Amsterdam
+
 Subject: Lesroosters
 
 Scheduling classes at the university is a difficult task that this program facilitates using heuristics. The classes are scheduled taking into account the expected student count, undesired timeslots, preferred sequence of activities and overlapping courses. It provides an optimal schedule using a genetic algorithm.
 
+**Upper bound:**	 
+
+Goed verdeeld vak: 22 * 20 = 440
+
+Studenten zonder vakconflicten = 609 * 1 = 609
+
+Totaal: 1049 Bonuspunten
+
+**Lower bound:** 
+
+Zaal<#studenten = 1177
+
+Avondslot: 5 * 20 = 100
+
+Vakactiviteiten(n) op n-1 dagen = 430
+
+Vakconflict = 11417
+
+Totaal: 13124 Maluspunten
 
 ((Roostermaker.py creates a schedule for the courses in vakken.txt in the rooms from lokalen.txt. The program uses the structures defined in information.py. A score is assigned to the created schedule in score.py))
 
