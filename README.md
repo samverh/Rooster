@@ -16,21 +16,17 @@ Scheduling classes at the university is a difficult task that this program facil
 ### Bounds of the problem
 **Upper bound:**	 
 
-Maximal distribution per course: 22 * 20 = 440
-
-Students without course conflicts = 609 * 1 = 609
+* Maximal distribution per course: 22 * 20 = 440
+* Students without course conflicts = 609 * 1 = 609
 
 Total: +1049 points
 
 **Lower bound:** 
 
-Room < #students = 1177
-
-Use evening time slot: 5 * 20 = 100
-
-course activities (n) divided over n-1 days = 430
-
-Course conflicts = 11417
+* Room < #students = 1177
+* Use evening time slot: 5 * 20 = 100
+* Course activities (n) divided over n-1 days = 430
+* Course conflicts = 11417
 
 Total: -13124 points
 
