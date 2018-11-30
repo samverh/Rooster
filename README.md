@@ -3,29 +3,43 @@ Class: Heuristieken - Universiteit van Amsterdam
 
 Subject: Lesroosters
 
-Scheduling classes at the university is a difficult task that this program facilitates using heuristics. The classes are scheduled taking into account the expected student count, undesired timeslots, preferred sequence of activities and overlapping courses. It provides an optimal schedule using a genetic algorithm.
+Scheduling classes at the university is a difficult task that this program facilitates using heuristics. The classes are scheduled taking into account the expected student count, undesired timeslots, preferred sequence of activities and overlapping courses. It provides an optimal schedule using algorithms. The case consists of 6 classrooms with 20 hours in the week. Additionally, 1 classroom contains an extra evening time slot, which adds 5 extra possible hours to the week. There are 129 course activities, exisiting of normal lectures, working sections and practica. The total amount of student is 600, all of which have individual course subscriptions.
 
+### Constraints & Points
+* Normal lectures should be scheduled before other activities of a course
+* Some courses should not overlap (see matrix.csv)
+* Use of the evening time slot takes -20 points
+* Maximal distribution of a course's activities earns +20 points, but points are taken if the distribution is not optimal
+* Every student that does not fit in the room takes -1 point
+* Per student, +1 point is earned per individual non-conflicting course
+
+### Bounds of the problem
 **Upper bound:**	 
 
-Goed verdeeld vak: 22 * 20 = 440
+Maximal distribution per course: 22 * 20 = 440
 
-Studenten zonder vakconflicten = 609 * 1 = 609
+Students without course conflicts = 609 * 1 = 609
 
-Totaal: 1049 Bonuspunten
+Total: +1049 points
 
 **Lower bound:** 
 
-Zaal<#studenten = 1177
+Room < #students = 1177
 
-Avondslot: 5 * 20 = 100
+Use evening time slot: 5 * 20 = 100
 
-Vakactiviteiten(n) op n-1 dagen = 430
+course activities (n) divided over n-1 days = 430
 
-Vakconflict = 11417
+Course conflicts = 11417
 
-Totaal: 13124 Maluspunten
+Total: -13124 points
 
-((Roostermaker.py creates a schedule for the courses in vakken.txt in the rooms from lokalen.txt. The program uses the structures defined in information.py. A score is assigned to the created schedule in score.py))
+### State Space
+No double scheduling: 145 x 144 x … 18 x 17 x 16 = 10238 possibilities 
+
+Courses overlap: > 10232 (schatting)
+
++ 609 students with 1372 individual course subscriptions...
 
 ## Getting Started
 ### Prerequisites
