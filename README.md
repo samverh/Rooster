@@ -31,11 +31,13 @@ Total: +1049 points
 Total: -13124 points
 
 ### State Space
-No double scheduling: 145 x 144 x … 18 x 17 x 16 = 10238 possibilities 
++ No double scheduling: 145 x 144 x … 18 x 17 x 16 = 10238 possibilities 
 
-Courses overlap: > 10232 (schatting)
++ Courses overlap: > 10232 (schatting)
 
-+ 609 students with 1372 individual course subscriptions...
++ 609 students with 1372 individual course subscriptions: 4 x 10^973
+
+= Total: 4 x 10^1211
 
 ## Getting Started
 ### Prerequisites
