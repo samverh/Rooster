@@ -14,6 +14,7 @@ from termcolor import colored, cprint
 import score as sc
 import visual as vis
 import hillclimber as hill
+import calculations as cal
 
 # read information files into code
 rooms = []
@@ -56,23 +57,26 @@ score += sc.student_checker(rooms, courses, course_names)
 bonus, malus = sc.distribution_checker(courses)
 score += bonus + malus
 score += sc.evening_checker(rooms, courses, course_names)
+
+# print stuff
 print("Score before hillclimber:", score)
-print("\n")
-hill_score, iterations = hill.climber(courses, rooms, course_names, 100, score, matrix)
-print("iterations: ", iterations)
-print("Score after hillclimber: ", hill_score)
-print("\n")
+for course in courses:
+    if course.goodbad < - 1000:
+        score = hill.course_climber(courses[0], courses, rooms, course_names, 1000, score, matrix)
+        print("Score after 1 course_climb: ", score)
+score = hill.random_climber(courses, rooms, course_names, 1000, score, matrix)
+print("Score after hillclimber: ", score)
+
+# check parts
 goodbad = 0
 for course in courses:
+    goodbad += course.goodbad
     if course.goodbad > 0:
         print(colored(course.name + ":",'green'), colored(course.goodbad, 'green'))
     elif course.goodbad < -50:
         print(colored(course.name + ":", 'red'), colored(course.goodbad, 'red'))
     else:
         print(course.name + ":", course.goodbad)
-    goodbad += course.goodbad
-print("sum course.goodbad: ", goodbad)
-
 
 bas_sch.print_schedule(rooms)
 bas_sch.clear_schedule(rooms, courses)

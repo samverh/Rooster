@@ -44,20 +44,25 @@ def scheduler(course, lect_type, group_id, poss_days, rooms, courses, course_nam
 
     # choose day and hour and make sure timeslot is free
     room, randd, day, randh, hour, date = assign_roomdate(poss_days, rooms)
+    j = 0
 
     while hour.scheduled or bas.matrix_checker(course.name, date, courses, course_names, matrix):
+        j += 1
+        if j > 10000:
+            poss_days = [x for x in range(5)]
         room, randd, day, randh, hour, date = assign_roomdate(poss_days, rooms)
+
 
     # add class activity (lecture type) to hour and course and add group ID
     if group_id == 'x':
         hour.course = course.name + ' | ' + lect_type
         hour.scheduled = True
-        course.activities.append(inf.Activity(lect_type, date, [" "], group_id))
+        course.activities.append(inf.Activity(lect_type, date, [" "], group_id, room.name))
 
     else:
         hour.course = course.name + ' | ' + lect_type + ' | ' + group_id
         hour.scheduled = True
-        course.activities.append(inf.Activity(lect_type, date, [" "], group_id))
+        course.activities.append(inf.Activity(lect_type, date, [" "], group_id, room.name))
 
 
 def days_returner(course):
@@ -137,7 +142,6 @@ def total_schedule(rooms, courses, course_names, matrix):
 
     # schedule all required classes
     for course in courses:
-
         # schedule all hoorcolleges
         schedulings += course_scheduler(course, rooms, courses, course_names, matrix)
     print("Schedulings:", schedulings)
