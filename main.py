@@ -10,6 +10,7 @@ import information as inf
 import random_scheduler as random_sch
 import days_scheduler as day_sch
 import schedule_basics as bas_sch
+from termcolor import colored, cprint
 import score as sc
 import visual as vis
 import hillclimber as hill
@@ -57,13 +58,18 @@ score += bonus + malus
 score += sc.evening_checker(rooms, courses, course_names)
 print("Score before hillclimber:", score)
 print("\n")
-hill_score, iterations = hill.climber(courses, rooms, course_names, 1, score, matrix)
+hill_score, iterations = hill.climber(courses, rooms, course_names, 100, score, matrix)
 print("iterations: ", iterations)
 print("Score after hillclimber: ", hill_score)
 print("\n")
 goodbad = 0
 for course in courses:
-    print(course.name + ":", course.goodbad)
+    if course.goodbad > 0:
+        print(colored(course.name + ":",'green'), colored(course.goodbad, 'green'))
+    elif course.goodbad < -50:
+        print(colored(course.name + ":", 'red'), colored(course.goodbad, 'red'))
+    else:
+        print(course.name + ":", course.goodbad)
     goodbad += course.goodbad
 print("sum course.goodbad: ", goodbad)
 

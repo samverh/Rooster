@@ -14,9 +14,10 @@ class Activity:
     """
     Class defining all information of a course activity.
     """
-    def __init__(self, id, date, students, group_id):
+    def __init__(self, id, date, students, group_id, room):
         self.id = id
         self.date = date
+        self.room = room
         self.students = students
         self.group_id = group_id
 

@@ -50,12 +50,12 @@ def scheduler(course, lect_type, group_id, rooms, courses, course_names, matrix)
     if group_id == 'x':
         hour.course = course.name + ' | ' + lect_type
         hour.scheduled = True
-        course.activities.append(inf.Activity(lect_type, date, [" "], group_id))
+        course.activities.append(inf.Activity(lect_type, date, [" "], group_id, room.name))
 
     else:
         hour.course = course.name + ' | ' + lect_type + ' | ' + group_id
         hour.scheduled = True
-        course.activities.append(inf.Activity(lect_type, date, [" "], group_id))
+        course.activities.append(inf.Activity(lect_type, date, [" "], group_id, room.name))
 
 
 def course_scheduler(course, rooms, courses, course_names, matrix):

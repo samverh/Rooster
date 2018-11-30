@@ -38,32 +38,34 @@ def random_hour_finder(rooms):
 def switcher(room1, date1, room2, date2, courses, course_names):
     hour1 = room1.days[date1//10].hours[date1%10]
     hour2 = room2.days[date2//10].hours[date2%10]
-    print(hour1.course)
-    print(hour2.course)
     if (not hour1.scheduled and not hour2.scheduled):
         return True
 
     elif not hour1.scheduled:
         course2 = courses[course_names.index(hour2.course.split(" | ")[0])]
         for activity in course2.activities:
-            if activity.date == date2:
+            if activity.date == date2 and activity.room == room2.name:
                 activity.date = date1
+                activity.room = room1
 
     elif not hour2.scheduled:
         course1 = courses[course_names.index(hour1.course.split(" | ")[0])]
         for activity in course1.activities:
-            if activity.date == date1:
+            if activity.date == date1 and activity.room == room1.name:
                 activity.date = date2
+                activity.room = room2
 
     else:
         course1 = courses[course_names.index(hour1.course.split(" | ")[0])]
         course2 = courses[course_names.index(hour2.course.split(" | ")[0])]
         for activity in course1.activities:
-            if activity.date == date1:
+            if activity.date == date1 and activity.room == room1.name:
                 activity.date = date2
+                activity.room = room2
         for activity in course2.activities:
-            if activity.date == date2:
+            if activity.date == date2 and activity.room == room2.name:
                 activity.date = date1
+                activity.room = room1
 
     temp_course = hour1.course
     temp_bool = hour1.scheduled
@@ -90,19 +92,11 @@ def climber(courses, rooms, course_names, max_iterations, old_score, matrix):
     i = 0
     while i < max_iterations:
         room1, date1 = random_hour_finder(rooms)
-        print(room1.name, date1)
         room2, date2 = random_hour_finder(rooms)
-        print(room2.name, date2)
         switcher(room1, date1, room2, date2, courses, course_names)
-        # switcher(room1, date1, room2, date2, courses, course_names)
+        switcher(room1, date1, room2, date2, courses, course_names)
         new_score = calc_score(courses, rooms, course_names, matrix)
-        print(old_score, "|", new_score)
-        if new_score > old_score:
-            old_score = new_score
-        else:
-            switcher(room1, date1, room2, date2, courses, course_names)
-
+        print(new_score)
         i += 1
-    calc_score(courses, rooms, course_names, matrix)
 
     return old_score, max_iterations
