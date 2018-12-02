@@ -15,15 +15,19 @@ import score as sc
 import visual as vis
 import hillclimber as hill
 import calculations as cal
+import student_distribution as stu
+
 
 # read information files into code
 rooms = []
 courses = []
 matrix = []
+students = []
 
 coursefile = open("vakken.txt", 'r')
 roomfile = open("lokalen.txt", 'r')
 matrixfile = open("matrix.csv", 'r')
+studentfile = open("studentenenvakken.csv", 'r', errors='ignore')
 
 for line in coursefile:
     info = line.split(";")
@@ -36,6 +40,17 @@ for line in roomfile:
 
 for line in matrixfile:
     matrix.append(line.split(";"))
+
+for line in studentfile:
+    student_info = line.strip("\n").split(";")
+    student_courses = []
+    for coursename in student_info[3:]:
+        if len(coursename) > 2:
+            student_courses.append(coursename)
+
+    students.append(inf.Student(student_info[0], student_info[1], student_info[2], student_courses))
+
+students = students[1:]
 
 # create evening timeslot in largest room
 big_room_cap = 0
@@ -51,7 +66,7 @@ for day in big_room.days:
 course_names = [course.name for course in courses]
 
 # return total score
-random_sch.total_schedule(rooms, courses, course_names, matrix)
+day_sch.total_schedule(rooms, courses, course_names, matrix)
 score = sc.matrix_checker(courses, course_names, matrix) + sc.order_checker(courses)
 score += sc.student_checker(rooms, courses, course_names)
 bonus, malus = sc.distribution_checker(courses)
@@ -60,12 +75,12 @@ score += sc.evening_checker(rooms, courses, course_names)
 
 # print stuff
 print("Score before hillclimber:", score)
-for course in courses:
-    if course.goodbad < - 1000:
-        score = hill.course_climber(courses[0], courses, rooms, course_names, 1000, score, matrix)
-        print("Score after 1 course_climb: ", score)
-score = hill.random_climber(courses, rooms, course_names, 1000, score, matrix)
-print("Score after hillclimber: ", score)
+# # for course in courses:
+#     if course.goodbad < - 1000:
+#         score = hill.course_climber(courses[0], courses, rooms, course_names, 1000, score, matrix)
+#         print("Score after 1 course_climb: ", score)
+# score = hill.random_climber(courses, rooms, course_names, 1000, score, matrix)
+# print("Score after hillclimber: ", score)
 
 # check parts
 goodbad = 0
@@ -77,6 +92,14 @@ for course in courses:
         print(colored(course.name + ":", 'red'), colored(course.goodbad, 'red'))
     else:
         print(course.name + ":", course.goodbad)
+
+stu.distribute_all_students(students, rooms, courses, course_names)
+stu.student_in_courses_checker(courses, students, course_names)
+stu.stats_about_students(courses, students, course_names)
+
+student_bonus, student_malus = sc.student_score(students)
+print("STUDENTBONUS", student_bonus)
+print("STUDENTMALUS", student_malus)
 
 bas_sch.print_schedule(rooms)
 bas_sch.clear_schedule(rooms, courses)

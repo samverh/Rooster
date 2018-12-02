@@ -14,12 +14,13 @@ class Activity:
     """
     Class defining all information of a course activity.
     """
-    def __init__(self, id, date, students, group_id, room):
+    def __init__(self, id, date, students, group_id, room, capacity):
         self.id = id
         self.date = date
         self.room = room
         self.students = students
         self.group_id = group_id
+        self.capacity = capacity
 
 
 class Course:
@@ -67,3 +68,17 @@ class Room_info:
         self.name = name
         self.cap = capaciteit
         self.days = [Day(), Day(), Day(), Day(), Day()]
+
+class Student:
+    """"
+    Class defining information of a student, i.e. the name, studentnumber,
+    courses and the dates of courses.
+
+    """
+    def __init__(self, surname, name, student_number, courses):
+        self.surname = surname
+        self.name = name
+        self.student_number = student_number
+        self.courses = courses
+        self.dates = []
+        self.group_id = ""

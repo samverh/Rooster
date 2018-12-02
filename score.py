@@ -7,6 +7,26 @@ Program assigns a score to the schedule.
 """
 
 
+def student_score(students):
+    malus = 0
+    bonus = 0
+
+    for student in students:
+        noconflicts = True
+
+        for i in range(len(student.dates)):
+            for j in range(i,len(student.dates)):
+                for date in student.dates[i]:
+                    if date in student.dates[j]:
+                        noconflicts = False
+                        malus -= 1
+
+        if noconflicts:
+            bonus += 1
+
+    return bonus, malus
+
+
 def matrix_checker(courses, course_names, matrix):
     """
     Adjusts score based on matrix.

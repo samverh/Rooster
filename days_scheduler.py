@@ -57,12 +57,12 @@ def scheduler(course, lect_type, group_id, poss_days, rooms, courses, course_nam
     if group_id == 'x':
         hour.course = course.name + ' | ' + lect_type
         hour.scheduled = True
-        course.activities.append(inf.Activity(lect_type, date, [" "], group_id, room.name))
+        course.activities.append(inf.Activity(lect_type, date, [" "], group_id, room.name, course.e_students))
 
     else:
         hour.course = course.name + ' | ' + lect_type + ' | ' + group_id
         hour.scheduled = True
-        course.activities.append(inf.Activity(lect_type, date, [" "], group_id, room.name))
+        course.activities.append(inf.Activity(lect_type, date, [" "], group_id, room.name, max(course.max_werkcolleges, course.max_practica)))
 
 
 def days_returner(course):
