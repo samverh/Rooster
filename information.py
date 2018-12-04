@@ -82,3 +82,4 @@ class Student:
         self.courses = courses
         self.dates = []
         self.group_id = ""
+        self.goodbad = 0

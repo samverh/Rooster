@@ -20,9 +20,11 @@ def student_score(students):
                     if date in student.dates[j]:
                         noconflicts = False
                         malus -= 1
+                        student.goodbad -= 1
 
         if noconflicts:
             bonus += 1
+            student.goodbad += 1
 
     return bonus, malus
 

@@ -75,31 +75,37 @@ score += sc.evening_checker(rooms, courses, course_names)
 
 # print stuff
 print("Score before hillclimber:", score)
-# # for course in courses:
-#     if course.goodbad < - 1000:
-#         score = hill.course_climber(courses[0], courses, rooms, course_names, 1000, score, matrix)
-#         print("Score after 1 course_climb: ", score)
-# score = hill.random_climber(courses, rooms, course_names, 1000, score, matrix)
-# print("Score after hillclimber: ", score)
+for course in courses:
+    if course.goodbad < - 1000:
+        score = hill.course_climber(courses[0], courses, rooms, course_names, 1000, score, matrix)
+        print("Score after 1 course_climb: ", score)
+score = hill.random_climber(courses, rooms, course_names, 1000, score, matrix)
+print("Score after hillclimber: ", score)
 
 # check parts
 goodbad = 0
 for course in courses:
     goodbad += course.goodbad
-    if course.goodbad > 0:
+    if course.goodbad >= 0:
         print(colored(course.name + ":",'green'), colored(course.goodbad, 'green'))
-    elif course.goodbad < -50:
-        print(colored(course.name + ":", 'red'), colored(course.goodbad, 'red'))
     else:
-        print(course.name + ":", course.goodbad)
+        print(colored(course.name + ":", 'red'), colored(course.goodbad, 'red'))
 
 stu.distribute_all_students(students, rooms, courses, course_names)
-stu.student_in_courses_checker(courses, students, course_names)
-stu.stats_about_students(courses, students, course_names)
+# stu.student_in_courses_checker(courses, students, course_names)
+# stu.stats_about_students(courses, students, course_names)
 
 student_bonus, student_malus = sc.student_score(students)
 print("STUDENTBONUS", student_bonus)
 print("STUDENTMALUS", student_malus)
+
+for student in students:
+    if student.goodbad >= 0:
+        print(colored(student.student_number + ":", 'green'), colored(student.goodbad, 'green'))
+    elif student.goodbad < - 10:
+        print(colored(student.student_number + ":", 'red'), colored(student.goodbad, 'red'))
+    else:
+        print(student.student_number + ":", student.goodbad)
 
 bas_sch.print_schedule(rooms)
 bas_sch.clear_schedule(rooms, courses)
