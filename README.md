@@ -12,6 +12,7 @@ Scheduling classes at the university is a difficult task that this program facil
 * Maximal distribution of a course's activities earns +20 points, but points are taken if the distribution is not optimal
 * Every student that does not fit in the room takes -1 point
 * Per student, +1 point is earned per individual non-conflicting course
+* Each course conflict per student results in -1 point
 
 ### Bounds of the problem
 **Upper bound:**	 
@@ -59,7 +60,7 @@ To run the program, run the main function:
 python main.py
 ```
 
-By opening rooster.html, you investigate the schedule on a visual level.
+By opening rooster.html, you can investigate the schedule on a visual level.
 
 ## Authors
 * Johan Diepstraten
@@ -67,4 +68,4 @@ By opening rooster.html, you investigate the schedule on a visual level.
 * Sam Verhezen
 
 ## Acknowledgements
-* Special thanks to our techassistant Bart van Baal!
+* Special thanks to our techassistant Bart van Baal, tutorial assistant Wouter Vrielink and professor Daan van den Berg!
