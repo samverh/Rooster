@@ -97,9 +97,14 @@ def clear_schedule(rooms, courses):
 
     # clear all memorised dates and types of courses
     for course in courses:
-        course.dates = []
-        course.types = []
+        course.activities = []
+        course.goodbad = 0
 
+def clear_students(students):
+    for student in students:
+        student.dates = []
+        student.group_id = ""
+        student.goodbad = 0
 
 def print_schedule(rooms):
     """
