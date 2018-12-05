@@ -3,7 +3,7 @@ Class: Heuristieken - Universiteit van Amsterdam
 
 Subject: Lesroosters
 
-Scheduling classes at the university is a difficult task that this program facilitates using heuristics. The classes are scheduled taking into account the expected student count, undesired timeslots, preferred sequence of activities and overlapping courses. It provides an optimal schedule using algorithms. The case consists of 6 classrooms with 20 hours in the week. Additionally, 1 classroom contains an extra evening time slot, which adds 5 extra possible hours to the week. There are 129 course activities, exisiting of normal lectures, working sections and practica. The total amount of student is 600, all of which have individual course subscriptions.
+Scheduling classes at the university is a difficult task that this program facilitates using heuristics. The classes are scheduled taking into account the expected student count, undesired timeslots, preferred sequence of activities and overlapping courses. It provides an optimal schedule using algorithms. The case consists of 6 classrooms with 20 hours in the week. Additionally, 1 classroom contains an extra evening time slot, which adds 5 extra possible hours to the week. There are 129 course activities, exisiting of normal lectures, working sections and practica. The total amount of student is 609, all of which have individual course subscriptions.
 
 ### Constraints & Points
 * Normal lectures should be scheduled before other activities of a course
