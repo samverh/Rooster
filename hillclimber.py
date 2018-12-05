@@ -15,6 +15,10 @@ import schedule_basics as bas_sch
 from termcolor import colored, cprint
 
 def random_hour_finder(rooms):
+    '''
+    Function returns a random room and date.
+    '''
+
     # choose random room and day, considering preferred sequence of activities
     randr = rd.randint(0, 6)
     room = rooms[randr]
@@ -35,6 +39,10 @@ def random_hour_finder(rooms):
     return room, date
 
 def activity_switcher(course, date1, room1, date2, room2):
+    '''
+    Function replaces the schedule of a course activity from one room and date
+    to another room and date.
+    '''
     for activity in course.activities:
         if activity.date == date1 and activity.room == room1.name:
             activity.date = date2

@@ -14,50 +14,98 @@ import schedule_basics as bas_sch
 from termcolor import colored, cprint
 
 def students_group_switcher(course, student1, group_id1, student2, group_id2):
+    '''
+    Function switches 2 students from groups within a course.
+    '''
+    # index for the course in students' personal lists
     index1 = student1.courses.index(course.name)
     index2 = student2.courses.index(course.name)
 
+    # store the switch in the student and course infomation
     for activity in course.activities:
         if activity.group_id == group_id1:
             student1.dates[index1].remove(activity.date)
             student2.dates[index2].append(activity.date)
+            activity.students.remove(student1.student_number)
+            activity.students.append(student2.student_number)
         if activity.group_id == group_id2:
             student1.dates[index1].append(activity.date)
             student2.dates[index2].remove(activity.date)
+            activity.students.append(student1.student_number)
+            activity.students.remove(student2.student_number)
 
 
-def course_students_picker(course, students, old_score):
-    poss_group_ids = []
+def course_students_picker(course, poss_group_ids, students, old_student_score):
+    '''
+    Function takes a course, picks 2 students from 2 different groups within
+    the course. Then it requests a switch, which is kept only if the student
+    score is improved.
+    '''
 
-    for activity in course.activities:
-        if activity.group_id not in poss_group_ids and activity.group_id != 'x':
-            poss_group_ids.append(activity.group_id)
+    # choose two different groups
+    group_id1 = rd.choice(poss_group_ids)
+    group_id2 = rd.choice(poss_group_ids)
+    while group_id2 == group_id1:
+        group_id2 = rd.choice(poss_group_ids)
 
-    if len(poss_group_ids) < 2:
-        return False
-
-     group_id1 = rd.choice(poss_group_ids)
-     poss_group_ids.remove(group_id1)
-     group_id2 = rd.choice(poss_group_ids)
-     studentnumber1, studentnumber2 = "", ""
-
-     for activity in course.activities:
-        if activity.group_id == group_id1 and len(studentnumber1) < 1:
+    # choose two studentnumbers from the two groups
+    studentnumber1, studentnumber2 = "", ""
+    while len(studentnumber1) < 2:
+        activity = rd.choice(course.activities)
+        if activity.group_id == group_id1:
             studentnumber1 = rd.choice(activity.students)
-        elif activity.group_id == group_id2 and len(studentnumber2) < 1:
+    while len(studentnumber2) < 2:
+        activity = rd.choice(course.activities)
+        if activity.group_id == group_id2:
             studentnumber2 = rd.choice(activity.students)
 
-    for student in students:
-        if student.studentnumber == studentnumber1:
+    # track the two students with the student numbers
+    student1, student2 = students[0], students[1]
+    notfound1, notfound2, i = True, True, 0
+    while (notfound1 or notfound2) and (i < len(students)):
+        student = students[i]
+        if student.student_number == studentnumber1:
             student1 = student
-        elif student.studentnumber == studentnumber2:
+            notfound1 = False
+            i += 1
+        elif student.student_number == studentnumber2:
             student2 = student
+            notfound2 = False
+            i += 1
+        else:
+            i += 1
 
+    # switch the students in the groups
     students_group_switcher(course, student1, group_id1, student2, group_id2)
 
+    # if the switch improves the score, keep it
+    for student in students:
+        student.goodbad = 0
     new_bonus, new_malus = sc.student_score(students)
-    if new_bonus + new_malus <= old_score:
-        students_group_switcher(course, student1, group_id1, student2, group_id2)
-        return False
+    if new_bonus + new_malus <= old_student_score:
+        students_group_switcher(course, student1, group_id2, student2, group_id1)
+        return False, old_student_score
 
-    return True
+    return True, new_bonus + new_malus
+
+
+def students_hillclimber(courses, students, old_student_score, max_iters):
+    '''
+    Function keeps making switches until the max of unuseful switches is met.
+    '''
+    # store switches
+    iters = 0
+
+    # keep switching, until a max of unuseful switches in a row is made
+    while iters < max_iters:
+        course, poss_group_ids = rd.choice(courses)
+        switched, score = course_students_picker(course, poss_group_ids, students, old_student_score)
+
+        if switched:
+            iters = 0
+            old_student_score = score
+        else:
+            iters += 1
+
+    # return the improved score
+    return old_student_score

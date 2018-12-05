@@ -16,6 +16,7 @@ import visual as vis
 import hillclimber as hill
 import calculations as cal
 import student_distribution as stu
+import student_hillclimber as sthl
 
 
 # read information files into code
@@ -65,6 +66,7 @@ for day in big_room.days:
 
 course_names = [course.name for course in courses]
 
+
 # return total score
 day_sch.total_schedule(rooms, courses, course_names, matrix)
 score = sc.matrix_checker(courses, course_names, matrix) + sc.order_checker(courses)
@@ -73,14 +75,16 @@ bonus, malus = sc.distribution_checker(courses)
 score += bonus + malus
 score += sc.evening_checker(rooms, courses, course_names)
 
+
 # print stuff
 print("Score before hillclimber:", score)
-for course in courses:
-    if course.goodbad < - 1000:
-        score = hill.course_climber(courses[0], courses, rooms, course_names, 1000, score, matrix)
-        print("Score after 1 course_climb: ", score)
+# for course in courses:
+#     if course.goodbad < - 1000:
+#         score = hill.course_climber(courses[0], courses, rooms, course_names, 1000, score, matrix)
+#         print("Score after 1 course_climb: ", score)
 score = hill.random_climber(courses, rooms, course_names, 1000, score, matrix)
 print("Score after hillclimber: ", score)
+
 
 # check parts
 goodbad = 0
@@ -95,17 +99,39 @@ stu.distribute_all_students(students, rooms, courses, course_names)
 # stu.student_in_courses_checker(courses, students, course_names)
 # stu.stats_about_students(courses, students, course_names)
 
-student_bonus, student_malus = sc.student_score(students)
-print("STUDENTBONUS", student_bonus)
-print("STUDENTMALUS", student_malus)
 
-for student in students:
-    if student.goodbad >= 0:
-        print(colored(student.student_number + ":", 'green'), colored(student.goodbad, 'green'))
-    elif student.goodbad < - 10:
-        print(colored(student.student_number + ":", 'red'), colored(student.goodbad, 'red'))
-    else:
-        print(student.student_number + ":", student.goodbad)
+# calculate student score
+student_bonus, student_malus = sc.student_score(students)
+print("OLD STUDENTBONUS", student_bonus)
+print("OLD STUDENTMALUS", student_malus)
+student_score = student_bonus + student_malus
+
+
+# pre filter the relevant courses
+student_courses = []
+for course in courses:
+    poss_group_ids = []
+
+    for activity in course.activities:
+        if activity.group_id not in poss_group_ids and activity.group_id != 'x':
+            poss_group_ids.append(activity.group_id)
+
+    if len(poss_group_ids) > 1:
+        student_courses.append([course, poss_group_ids])
+
+
+# watch student hillclimber
+print("SCORE BEFORE CLIMBER:", student_score)
+student_climb_score = sthl.students_hillclimber(student_courses, students, student_score, 1000)
+print("SCORE AFTER CLIMBER:", student_climb_score)
+
+# for student in students:
+#     if student.goodbad >= 0:
+#         print(colored(student.student_number + ":", 'green'), colored(student.goodbad, 'green'))
+#     elif student.goodbad < - 3:
+#         print(colored(student.student_number + ":", 'red'), colored(student.goodbad, 'red'))
+#     else:
+#         print(student.student_number + ":", student.goodbad)
 
 bas_sch.print_schedule(rooms)
 bas_sch.clear_schedule(rooms, courses)
