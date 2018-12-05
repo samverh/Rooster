@@ -37,7 +37,7 @@ Total: -13124 points
 
 + 609 students with 1372 individual course subscriptions: 4 x 10^973
 
-= Total: 4 x 10^1211
+Total: 4 x 10^1211
 
 ## Getting Started
 ### Prerequisites
@@ -63,4 +63,4 @@ python main.py
 * Sam Verhezen
 
 ## Acknowledgements
-* Special thanks to our techassistant Bart van Baal
+* Special thanks to our techassistant Bart van Baal!
