@@ -16,10 +16,10 @@ Scheduling classes at the university is a difficult task that this program facil
 ### Bounds of the problem
 **Upper bound:**	 
 
-* Maximal distribution per course: 22 * 20 = 440
+* Maximal distribution per course (considering different groups within course): 880 (outcome of calculations.py)
 * Students without course conflicts = 609 * 1 = 609
 
-Total: +1049 points
+Total: +1489 points
 
 **Lower bound:** 
 
@@ -31,20 +31,22 @@ Total: +1049 points
 Total: -13124 points
 
 ### State Space
-+ No double scheduling: 145 x 144 x … 18 x 17 x 16 = 10238 possibilities 
++ No double scheduling: 145 x 144 x … 18 x 17 x 16 = 10^238 possibilities 
 
-+ Courses overlap: > 10232 (schatting)
++ Courses overlap: > 10^232 (estimated)
 
-+ 609 students with 1372 individual course subscriptions: 4 x 10^973
++ 609 students with 1372 individual course subscriptions: 4 x 10^973 (outcome of calculations.py)
+
 
 Total: 4 x 10^1211
 
 ## Getting Started
 ### Prerequisites
-The program requires the pandas library to run successfully, download pandas the following:
+The program requires the pandas and termcolor library to run successfully, download pandas the following:
 
 ```
 pip install pandas
+pip install termcolor
 ```
 
 ### Structure
@@ -56,6 +58,8 @@ To run the program, run the main function:
 ```
 python main.py
 ```
+
+By opening rooster.html, you investigate the schedule on a visual level.
 
 ## Authors
 * Johan Diepstraten
