@@ -9,6 +9,27 @@ Basic schedule functions
 import information as inf
 import csv
 
+
+def make_exp_students_right_again(students):
+    '''
+    Restores the differences between expected students and actual
+    enrolments.
+    '''
+    names = []
+
+    coursefile = open("vakken.txt", 'r')
+    for line in coursefile:
+        info = line.split(";")
+        names.append(info[0])
+
+    values = [0 for name in names]
+
+    for student in students:
+        for course in student.courses:
+            values[names.index(course)] += 1
+
+    return values
+
 def roomsinfo(rooms):
     """
     Prints how the hours are scheduled.
