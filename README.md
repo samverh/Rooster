@@ -41,6 +41,10 @@ Total: -13124 points
 
 Total: 4 x 10^1211
 
+### Algorithms
+The algorithms used to improve the schedule are hillclimber and simulated annealing. Four types of simulated annealing were tested, including Sigmoidal, Exponential, Linear and Geman. Due to limited time the different types were ran 25 times each (for now). The distributions of the scores are shown in the graph below.
+ ![alt text](https://github.com/samverh/Rooster/algorithms_visualisations/sim_annealing_types.png "Simulated Annealing Types")
+
 ## Getting Started
 ### Prerequisites
 The program requires the pandas and termcolor library to run successfully, download the pandas and termcolor libraries using the following codes:
