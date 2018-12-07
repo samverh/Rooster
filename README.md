@@ -43,7 +43,7 @@ Total: 4 x 10^1211
 
 ## Getting Started
 ### Prerequisites
-The program requires the pandas and termcolor library to run successfully, download pandas the following:
+The program requires the pandas and termcolor library to run successfully, download the pandas and termcolor libraries using the following codes:
 
 ```
 pip install pandas
