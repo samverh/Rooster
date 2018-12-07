@@ -17,17 +17,20 @@ def student_distribute(student, rooms, courses, course_names):
         student.dates.append([])
         course = courses[course_names.index(coursename)]
         poss_group_ids = []
+        student_id = ""
 
         # get possible groups of course for student and choose one randomly
         for activity in course.activities:
             if activity.group_id != "x" and len(activity.students) < activity.capacity:
                 poss_group_ids.append(activity.group_id)
         if len(poss_group_ids) > 0:
-            student.group_id = rd.choice(poss_group_ids)
+            student_id = rd.choice(poss_group_ids)
+
+        student.group_id.append(student_id)
 
         # schedule students
         for activity in course.activities:
-            if activity.id == "Hoorcollege" or activity.group_id == student.group_id:
+            if activity.id == "Hoorcollege" or activity.group_id == student_id:
                 activity.students.append(student.student_number)
                 student.dates[student.courses.index(coursename)].append(activity.date)
 
@@ -42,7 +45,7 @@ def student_in_courses_checker(courses, students, course_names):
         total = course.e_students
         for activity in course.activities:
             if activity.capacity < len(activity.students):
-                print(course.name)
+                print(course.name, activity.id)
                 print("expected vs actually enrolled:")
                 print(colored(total,'red'), colored(len(activity.students),'red'))
 

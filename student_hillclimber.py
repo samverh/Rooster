@@ -34,6 +34,8 @@ def students_group_switcher(course, student1, group_id1, student2, group_id2):
             activity.students.append(student1.student_number)
             activity.students.remove(student2.student_number)
 
+    student1.group_id[index1] = group_id2
+    student2.group_id[index2] = group_id1
 
 def course_students_picker(course, poss_group_ids, students, old_student_score):
     '''
@@ -60,20 +62,21 @@ def course_students_picker(course, poss_group_ids, students, old_student_score):
             studentnumber2 = rd.choice(activity.students)
 
     # track the two students with the student numbers
-    student1, student2 = students[0], students[1]
-    notfound1, notfound2, i = True, True, 0
-    while (notfound1 or notfound2) and (i < len(students)):
-        student = students[i]
-        if student.student_number == studentnumber1:
-            student1 = student
-            notfound1 = False
-            i += 1
-        elif student.student_number == studentnumber2:
-            student2 = student
-            notfound2 = False
-            i += 1
-        else:
-            i += 1
+    student1 = [student for student in students if student.student_number == studentnumber1][0]
+    student2 = [student for student in students if student.student_number == studentnumber2][0]
+    # notfound1, notfound2, i = True, True, 0
+    # while (notfound1 or notfound2) and (i < len(students)):
+    #     student = students[i]
+    #     if student.student_number == studentnumber1:
+    #         student1 = student
+    #         notfound1 = False
+    #         i += 1
+    #     elif student.student_number == studentnumber2:
+    #         student2 = student
+    #         notfound2 = False
+    #         i += 1
+    #     else:
+    #         i += 1
 
     # switch the students in the groups
     students_group_switcher(course, student1, group_id1, student2, group_id2)
@@ -89,7 +92,7 @@ def course_students_picker(course, poss_group_ids, students, old_student_score):
     return True, new_bonus + new_malus
 
 
-def students_hillclimber(courses, students, old_student_score, max_iters):
+def students_hillclimber(courses_special, students, old_student_score, max_iters):
     '''
     Function keeps making switches until the max of unuseful switches is met.
     '''
@@ -98,7 +101,7 @@ def students_hillclimber(courses, students, old_student_score, max_iters):
 
     # keep switching, until a max of unuseful switches in a row is made
     while iters < max_iters:
-        course, poss_group_ids = rd.choice(courses)
+        course, poss_group_ids = rd.choice(courses_special)
         switched, score = course_students_picker(course, poss_group_ids, students, old_student_score)
 
         if switched:

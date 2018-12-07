@@ -125,14 +125,15 @@ for course in courses:
 print("SCORE BEFORE CLIMBER:", student_score)
 student_climb_score = sthl.students_hillclimber(student_courses, students, student_score, 1000)
 print("SCORE AFTER CLIMBER:", student_climb_score)
-
-# for student in students:
-#     if student.goodbad >= 0:
-#         print(colored(student.student_number + ":", 'green'), colored(student.goodbad, 'green'))
-#     elif student.goodbad < - 3:
-#         print(colored(student.student_number + ":", 'red'), colored(student.goodbad, 'red'))
-#     else:
-#         print(student.student_number + ":", student.goodbad)
+# stu.student_in_courses_checker(courses, students, course_names)
+# stu.stats_about_students(courses, students, course_names)
+for student in students:
+    if student.goodbad >= 0:
+        print(colored(student.student_number + ":", 'green'), colored(student.goodbad, 'green'))
+    elif student.goodbad < - 3:
+        print(colored(student.student_number + ":", 'red'), colored(student.goodbad, 'red'))
+    else:
+        print(student.student_number + ":", student.goodbad)
 
 bas_sch.print_schedule(rooms)
 bas_sch.clear_schedule(rooms, courses)
