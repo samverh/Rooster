@@ -208,10 +208,10 @@ def sim_annealing(courses, rooms, course_names, max_iterations, old_score, matri
         switcher(room1, date1, room2, date2, courses, course_names)
         new_score = calc_score(courses, rooms, course_names, matrix)
         # temperature = lineair(start_temp, end_temp, counter, max_iterations)
-        temperature = exponential(start_temp, end_temp, i, max_iterations)
+        # temperature = exponential(start_temp, end_temp, counter, max_iterations)
         # print(i)
-        # temperature = sigmoidal(start_temp, end_temp, i, max_iterations)
-        # temperature = geman(start_temp, i)
+        temperature = sigmoidal(start_temp, end_temp, counter, max_iterations)
+        # temperature = geman(start_temp, counter)
         # print(temperature)
         decrease = new_score - old_score
         if new_score >= old_score:
