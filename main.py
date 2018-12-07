@@ -83,6 +83,7 @@ print("Score before hillclimber:", score)
 #         score = hill.course_climber(courses[0], courses, rooms, course_names, 1000, score, matrix)
 #         print("Score after 1 course_climb: ", score)
 score = hill.random_climber(courses, rooms, course_names, 1000, score, matrix)
+# score = hill.sim_annealing(courses, rooms, course_names, 20000, score, matrix, 20)
 print("Score after hillclimber: ", score)
 
 

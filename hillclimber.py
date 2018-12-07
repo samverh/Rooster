@@ -176,3 +176,26 @@ def random_climber(courses, rooms, course_names, max_iterations, old_score, matr
     final_score = calc_score(courses, rooms, course_names, matrix)
 
     return final_score
+
+def sim_annealing(courses, rooms, course_names, max_iterations, old_score, matrix, start_temperature):
+
+    temp_score = 0
+    for i in range(max_iterations):
+        room1, date1 = random_hour_finder(rooms)
+        room2, date2 = random_hour_finder(rooms)
+        switcher(room1, date1, room2, date2, courses, course_names)
+        new_score = calc_score(courses, rooms, course_names, matrix)
+        temperature = start_temperature/math.log(i+2)
+        decrease = new_score - old_score
+        if new_score >= old_score:
+            old_score = new_score
+            if new_score > temp_score:
+                temp_score = new_score
+        elif (rd.randint(0, 100) < (100 * (math.exp(decrease/temperature)))):
+            old_score = new_score
+        else:
+            switcher(room1, date1, room2, date2, courses, course_names)
+    if temp_score > old_score:
+        old_score = temp_score
+        
+    return old_score
