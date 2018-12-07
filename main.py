@@ -11,13 +11,14 @@ import random_scheduler as random_sch
 import days_scheduler as day_sch
 import schedule_basics as bas_sch
 from termcolor import colored, cprint
+from colorama import init
 import score as sc
 import visual as vis
 import hillclimber as hill
 import calculations as cal
 import student_distribution as stu
 import student_hillclimber as sthl
-
+init()
 
 # read information files into code
 rooms = []
@@ -33,7 +34,7 @@ studentfile = open("studentenenvakken.csv", 'r', errors='ignore')
 for line in coursefile:
     info = line.split(";")
     courses.append(inf.Course(info[0], int(info[1]), int(info[2]), int(info[3]),\
-                   int(info[4]), int(info[5]), int(info[7])))
+                   int(info[4]), int(info[5]), int(info[6])))
 
 for line in roomfile:
     info = line.split(",")
@@ -52,7 +53,7 @@ for line in studentfile:
     students.append(inf.Student(student_info[0], student_info[1], student_info[2], student_courses))
 
 students = students[1:]
-real_things = bas_sch.make_exp_students_right_again(students)
+
 # create evening timeslot in largest room
 big_room_cap = 0
 
@@ -82,22 +83,19 @@ print("Score before hillclimber:", score)
 #     if course.goodbad < - 1000:
 #         score = hill.course_climber(courses[0], courses, rooms, course_names, 1000, score, matrix)
 #         print("Score after 1 course_climb: ", score)
-score = hill.random_climber(courses, rooms, course_names, 1000, score, matrix)
-# score = hill.sim_annealing(courses, rooms, course_names, 20000, score, matrix, 20)
+# score = hill.random_climber(courses, rooms, course_names, 1000, score, matrix)
+score = hill.sim_annealing(courses, rooms, course_names, 20000, score, matrix, 20, 0.001)
 print("Score after hillclimber: ", score)
 
 
 # check parts
-goodbad, i = 0, 0
+goodbad = 0
 for course in courses:
     goodbad += course.goodbad
     if course.goodbad >= 0:
         print(colored(course.name + ":",'green'), colored(course.goodbad, 'green'))
-        print(course.e_students, real_things[i])
     else:
         print(colored(course.name + ":", 'red'), colored(course.goodbad, 'red'))
-        print(course.e_students, real_things[i])
-    i+=1
 
 stu.distribute_all_students(students, rooms, courses, course_names)
 # stu.student_in_courses_checker(courses, students, course_names)
@@ -128,15 +126,14 @@ for course in courses:
 print("SCORE BEFORE CLIMBER:", student_score)
 student_climb_score = sthl.students_hillclimber(student_courses, students, student_score, 1000)
 print("SCORE AFTER CLIMBER:", student_climb_score)
-# stu.student_in_courses_checker(courses, students, course_names)
-# stu.stats_about_students(courses, students, course_names)
-for student in students:
-    if student.goodbad >= 0:
-        print(colored(student.student_number + ":", 'green'), colored(student.goodbad, 'green'))
-    elif student.goodbad < - 3:
-        print(colored(student.student_number + ":", 'red'), colored(student.goodbad, 'red'))
-    else:
-        print(student.student_number + ":", student.goodbad)
+
+# for student in students:
+#     if student.goodbad >= 0:
+#         print(colored(student.student_number + ":", 'green'), colored(student.goodbad, 'green'))
+#     elif student.goodbad < - 3:
+#         print(colored(student.student_number + ":", 'red'), colored(student.goodbad, 'red'))
+#     else:
+#         print(student.student_number + ":", student.goodbad)
 
 bas_sch.print_schedule(rooms)
 bas_sch.clear_schedule(rooms, courses)

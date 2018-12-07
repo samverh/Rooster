@@ -13,6 +13,7 @@ import schedule_basics as bas
 import score as sc
 import schedule_basics as bas_sch
 from termcolor import colored, cprint
+import math
 
 def random_hour_finder(rooms):
     '''
@@ -177,25 +178,58 @@ def random_climber(courses, rooms, course_names, max_iterations, old_score, matr
 
     return final_score
 
-def sim_annealing(courses, rooms, course_names, max_iterations, old_score, matrix, start_temperature):
+def lineair(start_temp, end_temp, iteration, max_iterations):
+    # print("lineair")
+    temperature = start_temp-iteration * (start_temp-end_temp)/max_iterations
+    return temperature
 
+def exponential(start_temp, end_temp, iteration, max_iterations):
+    # print("exponential")
+    temperature = start_temp * (end_temp/start_temp)**(iteration/max_iterations)
+    return temperature
+
+def sigmoidal(start_temp, end_temp, iteration, max_iterations):
+    # print("sigmoidal")
+    temperature = end_temp + (start_temp - end_temp)/(1 + math.exp(0.3*(iteration-max_iterations/2)))
+    return temperature
+
+def geman(start_temp, iteration):
+    # print("geman")
+    temperature = start_temp/math.log(iteration+2)
+    return temperature
+
+def sim_annealing(courses, rooms, course_names, max_iterations, old_score, matrix, start_temp, end_temp):
+    counter = 0
+    tempcounter = 0
     temp_score = 0
     for i in range(max_iterations):
         room1, date1 = random_hour_finder(rooms)
         room2, date2 = random_hour_finder(rooms)
         switcher(room1, date1, room2, date2, courses, course_names)
         new_score = calc_score(courses, rooms, course_names, matrix)
-        temperature = start_temperature/math.log(i+2)
+        # temperature = lineair(start_temp, end_temp, counter, max_iterations)
+        temperature = exponential(start_temp, end_temp, i, max_iterations)
+        # print(i)
+        # temperature = sigmoidal(start_temp, end_temp, i, max_iterations)
+        # temperature = geman(start_temp, i)
+        # print(temperature)
         decrease = new_score - old_score
         if new_score >= old_score:
             old_score = new_score
             if new_score > temp_score:
                 temp_score = new_score
-        elif (rd.randint(0, 100) < (100 * (math.exp(decrease/temperature)))):
+        elif rd.random() < math.exp(decrease/temperature):
             old_score = new_score
         else:
             switcher(room1, date1, room2, date2, courses, course_names)
+        counter += 1
+        tempcounter += 1
+        # print(old_score)
+        # if tempcounter == max_iterations/10:
+        #     counter = counter*0.9
+        #     tempcounter = 0
     if temp_score > old_score:
         old_score = temp_score
-        
-    return old_score
+    final_score = old_score
+
+    return final_score
