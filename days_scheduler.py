@@ -50,6 +50,7 @@ def scheduler(course, lect_type, group_id, poss_days, rooms, courses, course_nam
         j += 1
         if j > 10000:
             poss_days = [x for x in range(5)]
+
         room, randd, day, randh, hour, date = assign_roomdate(poss_days, rooms)
 
 

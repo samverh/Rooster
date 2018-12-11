@@ -17,21 +17,28 @@ import hillclimber as hill
 import calculations as cal
 import student_distribution as stu
 import student_hillclimber as sthl
+import random as rd
 
-def initial_population(course_names):
+def initial_population():
     # store different schedules
-    scheduled_rooms = [[] for i in range(50)]
-    scheduled_courses = [[] for i in range(50)]
-    scheduled_students = [[] for i in range(50)]
-    scores = [0 for i in range(50)]
+    scheduled_rooms = [[] for i in range(5)]
+    scheduled_courses = [[] for i in range(5)]
+    scheduled_students = [[] for i in range(5)]
+    scores = [0 for i in range(5)]
+    matrix = []
+    course_names = []
     matrixfile = open("matrix.csv", 'r')
+    coursenamefile = open("vakken.txt", 'r')
 
     # read matrix
     for line in matrixfile:
         matrix.append(line.split(";"))
 
+    for line in coursenamefile:
+        course_names.append(line.split(";")[0])
+
     # schedule 50 times
-    for i in range(50):
+    for i in range(5):
         #read files
         coursefile = open("vakken.txt", 'r')
         roomfile = open("lokalen.txt", 'r')
@@ -45,6 +52,17 @@ def initial_population(course_names):
         for line in roomfile:
             info = line.split(",")
             scheduled_rooms[i].append(inf.Room_info(info[0], int(info[1])))
+
+        # create evening timeslot in largest room
+        big_room_cap = 0
+
+        for room in scheduled_rooms[i]:
+            if room.cap > big_room_cap:
+                big_room_cap = room.cap
+                big_room = room
+
+        for day in big_room.days:
+            day.hours.append(inf.Hour())
 
         for line in studentfile:
             student_info = line.strip("\n").split(";")
@@ -91,7 +109,7 @@ def initial_population(course_names):
         # student hillclimber
         scores[i] += sthl.students_hillclimber(student_courses, scheduled_students[i], student_score, 100)
 
-    return scheduled_rooms, scheduled_courses, scheduled_students, scores
+    return scheduled_rooms, scheduled_courses, scheduled_students, scores, course_names, matrix
 
 
 def survival_of_the_fittest(scheduled_rooms, scheduled_courses, scheduled_students, scores):
@@ -102,8 +120,8 @@ def survival_of_the_fittest(scheduled_rooms, scheduled_courses, scheduled_studen
     fittest_scores = []
 
     # select best score, add schedule to fittest and remove from old list
-    while len(fittest_rooms < 5):
-        index = fittest_scores.index(max(fittest_scores))
+    for test in range(5):
+        index = scores.index(max(scores))
 
         fittest_rooms.append(scheduled_rooms[index])
         scheduled_rooms.remove(scheduled_rooms[index])
@@ -129,7 +147,7 @@ def clear_schedule_of_course(rooms,course,students):
     for room in rooms:
         for day in room.days:
             for hour in day.hours:
-                if course.name in hour.course.split(" | "):
+                if course.name == hour.course.split(" | ")[0]:
                     hour.course = ""
                     hour.scheduled = False
 
@@ -140,45 +158,90 @@ def clear_schedule_of_course(rooms,course,students):
             student.group_id[student.courses.index(course.name)] = ""
 
 
-def mutate_schedule(rooms, courses, students, score):
+def copy_schedule(rooms, courses, students, rooms_2, courses_2, students_2):
+    for i in range(len(rooms_2)):
+        for j in range(len(rooms_2[i].days)):
+            for k in range(len(rooms_2[i].days[j].hours)):
+                rooms_2[i].days[j].hours[k].scheduled = rooms[i].days[j].hours[k].scheduled
+                rooms_2[i].days[j].hours[k].course = rooms[i].days[j].hours[k].course
+
+    for i in range(len(courses)):
+        for activity in courses[j].activities:
+            courses_2[i].activities.append(inf.Activity(activity.id, \
+                activity.date, activity.students, activity.group_id, \
+                    activity.room, activity.capacity))
+
+    for i in range(len(students)):
+        students_2[i].dates = students[i].dates
+        students_2[i].group_id = students[i].group_id
+
+
+    return rooms_2, courses_2, students_2
+
+def mutate_schedule(rooms, courses, students, score, matrix, course_names):
     # store mutated schedules
-    new_rooms = [[] for j in range(10)]
-    new_courses = [[] for j in range(10)]
-    new_students = [[] for j in range(10)]
+    new_rooms = [[inf.Room_info(room.name, room.cap) for room in rooms] \
+        for j in range(10)]
+    new_courses = [[inf.Course(course.name, course.hoorcolleges, \
+        course.werkcolleges, course.max_werkcolleges, course.practica, \
+            course.max_practica, course.e_students) for course in courses] \
+                for j in range(10)]
+    new_students = [[inf.Student(student.surname, student.name, \
+        student.student_number, student.courses) for student in students] \
+            for j in range(10)]
     new_scores = [0 for j in range(10)]
 
-    # first schedule is original one
-    new_rooms[0] = rooms
-    new_courses[0] = courses
-    new_students[0] = students
+    for n_rooms in new_rooms:
+        # create evening timeslot in largest room
+        big_room_cap = 0
+
+        for room in n_rooms:
+            if room.cap > big_room_cap:
+                big_room_cap = room.cap
+                big_room = room
+
+        for day in big_room.days:
+            day.hours.append(inf.Hour())
+
+    for k in range(10):
+        new_rooms[k], new_courses[k], new_students[k] = copy_schedule(rooms, \
+            courses, students, new_rooms[k], new_courses[k], new_students[k])
+
+    # keep original schedule
     new_scores[0] = score
 
     # mutate 9 times
     for i in range(1,10):
-        # select random subset
-        indices = rd.sample(range(len(courses)), rd.randint(0,len(courses)-1))
-        sched_courses = []
-        unsched_courses = []
-
-        for j in range(len(courses)):
-            if j in indices:
-                sched_courses.append(courses[i])
-            else:
-                unsched_courses.append(courses[i])
-                clear_schedule_of_course(rooms,course,students)
+        # select random subset of scheduled courses
+        indices = rd.sample(range(len(new_courses[i])), rd.randint(0, \
+            len(new_courses[i])-2))
 
         # store names
-        unsched_names = [course.name for course in unsched_courses]
+        unsched_names = []
 
-        # schedule unscheduled courses
-        for course in unsched_courses:
-            day_sch.total_schedule(rooms, courses, course_names, matrix)
+        # unschedule subset
+        for j in indices:
+            unsched_names.append(new_courses[i][j].name)
+            clear_schedule_of_course(new_rooms[i], new_courses[i][j], \
+                new_students[i])
+
+        # schedule all required classes
+        schedulings = 0
+        for j in indices:
+            # schedule all hoorcolleges
+            # zeg = new_courses[i][j]
+            # print(zeg.hoorcolleges, zeg.werkcolleges, zeg.practica)
+            # print(zeg.max_practica, zeg.max_werkcolleges)
+            # print(zeg.e_students)
+            schedulings += day_sch.course_scheduler(new_courses[i][j], new_rooms[i],\
+                new_courses[i], course_names, matrix)
+        print("Schedulings:", schedulings)
 
         # schedule students' unscheduled groups
-        for student in students:
+        for student in new_students[i]:
             for coursename in student.courses:
                 if coursename in unsched_names:
-                    course = courses[course_names.index(coursename)]
+                    course = new_courses[i][course_names.index(coursename)]
                     poss_group_ids = []
                     student_id = ""
 
@@ -197,5 +260,46 @@ def mutate_schedule(rooms, courses, students, score):
                             activity.students.append(student.student_number)
                             student.dates[student.courses.index(coursename)].append(activity.date)
 
+        # calculate score
+        new_scores[i] = sc.matrix_checker(new_courses[i], course_names, \
+            matrix) + sc.order_checker(new_courses[i])
+        new_scores[i] += sc.student_checker(new_rooms[i], new_courses[i], course_names)
+        bonus, malus = sc.distribution_checker(new_courses[i])
+        new_scores[i] += bonus + malus + sc.evening_checker(new_rooms[i], \
+            new_courses[i], course_names)
+        student_bonus, student_malus = sc.student_score(new_students[i])
+        new_scores[i] += student_bonus + student_malus
 
     return new_rooms, new_courses, new_students, new_scores
+
+
+def pop_based_algo():
+    scheduled_rooms, scheduled_courses, scheduled_students, scores, \
+    course_names, matrix = initial_population()
+
+    for propagation in range(5):
+        fittest_rooms, fittest_courses, fittest_students, fittest_scores = \
+            survival_of_the_fittest(scheduled_rooms, scheduled_courses, \
+                scheduled_students, scores)
+
+        scheduled_rooms, scheduled_courses, scheduled_students, scores = \
+            [], [], [], []
+
+        for fit in range(len(fittest_students)):
+
+            new_rooms, new_courses, new_students, new_scores = mutate_schedule(\
+                fittest_rooms[fit], fittest_courses[fit], fittest_students[fit],\
+                    fittest_scores[fit], matrix, course_names)
+
+            for m in range(len(new_rooms)):
+                scheduled_rooms.append(new_rooms[m])
+                scheduled_courses.append(new_courses[m])
+                scheduled_students.append(new_students[m])
+                scores.append(new_scores[m])
+
+    fittest_rooms, fittest_courses, fittest_students, fittest_scores = \
+        survival_of_the_fittest(scheduled_rooms, scheduled_courses, \
+            scheduled_students, scores)
+    print(fittest_scores)
+
+pop_based_algo()
