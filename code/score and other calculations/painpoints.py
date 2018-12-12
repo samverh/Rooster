@@ -19,12 +19,16 @@ import student_distribution as stu
 import student_hillclimber as sthl
 
 def search(rooms, courses, course_names, students, matrix):
+    """
+    Searches for painpoints in the case.
+    """
 
     student_numbers = [student.student_number for student in students]
     student_weakness = [0 for number in student_numbers]
     course_weakness = [0 for coursename in course_names]
 
     for i in range(100):
+
         # schedule
         day_sch.total_schedule(rooms, courses, course_names, matrix)
 
@@ -39,7 +43,7 @@ def search(rooms, courses, course_names, students, matrix):
         # schedule students
         stu.distribute_all_students(students, rooms, courses, course_names)
 
-        # Save score for hillclimber
+        # save score for hillclimber
         student_bonus, student_malus = sc.student_score(students)
         student_score = student_bonus + student_malus
 
@@ -70,7 +74,7 @@ def search(rooms, courses, course_names, students, matrix):
         bas_sch.print_schedule(rooms)
         bas_sch.clear_schedule(rooms, courses)
         bas_sch.clear_students(students)
-        cprint(i,'blue')
+        cprint(i, 'blue')
 
     for f in range(len(student_numbers)):
         print(student_numbers[f] + ":", student_weakness[f])

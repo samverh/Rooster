@@ -6,6 +6,17 @@ Johan Diepstraten, Ya'gel Schoonderbeek, Sam Verhezen
 This program is the main function for scheduling classes.
 """
 
+# add code directories to path
+import os, sys
+directory = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.join(directory, "code"))
+sys.path.append(os.path.join(directory, "code", "schedulers"))
+sys.path.append(os.path.join(directory, "code", "classes"))
+sys.path.append(os.path.join(directory, "code", "algorithms"))
+sys.path.append(os.path.join(directory, "code", "score and other calculations"))
+sys.path.append(os.path.join(directory, "code", "visualizer"))
+
+
 import information as inf
 import random_scheduler as random_sch
 import days_scheduler as day_sch
@@ -13,7 +24,7 @@ import schedule_basics as bas_sch
 from termcolor import colored, cprint
 from colorama import init
 import score as sc
-import visual as vis
+# import visual as vis
 import hillclimber as hill
 import calculations as cal
 import student_distribution as stu
@@ -26,10 +37,10 @@ courses = []
 matrix = []
 students = []
 
-coursefile = open("vakken.txt", 'r')
-roomfile = open("lokalen.txt", 'r')
-matrixfile = open("matrix.csv", 'r')
-studentfile = open("studentenenvakken.csv", 'r', errors='ignore')
+coursefile = open("data/vakken.txt", 'r')
+roomfile = open("data/lokalen.txt", 'r')
+matrixfile = open("data/matrix.csv", 'r')
+studentfile = open("data/studentenenvakken.csv", 'r', errors="ignore")
 
 for line in coursefile:
     info = line.split(";")
@@ -109,13 +120,13 @@ print("OLD STUDENTMALUS", student_malus)
 student_score = student_bonus + student_malus
 
 
-# pre filter the relevant courses
+# pre-filter the relevant courses
 student_courses = []
 for course in courses:
     poss_group_ids = []
 
     for activity in course.activities:
-        if activity.group_id not in poss_group_ids and activity.group_id != 'x':
+        if activity.group_id not in poss_group_ids and activity.group_id != "x":
             poss_group_ids.append(activity.group_id)
 
     if len(poss_group_ids) > 1:

@@ -7,12 +7,16 @@ This program takes an existing schedule and distributes students over the
 scheduled lectures they commited to.
 """
 
-import information as inf
+#import information as inf
 import random as rd
 from termcolor import colored, cprint
 
 
 def student_distribute(student, rooms, courses, course_names):
+    """
+    Schedule students in groups.
+    """
+
     for coursename in student.courses:
         student.dates.append([])
         course = courses[course_names.index(coursename)]
@@ -36,20 +40,32 @@ def student_distribute(student, rooms, courses, course_names):
 
 
 def distribute_all_students(students, rooms, courses, course_names):
+    """
+    Schedule individual students.
+    """
+
     for student in students:
         student_distribute(student, rooms, courses, course_names)
 
 
 def student_in_courses_checker(courses, students, course_names):
+    """
+    Check amount of students per course activity.
+    """
+
     for course in courses:
         total = course.e_students
         for activity in course.activities:
             if activity.capacity < len(activity.students):
                 print(course.name, activity.id)
                 print("expected vs actually enrolled:")
-                print(colored(total,'red'), colored(len(activity.students),'red'))
+                print(colored(total, 'red'), colored(len(activity.students), 'red'))
 
 def stats_about_students(courses, students, course_names):
+    """
+    Show student distribution information.
+    """
+
     check_students = [0 for x in range(len(courses))]
     real_values = [course.e_students for course in courses]
 
@@ -57,6 +73,7 @@ def stats_about_students(courses, students, course_names):
         for coursename in student.courses:
             if len(coursename) > 2:
                 check_students[course_names.index(coursename)] += 1
+
     for i in range(len(courses)):
         if real_values[i] == check_students[i]:
             cprint("ENROLLED EQUALS EXPECTED", 'green')
