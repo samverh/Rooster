@@ -57,7 +57,7 @@ pip install termcolor
 ```
 
 ### Structure
-All python codes are in the main folder "Rooster", together with the input values and the output schedule file.
+The repository "Rooster" contains some primary functions that the user can run. The python codes supporting the main functions can be find in the folders, as well as the output that they generate. Files are divided into "code", "data" and "results". Every folder contains a README which explains its specifics in more detail.
 
 ### Testing
 To run the program and create a schedule, run the main function:
