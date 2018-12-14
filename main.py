@@ -13,7 +13,7 @@ sys.path.append(os.path.join(directory, "code"))
 sys.path.append(os.path.join(directory, "code", "schedulers"))
 sys.path.append(os.path.join(directory, "code", "classes"))
 sys.path.append(os.path.join(directory, "code", "algorithms"))
-sys.path.append(os.path.join(directory, "code", "score_and_other_calculations"))
+sys.path.append(os.path.join(directory, "code", "score and other calculations"))
 sys.path.append(os.path.join(directory, "code", "visualizer"))
 
 
@@ -99,9 +99,8 @@ print("Score after hillclimber: ", score)
 
 
 # check parts
-goodbad = 0
+latest_score = hill.calc_score(courses, rooms, course_names, matrix)
 for course in courses:
-    goodbad += course.goodbad
     if course.goodbad >= 0:
         print(colored(course.name + ":",'green'), colored(course.goodbad, 'green'))
     else:
