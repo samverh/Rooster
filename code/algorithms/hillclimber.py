@@ -254,32 +254,6 @@ def sim_annealing(courses, rooms, course_names, max_iterations, old_score, matri
     tempcounter = 0
     temp_score = 0
 
-    # store highst schedules
-    highest_rooms = [[inf.Room_info(room.name, room.cap) for room in rooms] \
-        for j in range(10)]
-
-    highest_courses = [[inf.Course(course.name, course.hoorcolleges, \
-        course.werkcolleges, course.max_werkcolleges, course.practica, \
-            course.max_practica, course.e_students) for course in courses] \
-                for j in range(10)]
-
-    highest_students = [[inf.Student(student.surname, student.name, \
-        student.student_number, student.courses) for student in students] \
-            for j in range(10)]
-
-    for n_rooms in highest_rooms:
-
-        # create evening timeslot in largest room
-        big_room_cap = 0
-
-        for room in n_rooms:
-            if room.cap > big_room_cap:
-                big_room_cap = room.cap
-                big_room = room
-
-        for day in big_room.days:
-            day.hours.append(inf.Hour())
-
     for i in range(max_iterations):
         room1, date1 = random_hour_finder(rooms)
         room2, date2 = random_hour_finder(rooms)
@@ -295,7 +269,6 @@ def sim_annealing(courses, rooms, course_names, max_iterations, old_score, matri
             old_score = new_score
             if new_score > temp_score:
                 temp_score = new_score
-                bas_sch.copy_schedule(rooms, courses, students, highest_rooms, highest_courses, highest_students)
 
         elif rd.random() < math.exp(decrease/temperature):
             old_score = new_score
