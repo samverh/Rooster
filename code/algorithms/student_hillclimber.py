@@ -64,19 +64,6 @@ def course_students_picker(course, poss_group_ids, students, old_student_score):
     # track the two students with the student numbers
     student1 = [student for student in students if student.student_number == studentnumber1][0]
     student2 = [student for student in students if student.student_number == studentnumber2][0]
-    # notfound1, notfound2, i = True, True, 0
-    # while (notfound1 or notfound2) and (i < len(students)):
-    #     student = students[i]
-    #     if student.student_number == studentnumber1:
-    #         student1 = student
-    #         notfound1 = False
-    #         i += 1
-    #     elif student.student_number == studentnumber2:
-    #         student2 = student
-    #         notfound2 = False
-    #         i += 1
-    #     else:
-    #         i += 1
 
     # switch the students in the groups
     students_group_switcher(course, student1, group_id1, student2, group_id2)

@@ -280,7 +280,7 @@ def sim_annealing(courses, rooms, course_names, max_iterations, old_score, matri
         # if tempcounter == max_iterations/10:
         #     counter = counter*0.9
         #     tempcounter = 0
-        
+
     if temp_score > old_score:
         old_score = temp_score
     final_score = old_score
