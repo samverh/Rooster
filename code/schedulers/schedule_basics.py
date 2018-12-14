@@ -10,6 +10,31 @@ Basic schedule functions
 import csv
 
 
+def copy_schedule(rooms, courses, students, rooms_2, courses_2, students_2):
+    """
+    Cope schedule.
+    """
+
+    for i in range(len(rooms_2)):
+        for j in range(len(rooms_2[i].days)):
+            for k in range(len(rooms_2[i].days[j].hours)):
+                rooms_2[i].days[j].hours[k].scheduled = rooms[i].days[j].hours[k].scheduled
+                rooms_2[i].days[j].hours[k].course = rooms[i].days[j].hours[k].course
+
+    for i in range(len(courses)):
+        for activity in courses[i].activities:
+            courses_2[i].activities.append(inf.Activity(activity.id, \
+                activity.date, activity.students, activity.group_id, \
+                    activity.room, activity.capacity))
+
+    for i in range(len(students)):
+        students_2[i].dates = students[i].dates
+        students_2[i].group_id = students[i].group_id
+
+
+    return rooms_2, courses_2, students_2
+    
+
 def make_exp_students_right_again(students):
     """
     Restores the differences between expected students and actual
