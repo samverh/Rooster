@@ -15,31 +15,28 @@ Scheduling classes at the university is a difficult task that this program facil
 * Each course conflict per student results in -1 point
 
 ### Bounds of the problem
-**Upper bound:**	 
+**Upper bound:**
 
-* Maximal distribution per course (considering different groups within course): 880 (outcome of calculations.py)
-* Students without course conflicts = 609 * 1 = 609
+    * Maximal distribution per course (considering different groups within course): 880 (outcome of calculations.py)
+    * Students without course conflicts = 609 * 1 = 609
 
-Total: +1489 points
+    Total: +1489 points
 
-**Lower bound:** 
+**Lower bound:**
 
-* Room < #students = 1177
-* Use evening time slot: 5 * 20 = 100
-* Course activities (n) divided over n-1 days = 430
-* Course conflicts = 11417
+    * Room < #students = 1177
+    * Use evening time slot: 5 * 20 = 100
+    * Course activities (n) divided over n-1 days = 430
+    * Course conflicts = 11417
 
-Total: -13124 points
+    Total: -13124 points
 
 ### State Space
-+ No double scheduling: 145 x 144 x … 18 x 17 x 16 = 10^238 possibilities 
+    + No double scheduling: 145 x 144 x … 18 x 17 x 16 = 10^238 possibilities 
+    + Courses overlap: > 10^232 (estimated)
+    + 609 students with 1372 individual course subscriptions: 4 x 10^973 (outcome of calculations.py)
 
-+ Courses overlap: > 10^232 (estimated)
-
-+ 609 students with 1372 individual course subscriptions: 4 x 10^973 (outcome of calculations.py)
-
-
-Total: 4 x 10^1211
+    Total: 4 x 10^1211
 
 ### Algorithms
 The algorithms used to improve the schedule are hillclimber and simulated annealing. Four types of simulated annealing were tested, including Sigmoidal, Exponential, Linear and Geman. Due to limited time the different types were ran 25 times each (for now). The distributions of the scores are shown in the graph below.
