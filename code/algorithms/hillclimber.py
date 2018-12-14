@@ -251,8 +251,6 @@ def sim_annealing(courses, rooms, course_names, max_iterations, old_score, matri
     """
 
     counter = 0
-    tempcounter = 0
-    temp_score = 0
 
     for i in range(max_iterations):
         room1, date1 = random_hour_finder(rooms)
@@ -267,8 +265,6 @@ def sim_annealing(courses, rooms, course_names, max_iterations, old_score, matri
 
         if new_score >= old_score:
             old_score = new_score
-            if new_score > temp_score:
-                temp_score = new_score
 
         elif rd.random() < math.exp(decrease/temperature):
             old_score = new_score
@@ -276,14 +272,7 @@ def sim_annealing(courses, rooms, course_names, max_iterations, old_score, matri
         else:
             switcher(room1, date1, room2, date2, courses, course_names)
         counter += 1
-        tempcounter += 1
-        # print(old_score)
-        # if tempcounter == max_iterations/10:
-        #     counter = counter*0.9
-        #     tempcounter = 0
 
-    if temp_score > old_score:
-        old_score = temp_score
     final_score = old_score
 
     return final_score
