@@ -1,0 +1,77 @@
+<!--
+Heuristieken UvA 2018-2019
+Lesroosters
+Johan Diepstraten, Ya'gel Schoonderbeek, Sam Verhezen
+
+This script generates a webpage which visualizes the schedule made in main.py.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link href="code/visualizer/rooster.css" rel="stylesheet"/>
+    <title>Rooster Team Tortuga</title>
+
+  </head>
+  <body>
+    <div id="table"></div>
+    <script type="text/javascript">
+
+      function readTextFile(file)
+      {
+          var rawFile = new XMLHttpRequest();
+          rawFile.open("GET", file, true);
+          rawFile.onreadystatechange = function ()
+          {
+              if(rawFile.readyState === 4 && (rawFile.status === 200 || rawFile.status == 0))
+              {
+
+                  // get csv file with schedule and parse into rows strings
+                  var allText = rawFile.responseText;
+                  var rows = allText.split("\n");
+
+                  // initiate html table
+                  var table = ""
+                  table += "<table>"
+
+                  // iterate through rows and parse row into course strings (columns)
+                  for(var i = 0; i < rows.length; i++) {
+                      var columns = rows[i].split(",");
+
+                      // add new table row to table
+                      table += "<tr>";
+
+                      // iterate over cells (columns) in row
+                      for(var j = 0; j < columns.length -1; j++) {
+
+                        // print good and bad courses in green and red
+                        var course = columns[j].split(" - ");
+                        var course_name = course[0], course_score = course[1];
+                        if (course_score > -10){
+                          table += "<td style='color:red'>" + course_name + "</td>";
+                        }
+                        else if (course_score > +10){
+                          table += "<td style='color:green'>" + course_name + "</td>";
+                        }
+                        else {
+                          table += "<td>" + course_name + "</td>";
+                        }
+                      }
+
+                      // terminate row
+                      table += "</tr>";
+                  }
+
+                  // terminate table and return table to page
+                  table += "</table>";
+                  document.getElementById("table").innerHTML = table;
+              }
+          }
+          rawFile.send(null);
+      }
+      readTextFile("results/schedule.csv");
+
+    </script>
+  </body>
+</html>
