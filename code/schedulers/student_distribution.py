@@ -18,7 +18,7 @@ def student_distribute(student, rooms, courses, course_names):
     """
 
     for coursename in student.courses:
-        student.dates.append([])
+        new_dates = []
         course = courses[course_names.index(coursename)]
         poss_group_ids = []
         student_id = ""
@@ -36,7 +36,9 @@ def student_distribute(student, rooms, courses, course_names):
         for activity in course.activities:
             if activity.id == "Hoorcollege" or activity.group_id == student_id:
                 activity.students.append(student.student_number)
-                student.dates[student.courses.index(coursename)].append(activity.date)
+                new_dates.append(activity.date)
+
+        student.dates.append(new_dates)
 
 
 def distribute_all_students(students, rooms, courses, course_names):

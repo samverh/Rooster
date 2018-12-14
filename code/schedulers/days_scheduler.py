@@ -102,7 +102,7 @@ def course_scheduler(course, rooms, courses, course_names, matrix):
     i = 0
 
     # schedule all lecture types
-    for i in range(course.hoorcolleges):
+    for f in range(course.hoorcolleges):
         scheduler(course, "Hoorcollege", 'x', hc_days, rooms, courses, course_names, matrix)
         i += 1
 
