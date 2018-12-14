@@ -88,6 +88,7 @@ def initial_population():
 
             scheduled_students[i].append(inf.Student(student_info[0], student_info[1], student_info[2], student_courses))
 
+        # remove headers in students
         scheduled_students[i] = scheduled_students[i][1:]
 
         # schedule
@@ -129,7 +130,8 @@ def initial_population():
 
 def survival_of_the_fittest(scheduled_rooms, scheduled_courses, scheduled_students, scores):
     """
-    Survival of the fittest.
+    Takes an population of schedules and returns the schedules in the top 5 of
+    scores.
     """
 
     # store fittest
@@ -159,7 +161,7 @@ def survival_of_the_fittest(scheduled_rooms, scheduled_courses, scheduled_studen
 
 def clear_schedule_of_course(rooms, course, students):
     """
-    Clear schedule.
+    Unschedule a specific course in the whole schedule.
     """
 
     # erase activities and score
@@ -183,7 +185,9 @@ def clear_schedule_of_course(rooms, course, students):
 
 def mutate_schedule(rooms, courses, students, score, matrix, course_names):
     """
-    Mutate schedule.
+    Mutate a fit schedule to 10 different schedules. Keep the orignal schedule.
+    Furthermore, for 9 times: unschedule a random subset of the courses and
+    reschedule this subset.
     """
 
     # store mutated schedules
@@ -201,9 +205,10 @@ def mutate_schedule(rooms, courses, students, score, matrix, course_names):
 
     new_scores = [0 for j in range(10)]
 
+    # create evening timeslot in largest room
     for n_rooms in new_rooms:
 
-        # create evening timeslot in largest room
+
         big_room_cap = 0
 
         for room in n_rooms:
@@ -214,6 +219,7 @@ def mutate_schedule(rooms, courses, students, score, matrix, course_names):
         for day in big_room.days:
             day.hours.append(inf.Hour())
 
+    # copy orignal schedule onto mutations
     for k in range(10):
         new_rooms[k], new_courses[k], new_students[k] = bas_sch.copy_schedule(rooms, \
             courses, students, new_rooms[k], new_courses[k], new_students[k])
@@ -228,7 +234,7 @@ def mutate_schedule(rooms, courses, students, score, matrix, course_names):
         indices = rd.sample(range(len(new_courses[i])), rd.randint(0, \
             len(new_courses[i]) - 7))
 
-        # store names
+        # store names of subset
         unsched_names = []
 
         # unschedule subset
@@ -240,11 +246,6 @@ def mutate_schedule(rooms, courses, students, score, matrix, course_names):
         # schedule all required classes
         schedulings = 0
         for j in indices:
-            # schedule all hoorcolleges
-            # zeg = new_courses[i][j]
-            # print(zeg.hoorcolleges, zeg.werkcolleges, zeg.practica)
-            # print(zeg.max_practica, zeg.max_werkcolleges)
-            # print(zeg.e_students)
             schedulings += day_sch.course_scheduler(new_courses[i][j], new_rooms[i],\
                 new_courses[i], course_names, matrix)
         print("Schedulings:", schedulings)
@@ -287,20 +288,26 @@ def mutate_schedule(rooms, courses, students, score, matrix, course_names):
 
 def pop_based_algo():
     """
-    Population based algorithm.
+    Simulate a lifetime of a population of schedules. Each propagation only
+    the fittest survive and are mutated into a new population.
     """
 
+    # initialise population
     scheduled_rooms, scheduled_courses, scheduled_students, scores, \
     course_names, matrix = initial_population()
 
+    # 5 cycles of propagation
     for propagation in range(5):
+        # select fittest group
         fittest_rooms, fittest_courses, fittest_students, fittest_scores = \
             survival_of_the_fittest(scheduled_rooms, scheduled_courses, \
                 scheduled_students, scores)
 
+        # store new population
         scheduled_rooms, scheduled_courses, scheduled_students, scores = \
             [], [], [], []
 
+        # mutate fittest schedules and add to population
         for fit in range(len(fittest_students)):
             new_rooms, new_courses, new_students, new_scores = mutate_schedule(\
                 fittest_rooms[fit], fittest_courses[fit], fittest_students[fit],\
@@ -312,10 +319,12 @@ def pop_based_algo():
                 scheduled_students.append(new_students[m])
                 scores.append(new_scores[m])
 
+    # select fittest schedules of end population
     fittest_rooms, fittest_courses, fittest_students, fittest_scores = \
         survival_of_the_fittest(scheduled_rooms, scheduled_courses, \
             scheduled_students, scores)
 
+    # show best scores
     print(fittest_scores)
 
 pop_based_algo()
