@@ -23,23 +23,18 @@ def calcs(courses):
     max_bonus, state_space = 0, 1
     for course in courses:
         if course.hoorcolleges + course.werkcolleges + course.practica > 1:
-            m, n = 0, 0
-            for j in range(course.werkcolleges):
-                r = course.e_students
+            diff_ids = []
 
-                while r > 0:
-                    m += 1
-                    r -= course.max_werkcolleges
+            for activity in course.activities:
+                if not activity.group_id in diff_ids:
+                    diff_ids.append(activity.group_id)
 
+            diff_ids = set(diff_ids)
 
-            for k in range(course.practica):
-                r = course.e_students
+            if 'x' in diff_ids and len(diff_ids) > 1:
+                diff_ids.remove('x')
 
-                while r > 0:
-                    n += 1
-                    r -= course.max_practica
-
-            maxi = max(m,n)
+            maxi = len(diff_ids)
             max_bonus += maxi * 20
 
             if maxi > 0:
@@ -58,4 +53,4 @@ def calcs(courses):
         power += 1
 
     cprint("MAX BONUS:{}".format(max_bonus), 'blue')
-    cprint("STUDENT STATESPACE:{}x10^{}".format(state_space, power+238), 'magenta')
+    cprint("STUDENT STATESPACE:{}x10^{}".format(state_space, power+232), 'magenta')

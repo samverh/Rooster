@@ -6,7 +6,7 @@ Johan Diepstraten, Ya'gel Schoonderbeek, Sam Verhezen
 Program assigns a score to the schedule.
 """
 
-
+import pprint as pp
 def student_score(students):
     malus = 0
     bonus = 0
@@ -15,7 +15,7 @@ def student_score(students):
         noconflicts = True
 
         for i in range(len(student.dates)):
-            for j in range(i,len(student.dates)):
+            for j in range(i+1,len(student.dates)):
                 for date in student.dates[i]:
                     if date in student.dates[j]:
                         noconflicts = False
@@ -25,7 +25,7 @@ def student_score(students):
         if noconflicts:
             bonus += 1
             student.goodbad += 1
-
+    # print("per loop update:", bonus, malus)
     return bonus, malus
 
 
@@ -155,7 +155,7 @@ def distribution_checker(courses):
         id_s = 1
 
         for activity in course.activities:
-            if activity.group_id != "x":
+            if activity.group_id != "x" and activity.group_id != "a":
                 if ord(activity.group_id) - 96 > id_s:
                     id_s += 1
 
@@ -193,8 +193,7 @@ def distribution_checker(courses):
                 course.goodbad -= difference * 10
 
             elif len(dates) == 4:
-                day1, day2, day3, day4 = sorted
-                if day1 == 0 and day2 == 1 and day3 == 3 and day4 == 4:
+                if sorted == [0,1,3,4]:
                     bonus += 20
                     course_total += 20
 
@@ -203,7 +202,9 @@ def distribution_checker(courses):
                 course_total -= difference * 10
 
             elif len(dates) > 4:
-                sorted = [int(date/10) for date in dates]
+                if sorted == [0,1,2,3,4]:
+                    bonus += 20
+                    course_total += 20
                 difference = len(sorted) - len(set(sorted))
                 malus -= difference * 10
                 course_total -= difference * 10
