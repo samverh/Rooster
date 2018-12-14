@@ -60,13 +60,18 @@ pip install termcolor
 All python codes are in the main folder "Rooster", together with the input values and the output schedule file.
 
 ### Testing
-To run the program, run the main function:
-
+To run the program and create a schedule, run the main function:
 ```
 python main.py
 ```
+The script will prompt the used for input regarding the used optimization technique, amount of iterations and amount of runs.
 
-By opening rooster.html, you can investigate the schedule on a visual level.
+By opening rooster.html, you can investigate the created schedule on a visual level.
+
+The population based (plant propagation) algorithm can be run with the function:
+```
+populated_based.py
+```
 
 ## Authors
 * Johan Diepstraten
