@@ -13,7 +13,7 @@ sys.path.append(os.path.join(directory, "code"))
 sys.path.append(os.path.join(directory, "code", "schedulers"))
 sys.path.append(os.path.join(directory, "code", "classes"))
 sys.path.append(os.path.join(directory, "code", "algorithms"))
-sys.path.append(os.path.join(directory, "code", "score and other calculations"))
+sys.path.append(os.path.join(directory, "code", "score_and_other_calculations"))
 sys.path.append(os.path.join(directory, "code", "visualizer"))
 
 
@@ -65,7 +65,7 @@ for line in studentfile:
 
 students = students[1:]
 
-# create evening timeslot in largest room
+# create eveniqng timeslot in largest room
 big_room_cap = 0
 
 for room in rooms:
@@ -86,7 +86,6 @@ score += sc.student_checker(rooms, courses, course_names)
 bonus, malus = sc.distribution_checker(courses)
 score += bonus + malus
 score += sc.evening_checker(rooms, courses, course_names)
-
 
 # print stuff
 print("Score before hillclimber:", score)
@@ -137,14 +136,7 @@ for course in courses:
 print("SCORE BEFORE CLIMBER:", student_score)
 student_climb_score = sthl.students_hillclimber(student_courses, students, student_score, 1000)
 print("SCORE AFTER CLIMBER:", student_climb_score)
-
-# for student in students:
-#     if student.goodbad >= 0:
-#         print(colored(student.student_number + ":", 'green'), colored(student.goodbad, 'green'))
-#     elif student.goodbad < - 3:
-#         print(colored(student.student_number + ":", 'red'), colored(student.goodbad, 'red'))
-#     else:
-#         print(student.student_number + ":", student.goodbad)
+cprint("FINAL SCORE: {}".format(student_climb_score + score), 'green')
 
 bas_sch.print_schedule(rooms)
 bas_sch.clear_schedule(rooms, courses)
