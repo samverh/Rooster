@@ -18,5 +18,5 @@
 * ```painpoints.py``` determines the painpoints in the case. Running the script generates an excel file, found under "data".
 
 ## Visualizer
-* ```visual.html``` makes a webpage of the generated schedule csv file, using rooster.css as stylesheet.
+* ```rooster.css``` visual.html makes a webpage of the generated schedule csv file, using rooster.css as stylesheet.
 * ```sim_annealing_plot.py``` visualizes data gathered by running the simulated annealing algorithms and visualizes it with a plot.
