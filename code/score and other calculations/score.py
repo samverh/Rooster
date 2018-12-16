@@ -6,8 +6,6 @@ Johan Diepstraten, Ya'gel Schoonderbeek, Sam Verhezen
 Program assigns a score to the schedule.
 """
 
-import pprint as pp
-
 
 def student_score(students):
     """
