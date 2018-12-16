@@ -28,16 +28,14 @@ plt.xlabel("Score")
 plt.ylabel("Frequency")
 
 # plot random and hillclimber first
-p1 = plt.hist(plotdata["Random Scheduling"], bins=50, fc=(1, 0, 0, 0.5), label = "Random")
-p2 = plt.hist(plotdata["Random Hillclimber"], bins=50, fc=(0, 0, 1, 0.5), label = "Hillclimber")
+plt.hist(plotdata["Random Scheduling"], bins=50, fc=(1, 0, 0, 0.5), label = "Random")
 
 # create legend
 red_patch = mpatches.Patch(color=(1, 0, 0, 0.5), label="Random")
-blue_patch = mpatches.Patch(color=(0, 0, 1, 0.5), label="Hillclimber (1000 iteraties)")
-plt.legend(handles=[red_patch, blue_patch])
+plt.legend(handles=[red_patch])
 
 # add graph title
-plt.title("Course scheduling: score distribution of random scheduling and hillclimber (N=1000)")
+plt.title("Course scheduling: score distribution of random scheduling (N=1000)")
 
 # visualize plot
 plt.show()
@@ -47,16 +45,19 @@ p1 = plt.hist(plotdata["Sigmoidal"], bins=50, fc=(1, 0, 0, 0.5), label = "Sigmoi
 p2 = plt.hist(plotdata["Exponential"], bins=50, fc=(0, 0, 1, 0.5), label = "Exponential")
 p3 = plt.hist(plotdata["Linear"], bins=50, fc=(0.8, 0.3, 0.5, 0.5), label = "Linear")
 p4 = plt.hist(plotdata["Geman"], bins=50, fc=(0.2, 1, 0.4, 0.5), label = "Geman")
+p5 = plt.hist(plotdata["Random Hillclimber"], bins=50, fc=(0.2, 0.2, 0.3, 0.5), label = "Hillclimber")
 
 # create legend
-red_patch = mpatches.Patch(color=(1, 0, 0, 0.5), label="Sigmoidal (5000 iteraties)")
-blue_patch = mpatches.Patch(color=(0, 0, 1, 0.5), label="Exponential (20000 iteraties)")
-wine_patch = mpatches.Patch(color=(0.8, 0.3, 0.5, 0.5), label="Linear (20000 iteraties)")
-new_patch = mpatches.Patch(color=(0.2, 1, 0.4, 0.5), label = "Geman (20000 iteraties)")
-plt.legend(handles=[red_patch, blue_patch, wine_patch, new_patch])
+p1_patch = mpatches.Patch(color=(1, 0, 0, 0.5), label="Sigmoidal (5000 iterations)")
+p2_patch = mpatches.Patch(color=(0, 0, 1, 0.5), label="Exponential (20000 iterations)")
+p3_patch = mpatches.Patch(color=(0.8, 0.3, 0.5, 0.5), label="Linear (20000 iterations)")
+p4_patch = mpatches.Patch(color=(0.2, 1, 0.4, 0.5), label = "Geman (20000 iterations)")
+p5_patch = mpatches.Patch(color=(0.2, 0.2, 0.3, 0.5), label = "Hillclimber (1000 iterations)")
+
+plt.legend(handles=[p1_patch, p2_patch, p3_patch, p4_patch, p5_patch])
 
 # add graph title
-plt.title("Course scheduling: score distribution of simulated annealing types (N=1000)")
+plt.title("Course scheduling: score distribution of schedules after optimization (N=1000)")
 
 # visualize plot
 plt.show()
