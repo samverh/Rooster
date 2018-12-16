@@ -49,10 +49,10 @@ This script generates a webpage which visualizes the schedule made in main.py.
                         // print good and bad courses in green and red
                         var course = columns[j].split(" - ");
                         var course_name = course[0], course_score = course[1];
-                        if (course_score > -10){
+                        if (course_score < -10){
                           table += "<td style='color:red'>" + course_name + "</td>";
                         }
-                        else if (course_score > +10){
+                        else if (course_score > 10){
                           table += "<td style='color:green'>" + course_name + "</td>";
                         }
                         else {
