@@ -13,10 +13,12 @@ import score as sc
 import schedule_basics as bas_sch
 from termcolor import colored, cprint
 
+
 def students_group_switcher(course, student1, group_id1, student2, group_id2):
-    '''
+    """
     Function switches 2 students from groups within a course.
-    '''
+    """
+
     # index for the course in students' personal lists
     index1 = student1.courses.index(course.name)
     index2 = student2.courses.index(course.name)
@@ -37,12 +39,13 @@ def students_group_switcher(course, student1, group_id1, student2, group_id2):
     student1.group_id[index1] = group_id2
     student2.group_id[index2] = group_id1
 
+
 def course_students_picker(course, poss_group_ids, students, old_student_score):
-    '''
+    """
     Function takes a course, picks 2 students from 2 different groups within
     the course. Then it requests a switch, which is kept only if the student
     score is improved.
-    '''
+    """
 
     # choose two different groups
     group_id1 = rd.choice(poss_group_ids)
@@ -80,9 +83,10 @@ def course_students_picker(course, poss_group_ids, students, old_student_score):
 
 
 def students_hillclimber(courses_special, students, old_student_score, max_iters):
-    '''
+    """
     Function keeps making switches until the max of unuseful switches is met.
-    '''
+    """
+    
     # store switches
     iters = 0
 

@@ -7,7 +7,13 @@ Program assigns a score to the schedule.
 """
 
 import pprint as pp
+
+
 def student_score(students):
+    """
+    Determines the score per student.
+    """
+
     malus = 0
     bonus = 0
 
@@ -15,7 +21,7 @@ def student_score(students):
         noconflicts = True
 
         for i in range(len(student.dates)):
-            for j in range(i+1,len(student.dates)):
+            for j in range(i + 1, len(student.dates)):
                 for date in student.dates[i]:
                     if date in student.dates[j]:
                         noconflicts = False
@@ -25,6 +31,7 @@ def student_score(students):
         if noconflicts:
             bonus += 1
             student.goodbad += 1
+
     # print("per loop update:", bonus, malus)
     return bonus, malus
 
@@ -33,6 +40,7 @@ def matrix_checker(courses, course_names, matrix):
     """
     Adjusts score based on matrix.
     """
+
     malus_points = 0
 
     # iterate through positions of every course in matrix
@@ -58,6 +66,7 @@ def order_checker(courses):
     """
     Checks if preferred sequence of course activities is respected.
     """
+
     order_points = 0
 
     for course in courses:
@@ -92,6 +101,7 @@ def student_checker(rooms, courses, course_names):
     """
     Adjusts score based on students.
     """
+
     malus = 0
 
     for room in rooms:
@@ -121,6 +131,7 @@ def evening_checker(rooms, courses, course_names):
     """
     Adjusts score based on usage of evening timeslot.
     """
+
     malus = 0
     room = rooms[5]
 
@@ -151,7 +162,7 @@ def distribution_checker(courses):
     for course in courses:
         course_total = 0
 
-        total = course.hoorcolleges + course.werkcolleges + course.practica
+        #total = course.hoorcolleges + course.werkcolleges + course.practica
         id_s = 1
 
         for activity in course.activities:
@@ -193,7 +204,7 @@ def distribution_checker(courses):
                 course.goodbad -= difference * 10
 
             elif len(dates) == 4:
-                if sorted == [0,1,3,4]:
+                if sorted == [0, 1, 3, 4]:
                     bonus += 20
                     course_total += 20
 
@@ -202,7 +213,7 @@ def distribution_checker(courses):
                 course_total -= difference * 10
 
             elif len(dates) > 4:
-                if sorted == [0,1,2,3,4]:
+                if sorted == [0, 1, 2, 3, 4]:
                     bonus += 20
                     course_total += 20
                 difference = len(sorted) - len(set(sorted))

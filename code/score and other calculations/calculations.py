@@ -8,7 +8,12 @@ This program calculates specific bounds.
 
 from termcolor import colored, cprint
 
+
 def product(above, under):
+    """
+    Determine the product.
+    """
+
     if not above > under:
         return 1
 
@@ -19,7 +24,12 @@ def product(above, under):
 
     return x
 
+
 def calcs(courses):
+    """
+    Function calculates the bounds.
+    """
+
     max_bonus, state_space = 0, 1
     for course in courses:
         if course.hoorcolleges + course.werkcolleges + course.practica > 1:
@@ -47,6 +57,7 @@ def calcs(courses):
 
                 state_space = state_space * state
 
+    # determine the power factor
     power = 0
     while state_space > 10:
         state_space = state_space // 10

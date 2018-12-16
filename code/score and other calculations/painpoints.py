@@ -6,17 +6,17 @@ Johan Diepstraten, Ya'gel Schoonderbeek, Sam Verhezen
 This program searches for key weaknesses in the case.
 """
 
-import information as inf
-import random_scheduler as random_sch
+# import information as inf
+# import random_scheduler as random_sch
 import days_scheduler as day_sch
 import schedule_basics as bas_sch
-from termcolor import colored, cprint
+from termcolor import cprint
 import score as sc
-import visual as vis
 import hillclimber as hill
-import calculations as cal
+# import calculations as cal
 import student_distribution as stu
 import student_hillclimber as sthl
+
 
 def search(rooms, courses, course_names, students, matrix):
     """
@@ -53,7 +53,7 @@ def search(rooms, courses, course_names, students, matrix):
             poss_group_ids = []
 
             for activity in course.activities:
-                if activity.group_id not in poss_group_ids and activity.group_id != 'x':
+                if activity.group_id not in poss_group_ids and activity.group_id != "x":
                     poss_group_ids.append(activity.group_id)
 
             if len(poss_group_ids) > 1:
@@ -74,8 +74,9 @@ def search(rooms, courses, course_names, students, matrix):
         bas_sch.print_schedule(rooms)
         bas_sch.clear_schedule(rooms, courses)
         bas_sch.clear_students(students)
-        cprint(i, 'blue')
+        cprint(i, "blue")
 
+    # print painpoints
     for f in range(len(student_numbers)):
         print(student_numbers[f] + ":", student_weakness[f])
     for j in range(len(course_names)):
