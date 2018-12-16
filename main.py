@@ -123,9 +123,9 @@ for l in range(runs):
     score += sc.evening_checker(rooms, courses, course_names)
 
     # specified to run script only for Courses
-    if students_inc == "courses only" and not A_type == "none":
+    if students_inc == "courses only":
 
-        # print scores before and after hillclimber
+        # print scores before hillclimber
         print("Score before hillclimber:", score)
 
         # for course in courses:
@@ -133,9 +133,11 @@ for l in range(runs):
         #         score = hill.course_climber(courses[0], courses, rooms, course_names, 1000, score, matrix)
         #         print("Score after 1 course_climb: ", score)
 
+        # run hillclimber if specified by user
         if A_type == "hillclimber":
             score = hill.random_climber(courses, rooms, course_names, max_iterations, score, matrix)
 
+        # run simulated annealing if specified by user, with specified type
         if A_type == "sim annealing":
             score = hill.sim_annealing(courses, rooms, course_names, max_iterations, score, matrix, 20, 0.001, SA_type)
 
@@ -143,28 +145,36 @@ for l in range(runs):
         print("Score after hillclimber: ", score)
         score_list.append(score)
 
-    # specified to include students
-    elif students_inc == "students inc":
-
         # check parts
         latest_score = hill.calc_score(courses, rooms, course_names, matrix)
+
         for course in courses:
             if course.goodbad >= 0:
-                print(colored(course.name + ":",'green'), colored(course.goodbad, 'green'))
+                print(colored(course.name + ":", 'green'), colored(course.goodbad, 'green'))
+
+                # append score to course for coloring course in schedule visualization
+                for activity in course.activities:
+                    room = [room for room in rooms if room.name == activity.room][0]
+                    hour = room.days[activity.date // 10].hours[activity.date % 10]
+                    hour.course = hour.course + " - " + str(course.goodbad)
+
             else:
                 print(colored(course.name + ":", 'red'), colored(course.goodbad, 'red'))
 
+    # user specified to include students in scheduling
+    elif students_inc == "students inc":
+
+        # distribute all students over the courses
         stu.distribute_all_students(students, rooms, courses, course_names)
+
         # stu.student_in_courses_checker(courses, students, course_names)
         # stu.stats_about_students(courses, students, course_names)
-
 
         # calculate student score
         student_bonus, student_malus = sc.student_score(students)
         print("OLD STUDENTBONUS", student_bonus)
         print("OLD STUDENTMALUS", student_malus)
         student_score = student_bonus + student_malus
-
 
         # pre-filter the relevant courses
         student_courses = []
@@ -177,15 +187,16 @@ for l in range(runs):
 
             if len(poss_group_ids) > 1:
                 student_courses.append([course, poss_group_ids])
-    
+
 
         # watch student hillclimber
         print("SCORE BEFORE CLIMBER:", student_score)
-        student_climb_score = sthl.students_hillclimber(student_courses, students, student_score, 1000)
+        student_climb_score = sthl.students_hillclimber(student_courses, students, student_score, max_iterations)
         print("SCORE AFTER CLIMBER:", student_climb_score)
         cprint("FINAL SCORE: {}".format(student_climb_score + score), 'green')
-#
-#     bas_sch.print_schedule(rooms)
+
+    # print the schedule and clear for next scheduling run
+    bas_sch.print_schedule(rooms)
     bas_sch.clear_schedule(rooms, courses)
 
 if not A_type == "none":

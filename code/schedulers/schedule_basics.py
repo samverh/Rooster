@@ -12,7 +12,7 @@ import csv
 
 def copy_schedule(rooms, courses, students, rooms_2, courses_2, students_2):
     """
-    Cope schedule.
+    Copy the schedule.
     """
 
     for i in range(len(rooms_2)):
@@ -33,7 +33,7 @@ def copy_schedule(rooms, courses, students, rooms_2, courses_2, students_2):
 
 
     return rooms_2, courses_2, students_2
-    
+
 
 def make_exp_students_right_again(students):
     """
@@ -183,7 +183,7 @@ def print_schedule(rooms):
 
                 # append course at specified room and timeslot for every day to list
                 for k in range(5):
-                    weekdays.append(rooms[j].days[k].hours[i].course)
+                    weekdays.append((rooms[j].days[k].hours[i].course).replace(",",""))
 
                 # write row with coures for all days at a specific timeslot and room
                 writer.writerow({"Timeslot": hourslots[i], "Room": rooms[j].name,\
