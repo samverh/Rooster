@@ -19,4 +19,4 @@
 
 ## Visualizer
 * ```rooster.css``` visual.html makes a webpage of the generated schedule csv file, using rooster.css as stylesheet.
-* ```sim_annealing_plot.py``` visualizes data gathered by running the simulated annealing algorithms and visualizes it with a plot.
+* ```plot_results.py``` visualizes data gathered by running the scheduler consequently (randomly, with hillclimber and with simulated annealing types). Data is included of scheduling only courses, as well as with students included. The program will prompt for input, please follow the descriptions to generate the desired plots. Additionally, a picture of the plots (png format) is included in the folder "results".
