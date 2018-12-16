@@ -199,5 +199,6 @@ for l in range(runs):
     bas_sch.print_schedule(rooms)
     bas_sch.clear_schedule(rooms, courses)
 
-if not A_type == "none":
+# print scores in list if runned multiple times
+if not A_type == "none" and runs > 1:
     print(score_list)

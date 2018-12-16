@@ -1,30 +1,30 @@
 Timeslot,Room,Monday,Tuesday,Wednesday,Thursday,Friday
-9-11,"""A1.04""",Collectieve Intelligentie | Practica | a - 55,,Project Genetic Algorithms | Practica | c - 0,Data Mining | Practica | b - 40,Moderne Databases | Practica | c - 60
-9-11,"""A1.06""",Autonomous Agents 2 | Hoorcollege - 40,Autonomous Agents 2 | Hoorcollege - 40,Project Genetic Algorithms | Practica | b - 0,Heuristieken 2 | Werkcollege | b - 40,Collectieve Intelligentie | Werkcollege | d - 55
-9-11,"""A1.08""",,Informatie- en organisatieontwerp | Werkcollege | a - 60,Data Mining | Werkcollege | b - 40,Data Mining | Werkcollege | c - 40,Collectieve Intelligentie | Werkcollege | a - 55
-9-11,"""A1.10""",,Bioinformatica | Hoorcollege - 40,Technology for games | Hoorcollege - 60,Heuristieken 2 | Werkcollege | a - 40,Algoritmen en complexiteit | Werkcollege | a - 20
-9-11,"""B0.201""",Architectuur en computerorganisatie | Hoorcollege - 20,Informatie- en organisatieontwerp | Werkcollege | b - 60,Databases 2 | Werkcollege | a - 20,Machine Learning | Hoorcollege - 20,Compilerbouw | Practica | a - 40
-9-11,"""C0.110""",Algoritmen en complexiteit | Practica | b - 20,Analysemethoden en -technieken | Hoorcollege - 0,Programmeren in Java 2 | Practica | d - 0,Compilerbouw | Hoorcollege - 40,Compilerbouw | Hoorcollege - 40
-9-11,"""C1.112""",Software Engineering | Practica | a - 0,Informatie- en organisatieontwerp | Hoorcollege - 60,Software Engineering | Practica | b - 0,Heuristieken 1 | Hoorcollege - 40,Lineaire Algebra | Hoorcollege - 20
-11-13,"""A1.04""",Machine Learning | Hoorcollege - 20,Bioinformatica | Hoorcollege - 40,Programmeren in Java 2 | Practica | b - 0,Compilerbouw | Werkcollege | b - 40,Advanced Heuristics | Hoorcollege - 60
-11-13,"""A1.06""",Netwerken en systeembeveiliging | Practica | b - 0,,Reflectie op de digitale cultuur | Werkcollege | c - 60,Collectieve Intelligentie | Werkcollege | b - 55,Collectieve Intelligentie | Practica | c - 55
-11-13,"""A1.08""",Project Numerical Recipes | Practica | b - 0,Collectieve Intelligentie | Werkcollege | c - 55,Zoeken sturen en bewegen | Practica | b - 0,Interactie-ontwerp | Hoorcollege - 9,Informatie- en organisatieontwerp | Werkcollege | c - 60
-11-13,"""A1.10""",Interactie-ontwerp | Hoorcollege - 9,Advanced Heuristics | Practica | a - 60,Zoeken sturen en bewegen | Practica | c - 0,Calculus 2 | Werkcollege | b - 60,Informatie- en organisatieontwerp | Hoorcollege - 60
-11-13,"""B0.201""",,Software Engineering | Werkcollege | a - 0,Algoritmen en complexiteit | Werkcollege | b - 20,Collectieve Intelligentie | Practica | b - 55,Technology for games | Werkcollege | a - 60
-11-13,"""C0.110""",Project Genetic Algorithms | Practica | a - 0,Webprogrammeren en databases | Hoorcollege - 60,Netwerken en systeembeveiliging | Practica | a - 0,Software Engineering | Hoorcollege - 0,Bioinformatica | Werkcollege | a - 40
-11-13,"""C1.112""",Heuristieken 2 | Hoorcollege - 40,Webprogrammeren en databases | Practica | c - 60,Moderne Databases | Werkcollege | a - 60,Databases 2 | Werkcollege | b - 20,Moderne Databases | Hoorcollege - 60
-13-15,"""A1.04""",Compilerbouw | Practica | b - 40,,,Calculus 2 | Werkcollege | c - 60,Technology for games | Werkcollege | b - 60
-13-15,"""A1.06""",Data Mining | Werkcollege | a - 40,Netwerken en systeembeveiliging | Practica | c - 0,Collectieve Intelligentie | Practica | d - 55,Webprogrammeren en databases | Werkcollege | c - 60,Advanced Heuristics | Practica | b - 60
-13-15,"""A1.08""",Webprogrammeren en databases | Practica | b - 60,Webprogrammeren en databases | Werkcollege | b - 60,Programmeren in Java 2 | Practica | a - 0,,Technology for games | Werkcollege | c - 60
-13-15,"""A1.10""",Informatie- en organisatieontwerp | Practica | b - 60,Algoritmen en complexiteit | Hoorcollege - 20,,Autonomous Agents 2 | Werkcollege | b - 40,Advanced Heuristics | Practica | c - 60
-13-15,"""B0.201""",Moderne Databases | Practica | a - 60,Compilerbouw | Werkcollege | a - 40,Software Engineering | Werkcollege | b - 0,Data Mining | Hoorcollege - 40,Reflectie op de digitale cultuur | Werkcollege | a - 60
-13-15,"""C0.110""",Calculus 2 | Hoorcollege - 60,Zoeken sturen en bewegen | Practica | a - 0,,Architectuur en computerorganisatie | Hoorcollege - 20,Kansrekenen 2 | Hoorcollege - 20
-13-15,"""C1.112""",Technology for games | Hoorcollege - 60,Project Numerical Recipes | Practica | a - 0,Moderne Databases | Werkcollege | c - 60,Informatie- en organisatieontwerp | Practica | a - 60,Autonomous Agents 2 | Practica | b - 40
-15-17,"""A1.04""",Reflectie op de digitale cultuur | Werkcollege | b - 60,Programmeren in Java 2 | Practica | e - 0,Bioinformatica | Hoorcollege - 40,Heuristieken 1 | Werkcollege | b - 40,Data Mining | Practica | c - 40
-15-17,"""A1.06""",Project Numerical Recipes | Practica | c - 0,Autonomous Agents 2 | Werkcollege | a - 40,Compilerbouw practicum | Practica | c - 0,Bioinformatica | Practica | b - 40,Moderne Databases | Werkcollege | b - 60
-15-17,"""A1.08""",,,Moderne Databases | Practica | b - 60,Autonomous Agents 2 | Practica | a - 40,Informatie- en organisatieontwerp | Practica | c - 60
-15-17,"""A1.10""",Compilerbouw practicum | Practica | a - 0,Lineaire Algebra | Hoorcollege - 20,Reflectie op de digitale cultuur | Hoorcollege - 60,Bioinformatica | Practica | a - 40,Webprogrammeren en databases | Hoorcollege - 60
-15-17,"""B0.201""",Heuristieken 1 | Werkcollege | a - 40,Programmeren in Java 2 | Practica | c - 0,Algoritmen en complexiteit | Practica | a - 20,Calculus 2 | Werkcollege | a - 60,Webprogrammeren en databases | Werkcollege | a - 60
-15-17,"""C0.110""",Databases 2 | Hoorcollege - 20,Kansrekenen 2 | Hoorcollege - 20,Reflectie op de digitale cultuur | Hoorcollege - 60,Collectieve Intelligentie | Hoorcollege - 55,Webprogrammeren en databases | Practica | a - 60
-15-17,"""C1.112""",Bioinformatica | Werkcollege | b - 40,Data Mining | Hoorcollege - 40,Compilerbouw practicum | Practica | b - 0,Collectieve Intelligentie | Hoorcollege - 55,Data Mining | Practica | a - 40
-17-19,"""C0.110""",Bioinformatica | Werkcollege | b - 40,Data Mining | Hoorcollege - 40,Compilerbouw practicum | Practica | b - 0,Collectieve Intelligentie | Hoorcollege - 55,Data Mining | Practica | a - 40
+9-11,"""A1.04""",Advanced Heuristics | Hoorcollege,Software Engineering | Hoorcollege,Advanced Heuristics | Practica | c,Autonomous Agents 2 | Practica | a,Heuristieken 1 | Werkcollege | b
+9-11,"""A1.06""",Collectieve Intelligentie | Hoorcollege,Data Mining | Hoorcollege,Compilerbouw practicum | Practica | a,Machine Learning | Hoorcollege,Calculus 2 | Werkcollege | c
+9-11,"""A1.08""",,Project Numerical Recipes | Practica | a,Collectieve Intelligentie | Werkcollege | c,Software Engineering | Practica | a,Informatie- en organisatieontwerp | Practica | a
+9-11,"""A1.10""",Programmeren in Java 2 | Practica | d,Compilerbouw | Hoorcollege,Bioinformatica | Practica | a,Advanced Heuristics | Practica | b,Data Mining | Practica | b
+9-11,"""B0.201""",,Zoeken sturen en bewegen | Practica | c,Software Engineering | Werkcollege | b,Collectieve Intelligentie | Practica | b,Webprogrammeren en databases | Werkcollege | c
+9-11,"""C0.110""",Reflectie op de digitale cultuur | Hoorcollege,Webprogrammeren en databases | Hoorcollege,Moderne Databases | Werkcollege | a,Moderne Databases | Practica | c,Data Mining | Practica | a
+9-11,"""C1.112""",Heuristieken 1 | Hoorcollege,,Collectieve Intelligentie | Practica | d,Heuristieken 2 | Werkcollege | a,Data Mining | Werkcollege | c
+11-13,"""A1.04""",Compilerbouw | Hoorcollege,Collectieve Intelligentie | Hoorcollege,,Bioinformatica | Werkcollege | b,Programmeren in Java 2 | Practica | b
+11-13,"""A1.06""",Webprogrammeren en databases | Hoorcollege,Technology for games | Hoorcollege,Webprogrammeren en databases | Practica | c,Technology for games | Werkcollege | b,Reflectie op de digitale cultuur | Werkcollege | c
+11-13,"""A1.08""",,Reflectie op de digitale cultuur | Hoorcollege,Collectieve Intelligentie | Werkcollege | a,Webprogrammeren en databases | Werkcollege | a,Calculus 2 | Werkcollege | b
+11-13,"""A1.10""",Technology for games | Hoorcollege,Bioinformatica | Hoorcollege,,Software Engineering | Werkcollege | a,Algoritmen en complexiteit | Werkcollege | b
+11-13,"""B0.201""",,Databases 2 | Hoorcollege,Informatie- en organisatieontwerp | Werkcollege | a,Informatie- en organisatieontwerp | Practica | c,Databases 2 | Werkcollege | a
+11-13,"""C0.110""",Informatie- en organisatieontwerp | Hoorcollege,Collectieve Intelligentie | Hoorcollege,Algoritmen en complexiteit | Werkcollege | a,Collectieve Intelligentie | Werkcollege | d,Moderne Databases | Werkcollege | b
+11-13,"""C1.112""",,Interactie-ontwerp | Hoorcollege,Heuristieken 1 | Werkcollege | a,Moderne Databases | Werkcollege | c,Compilerbouw practicum | Practica | c
+13-15,"""A1.04""",Heuristieken 2 | Hoorcollege,Architectuur en computerorganisatie | Hoorcollege,Bioinformatica | Werkcollege | a,Software Engineering | Practica | b,
+13-15,"""A1.06""",Architectuur en computerorganisatie | Hoorcollege,Programmeren in Java 2 | Practica | e,Advanced Heuristics | Practica | a,Informatie- en organisatieontwerp | Werkcollege | c,
+13-15,"""A1.08""",Data Mining | Hoorcollege,,,Heuristieken 2 | Werkcollege | b,Autonomous Agents 2 | Werkcollege | b
+13-15,"""A1.10""",,Informatie- en organisatieontwerp | Hoorcollege,Calculus 2 | Werkcollege | a,Autonomous Agents 2 | Werkcollege | a,Databases 2 | Werkcollege | b
+13-15,"""B0.201""",Kansrekenen 2 | Hoorcollege,Project Numerical Recipes | Practica | b,Collectieve Intelligentie | Werkcollege | b,Autonomous Agents 2 | Practica | b,Reflectie op de digitale cultuur | Werkcollege | a
+13-15,"""C0.110""",Project Numerical Recipes | Practica | c,Project Genetic Algorithms | Practica | b,Webprogrammeren en databases | Werkcollege | b,Informatie- en organisatieontwerp | Werkcollege | b,Programmeren in Java 2 | Practica | a
+13-15,"""C1.112""",Project Genetic Algorithms | Practica | a,Zoeken sturen en bewegen | Practica | b,Lineaire Algebra | Hoorcollege,Data Mining | Werkcollege | b,Collectieve Intelligentie | Practica | c
+15-17,"""A1.04""",Autonomous Agents 2 | Hoorcollege,Bioinformatica | Hoorcollege,Webprogrammeren en databases | Practica | b,Bioinformatica | Practica | b,Algoritmen en complexiteit | Practica | a
+15-17,"""A1.06""",Calculus 2 | Hoorcollege,Programmeren in Java 2 | Practica | c,Moderne Databases | Practica | b,Project Genetic Algorithms | Practica | c,Netwerken en systeembeveiliging | Practica | c
+15-17,"""A1.08""",Moderne Databases | Hoorcollege,Algoritmen en complexiteit | Hoorcollege,Algoritmen en complexiteit | Practica | b,Data Mining | Practica | c,Compilerbouw | Werkcollege | b
+15-17,"""A1.10""",,Autonomous Agents 2 | Hoorcollege,Compilerbouw | Practica | b,Technology for games | Werkcollege | c,Reflectie op de digitale cultuur | Werkcollege | b
+15-17,"""B0.201""",Interactie-ontwerp | Hoorcollege,Bioinformatica | Hoorcollege,Informatie- en organisatieontwerp | Practica | b,Machine Learning | Hoorcollege,Kansrekenen 2 | Hoorcollege
+15-17,"""C0.110""",Zoeken sturen en bewegen | Practica | a,,Technology for games | Werkcollege | a,Analysemethoden en -technieken | Hoorcollege,Lineaire Algebra | Hoorcollege
+15-17,"""C1.112""",Compilerbouw practicum | Practica | b,,Compilerbouw | Werkcollege | a,Moderne Databases | Practica | a,Webprogrammeren en databases | Practica | a
+17-19,"""C0.110""",Compilerbouw practicum | Practica | b,,Compilerbouw | Werkcollege | a,Moderne Databases | Practica | a,Webprogrammeren en databases | Practica | a
