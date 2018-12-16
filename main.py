@@ -170,7 +170,7 @@ for l in range(runs):
         # stu.student_in_courses_checker(courses, students, course_names)
         # stu.stats_about_students(courses, students, course_names)
 
-        # calculate student score
+        # calculate and print student score
         student_bonus, student_malus = sc.student_score(students)
         print("OLD STUDENTBONUS", student_bonus)
         print("OLD STUDENTMALUS", student_malus)
