@@ -61,7 +61,7 @@ To run the program and create a schedule, run the main function:
 ```
 python main.py
 ```
-The script will prompt the used for input regarding the used optimization technique, amount of iterations and amount of runs.
+The script will prompt the used for input regarding the used optimization technique, amount of iterations and amount of runs. The recommended amount of iterations for hillclimber is 1000. For simulated annealing, 20000 iterations are recommended (4000 for sigmoidal type).
 
 By opening rooster.html, you can investigate the created schedule on a visual level.
 
