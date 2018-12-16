@@ -67,7 +67,7 @@ By opening rooster.html, you can investigate the created schedule on a visual le
 
 The population based (plant propagation) algorithm can be run with the function:
 ```
-populated_based.py
+population_based.py
 ```
 
 ## Authors
