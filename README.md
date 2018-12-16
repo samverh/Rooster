@@ -39,8 +39,8 @@ Scheduling classes at the university is a difficult task that this program facil
     Total: 4 x 10^1211
 
 ### Algorithms
-The algorithms used to improve the schedule are hillclimber and simulated annealing. Four types of simulated annealing were tested, including Sigmoidal, Exponential, Linear and Geman. Due to limited time the different types were ran 25 times each (for now). The distributions of the scores are shown in the graph below.
- ![alt text](https://github.com/samverh/Rooster/blob/master/results/sim_annealing_types.png "Simulated Annealing Types")
+The algorithms used to improve the schedule are hillclimber and simulated annealing. Four types of simulated annealing were tested, including Sigmoidal, Exponential, Linear and Geman. The schedule optimizers were ran 1000 times each. The distributions of the scores are shown in the graph below.
+ ![alt text](https://github.com/samverh/Rooster/blob/master/results/course_scheduler_optimizations.png "Simulated Annealing Types")
  
  The data, image and python script to visualize the plot can be found in the folder "algorithms_visualisations".
 
