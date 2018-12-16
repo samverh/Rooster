@@ -70,6 +70,12 @@ The population based (plant propagation) algorithm can be run with the function:
 population_based.py
 ```
 
+The visualization of the results acquired by running the script with different optimization techniques can be reviewed by running the following program (found under code/visualizer):
+```
+plot_results.py
+```
+The program will prompt the user for input to specify whether data of scheduling only courses or with students included should be visualized.
+
 ## Authors
 * Johan Diepstraten
 * Ya'gel Schoonderbeek
