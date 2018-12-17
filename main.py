@@ -37,11 +37,18 @@ students_inc, stud_optim, stud_optim_type, stud_SA_type, s_max_iterations = inp.
 
 # prompt user to specify amount of runs
 runs = input("Please enter amount of runs (integer): ")
-while not type(runs) == int:
+valid = False
+while not valid:
+    runs = input("Incorrect input. Try again (integer): ")
     try:
         runs = int(runs)
     except:
         runs = input("Incorrect input. Try again (integer): ")
+    else:
+        valid = runs > 0
+        if not valid:
+            runs = input("Incorrect input. Try again (integer): ")
+
 print("\nStart scheduling\n")
 
 # run as many runs as specified and save scores in list
@@ -133,14 +140,15 @@ for l in range(runs):
         if course.goodbad >= 0:
             print(colored(course.name + ":", 'green'), colored(course.goodbad, 'green'))
 
-            # append score to course for coloring course in schedule visualization
-            for activity in course.activities:
-                room = [room for room in rooms if room.name == activity.room][0]
-                hour = room.days[activity.date // 10].hours[activity.date % 10]
-                hour.course = hour.course + " - " + str(course.goodbad)
-
         else:
             print(colored(course.name + ":", 'red'), colored(course.goodbad, 'red'))
+
+        # append score to course for coloring course in schedule visualization
+        for activity in course.activities:
+            room = [room for room in rooms if room.name == activity.room][0]
+            hour = room.days[activity.date // 10].hours[activity.date % 10]
+            print(course.goodbad)
+            hour.course = hour.course + " : " + str(course.goodbad)
 
     # user specified to include students in scheduling
     if students_inc == "yes":

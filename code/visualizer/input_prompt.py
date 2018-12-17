@@ -41,13 +41,17 @@ def course_input():
     # prompt user for amount of iterations for simulated annealing and hillclimber
     if course_optim == "yes":
         c_max_iterations = input("Please enter amount of iterations (integer): ")
-        while not type(c_max_iterations) is int:
+        valid = False
+        while not valid:
+            c_max_iterations = input("Incorrect input. Try again (integer): ")
             try:
                 c_max_iterations = int(c_max_iterations)
             except:
                 c_max_iterations = input("Incorrect input. Try again (integer): ")
-    else:
-        c_max_iterations = "none"
+            else:
+                valid = c_max_iterations > 0
+                if not valid:
+                    c_max_iterations = input("Incorrect input. Try again (integer): ")
 
     # return the obtained variables
     return course_optim, course_optim_type, course_SA_type, c_max_iterations
@@ -88,13 +92,18 @@ def students_input():
         # prompt user for amount of iterations for simulated annealing and hillclimber
         if stud_optim == "yes":
             s_max_iterations = input("Please enter amount of iterations (integer): ")
-            while not type(s_max_iterations) is int:
+            valid = False
+            while not valid:
+                s_max_iterations = input("Incorrect input. Try again (integer): ")
                 try:
                     s_max_iterations = int(s_max_iterations)
                 except:
                     s_max_iterations = input("Incorrect input. Try again (integer): ")
-        else:
-            s_max_iterations = "none"
+                else:
+                    valid = s_max_iterations > 0
+                    if not valid:
+                        s_max_iterations = input("Incorrect input. Try again (integer): ")
+
 
         # return obtained variables
         return students_inc, stud_optim, stud_optim_type, stud_SA_type, s_max_iterations

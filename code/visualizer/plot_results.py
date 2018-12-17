@@ -9,7 +9,6 @@ annealing types.
 
 import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
 import matplotlib.patches as mpatches
 
 # prompt user for input
@@ -37,27 +36,34 @@ plt.legend(handles=[red_patch])
 # add graph title
 plt.title("Course scheduling: score distribution of random scheduling (N=1000)")
 
-# visualize plot
+# visualize random plot
 plt.show()
 
-# plot histograms per simulated annealing type second
-p1 = plt.hist(plotdata["Sigmoidal"], bins=50, fc=(1, 0, 0, 0.5), label = "Sigmoidal")
-p2 = plt.hist(plotdata["Exponential"], bins=50, fc=(0, 0, 1, 0.5), label = "Exponential")
-p3 = plt.hist(plotdata["Linear"], bins=50, fc=(0.8, 0.3, 0.5, 0.5), label = "Linear")
-p4 = plt.hist(plotdata["Geman"], bins=50, fc=(0.2, 1, 0.4, 0.5), label = "Geman")
-p5 = plt.hist(plotdata["Random Hillclimber"], bins=50, fc=(0.2, 0.2, 0.3, 0.5), label = "Hillclimber")
+# plot histograms for optimizations
+p1 = plt.hist(plotdata["Exponential"], bins=50, fc=(0, 0, 1, 0.5), label = "Exponential")
+p2 = plt.hist(plotdata["Linear"], bins=50, fc=(0.8, 0.3, 0.5, 0.5), label = "Linear")
+p3 = plt.hist(plotdata["Hillclimber"], bins=50, fc=(0.2, 0.2, 0.3, 0.5), label = "Hillclimber")
+
+if type == "courses only":
+    p4 = plt.hist(plotdata["Sigmoidal"], bins=50, fc=(1, 0, 0, 0.5), label = "Sigmoidal")
+    p5 = plt.hist(plotdata["Geman"], bins=50, fc=(0.2, 1, 0.4, 0.5), label = "Geman")
 
 # create legend
-p1_patch = mpatches.Patch(color=(1, 0, 0, 0.5), label="Sigmoidal (5000 iterations)")
-p2_patch = mpatches.Patch(color=(0, 0, 1, 0.5), label="Exponential (20000 iterations)")
-p3_patch = mpatches.Patch(color=(0.8, 0.3, 0.5, 0.5), label="Linear (20000 iterations)")
-p4_patch = mpatches.Patch(color=(0.2, 1, 0.4, 0.5), label = "Geman (20000 iterations)")
-p5_patch = mpatches.Patch(color=(0.2, 0.2, 0.3, 0.5), label = "Hillclimber (1000 iterations)")
+p1_patch = mpatches.Patch(color=(0, 0, 1, 0.5), label="Exponential (20000 iterations)")
+p2_patch = mpatches.Patch(color=(0.8, 0.3, 0.5, 0.5), label="Linear (20000 iterations)")
+p3_patch = mpatches.Patch(color=(0.2, 0.2, 0.3, 0.5), label = "Hillclimber (1000 iterations)")
 
-plt.legend(handles=[p1_patch, p2_patch, p3_patch, p4_patch, p5_patch])
+if type == "courses only":
+    p4_patch = mpatches.Patch(color=(1, 0, 0, 0.5), label="Sigmoidal (5000 iterations)")
+    p5_patch = mpatches.Patch(color=(0.2, 1, 0.4, 0.5), label = "Geman (20000 iterations)")
 
-# add graph title
-plt.title("Course scheduling: score distribution of schedules after optimization (N=1000)")
+# add legend and graph title
+if type == "courses only":
+    plt.legend(handles=[p1_patch, p2_patch, p3_patch, p4_patch, p5_patch])
+    plt.title("Course scheduling: score distribution of schedules after optimization (N=1000)")
+else:
+    plt.legend(handles=[p1_patch, p2_patch, p3_patch])
+    plt.title("Students scheduling: score distribution of schedules after optimization (N=500)")
 
-# visualize plot
+# visualize optimization plot
 plt.show()
