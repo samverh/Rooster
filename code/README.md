@@ -20,3 +20,4 @@
 ## Visualizer
 * ```rooster.css``` visual.html makes a webpage of the generated schedule csv file, using rooster.css as stylesheet.
 * ```plot_results.py``` visualizes data gathered by running the scheduler consequently (randomly, with hillclimber and with simulated annealing types). Data is included of scheduling only courses, as well as with students included. The program will prompt for input, please follow the descriptions to generate the desired plots. Additionally, a picture of the plots (png format) is included in the folder "results".
+* ```input_prompt.py``` is a script which is used by main.py to get input from the user on how to run the scheduler.
