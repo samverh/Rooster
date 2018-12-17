@@ -196,6 +196,8 @@ for l in range(runs):
             # watch student hillclimber and save final score
             print("SCORE BEFORE CLIMBER:", student_score)
             student_climb_score = sthl.students_hillclimber(student_courses, students, student_score, max_iterations)
+            # DEZE IS VOOR DE STUDENTS MET SIMULATED ANNEALING
+            # student_climb_score = sthl.students_sim_annealing(student_courses, students, student_score, 20000, 10, 0.001)
             print("SCORE AFTER CLIMBER:", student_climb_score)
             print(colored("FINAL SCORE: {}".format(student_climb_score + score), 'green'))
             score_list_students.append(student_climb_score + score)
