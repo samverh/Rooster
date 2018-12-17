@@ -211,7 +211,6 @@ def lineair(start_temp, end_temp, iteration, max_iterations):
     Linear simulated annealing.
     """
 
-    # print("lineair")
     temperature = start_temp-iteration * (start_temp-end_temp) / max_iterations
     return temperature
 
@@ -221,7 +220,6 @@ def exponential(start_temp, end_temp, iteration, max_iterations):
     Exponential simulated annealing.
     """
 
-    # print("exponential")
     temperature = start_temp * (end_temp/start_temp) ** (iteration/max_iterations)
     return temperature
 
@@ -231,7 +229,6 @@ def sigmoidal(start_temp, end_temp, iteration, max_iterations):
     Sigmoidal simulated annealing.
     """
 
-    # print("sigmoidal")
     temperature = end_temp + (start_temp - end_temp)/(1 + math.exp(0.3 * (iteration-max_iterations / 2)))
     return temperature
 
@@ -241,7 +238,6 @@ def geman(start_temp, iteration):
     Geman simulated annealing.
     """
 
-    # print("geman")
     temperature = start_temp/math.log(iteration + 2)
     return temperature
 
