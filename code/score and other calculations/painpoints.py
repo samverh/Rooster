@@ -6,14 +6,11 @@ Johan Diepstraten, Ya'gel Schoonderbeek, Sam Verhezen
 This program searches for key weaknesses in the case.
 """
 
-# import information as inf
-# import random_scheduler as random_sch
 import days_scheduler as day_sch
 import schedule_basics as bas_sch
 from termcolor import cprint
 import score as sc
 import hillclimber as hill
-# import calculations as cal
 import student_distribution as stu
 import student_hillclimber as sthl
 

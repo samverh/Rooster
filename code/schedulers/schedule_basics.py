@@ -3,10 +3,9 @@ Heuristieken UvA 2018-2019
 Lesroosters
 Johan Diepstraten, Ya'gel Schoonderbeek, Sam Verhezen
 
-Basic schedule functions
+Basic schedule functions.
 """
 
-#import information as inf
 import csv
 
 
@@ -55,6 +54,7 @@ def make_exp_students_right_again(students):
             values[names.index(course)] += 1
 
     return values
+
 
 def roomsinfo(rooms):
     """

@@ -7,11 +7,7 @@ This program tries to locally improve the solution for students.
 """
 
 import random as rd
-#import information as inf
-#import schedule_basics as bas
 import score as sc
-#import schedule_basics as bas_sch
-from termcolor import colored, cprint
 import math
 
 

@@ -22,12 +22,12 @@ import days_scheduler as day_sch
 import schedule_basics as bas_sch
 from termcolor import colored, cprint
 import score as sc
-#import visual as vis
 import hillclimber as hill
 import calculations as cal
 import student_distribution as stu
 import student_hillclimber as sthl
 import random as rd
+
 
 def initial_population():
     """
@@ -120,7 +120,6 @@ def initial_population():
 
             if len(poss_group_ids) > 1:
                 student_courses.append([course, poss_group_ids])
-
 
         # student hillclimber
         scores[i] += sthl.students_hillclimber(student_courses, scheduled_students[i], student_score, 100)

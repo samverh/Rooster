@@ -24,7 +24,6 @@ import schedule_basics as bas_sch
 from termcolor import colored, cprint
 from colorama import init
 import score as sc
-# import visual as vis
 import hillclimber as hill
 import calculations as cal
 import student_distribution as stu

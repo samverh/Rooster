@@ -7,7 +7,6 @@ This program takes an existing schedule and distributes students over the
 scheduled lectures they commited to.
 """
 
-#import information as inf
 import random as rd
 from termcolor import colored, cprint
 
@@ -62,6 +61,7 @@ def student_in_courses_checker(courses, students, course_names):
                 print(course.name, activity.id)
                 print("expected vs actually enrolled:")
                 print(colored(total, 'red'), colored(len(activity.students), 'red'))
+
 
 def stats_about_students(courses, students, course_names):
     """

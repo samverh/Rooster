@@ -9,7 +9,6 @@ and writes it to a csv file.
 
 import random as rd
 import information as inf
-import csv
 import schedule_basics as bas
 
 
@@ -114,7 +113,7 @@ def course_scheduler(course, rooms, courses, course_names, matrix):
             r -= course.max_werkcolleges
 
         for j_2 in range(m):
-            scheduler(course, "Werkcollege", chr(97+j_2), wc_days, rooms,\
+            scheduler(course, "Werkcollege", chr(97 + j_2), wc_days, rooms,\
                       courses, course_names, matrix)
             i += 1
 
@@ -126,7 +125,7 @@ def course_scheduler(course, rooms, courses, course_names, matrix):
             r -= course.max_practica
 
         for k_2 in range(m):
-            scheduler(course, "Practica", chr(97+k_2), pr_days, rooms, courses,\
+            scheduler(course, "Practica", chr(97 + k_2), pr_days, rooms, courses,\
                       course_names, matrix)
             i += 1
 
@@ -143,6 +142,7 @@ def total_schedule(rooms, courses, course_names, matrix):
 
     # schedule all required classes
     for course in courses:
+
         # schedule all hoorcolleges
         schedulings += course_scheduler(course, rooms, courses, course_names, matrix)
     print("Schedulings:", schedulings)
