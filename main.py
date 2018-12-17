@@ -37,18 +37,15 @@ students_inc, stud_optim, stud_optim_type, stud_SA_type, s_max_iterations = inp.
 
 # prompt user to specify amount of runs
 runs = input("Please enter amount of runs (integer): ")
-valid = False
-while not valid:
-    runs = input("Incorrect input. Try again (integer): ")
+while not (type(runs) == int):
     try:
         runs = int(runs)
+        if runs > 0:
+            break
+        else:    
+            runs = input("Incorrect input. Try again (integer): ")
     except:
         runs = input("Incorrect input. Try again (integer): ")
-    else:
-        valid = runs > 0
-        if not valid:
-            runs = input("Incorrect input. Try again (integer): ")
-
 print("\nStart scheduling\n")
 
 # run as many runs as specified and save scores in list
