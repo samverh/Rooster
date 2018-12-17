@@ -15,6 +15,7 @@ def student_score(students):
     malus = 0
     bonus = 0
 
+    # Iterate through all students and calculate confilcts
     for student in students:
         noconflicts = True
 
@@ -30,7 +31,6 @@ def student_score(students):
             bonus += 1
             student.goodbad += 1
 
-    # print("per loop update:", bonus, malus)
     return bonus, malus
 
 
@@ -67,6 +67,7 @@ def order_checker(courses):
 
     order_points = 0
 
+    # Iterate through courses and check for each course if order is correct
     for course in courses:
         first_hoorcollege = -1
         first_practicum = 44
@@ -88,6 +89,7 @@ def order_checker(courses):
                 else:
                     first_hoorcollege = min(activity.date, first_hoorcollege)
 
+        # assign penalty points for wrong order
         if (first_werkcollege < first_hoorcollege) or (first_practicum < first_hoorcollege):
             order_points -= 10000
             course.goodbad -= 10000
@@ -102,11 +104,14 @@ def student_checker(rooms, courses, course_names):
 
     malus = 0
 
+    # iterate through all rooms on all possible times
     for room in rooms:
         max = room.cap
         for day in room.days:
             for hour in day.hours:
 
+                #  compare amount of expected students in room with room capacity
+                #  assign malus points for each student that exceeds the capacity
                 if hour.scheduled:
                     course_name, type = hour.course.split(" | ")[:2]
                     course = courses[course_names.index(course_name)]
@@ -133,6 +138,7 @@ def evening_checker(rooms, courses, course_names):
     malus = 0
     room = rooms[5]
 
+    # iterate through evening timeslot, give penalty for each time it is scheduled
     for day in room.days:
         hour = day.hours[4]
 
@@ -157,10 +163,10 @@ def distribution_checker(courses):
     malus = 0
     id_dates = []
 
+    # iterate through all activities of each course and check distribution
     for course in courses:
         course_total = 0
 
-        #total = course.hoorcolleges + course.werkcolleges + course.practica
         id_s = 1
 
         for activity in course.activities:
@@ -182,6 +188,7 @@ def distribution_checker(courses):
             sorted = [int(date/10) for date in dates]
             sorted.sort()
 
+            # assign bonus or malus points based on the amount of activities
             if len(dates) == 2:
                 day1, day2 = sorted
                 if day2 - day1 == 3:
