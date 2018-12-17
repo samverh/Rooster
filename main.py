@@ -28,12 +28,12 @@ import hillclimber as hill
 import calculations as cal
 import student_distribution as stu
 import student_hillclimber as sthl
+import input_prompt as inp
 init()
 
-# prompt user to specify to run the script for courses only or stundents included
-students_inc = input("Please specify to run script for students or courses only (students inc, courses only): ")
-while not (students_inc in ["students inc", "courses only"]):
-    students_inc = input("Incorrect input. Try again (students inc, courses only): ")
+# get user input on how to run scheduler using the input Functions
+course_optim, course_optim_type, course_SA_type, c_max_iterations = inp.course_input()
+students_inc, stud_optim, stud_optim_type, stud_SA_type, s_max_iterations = inp.students_input()
 
 # prompt user to specify amount of runs
 runs = input("Please enter amount of runs (integer): ")
@@ -42,26 +42,7 @@ while not type(runs) == int:
         runs = int(runs)
     except:
         runs = input("Incorrect input. Try again (integer): ")
-
-# prompt user to specify the optimization type
-A_type = input("Please enter optimalization type (hillclimber, sim annealing, none): ")
-while not (A_type in ["hillclimber", "sim annealing", "none"]):
-    A_type = input("Incorrect input. Try again (hillclimber, sim annealing, none): ")
-
-# if optimization type is simulated annealing, prompt user for type
-if A_type == "sim annealing":
-    SA_type = input("Please enter type of simulated annealing (linear, exponential, sigmoidal, geman): ")
-    while not SA_type in ["linear", "exponential", "sigmoidal", "geman"]:
-        SA_type = input("Incorrect input. Try again (linear, exponential, sigmoidal, geman): ")
-
-# prompt user for amount of iterations
-if not A_type == "none":
-    max_iterations = input("Please enter amount of iterations (integer): ")
-    while not type(max_iterations) is int:
-        try:
-            max_iterations = int(max_iterations)
-        except:
-            max_iterations = input("Incorrect input. Try again (integer): ")
+print("\nStart scheduling\n")
 
 # run as many runs as specified and save scores in list
 score_list = []
@@ -79,6 +60,7 @@ for l in range(runs):
     matrixfile = open("data/matrix.csv", 'r')
     studentfile = open("data/studentenenvakken.csv", 'r', errors="ignore")
 
+    # parse csv files and append content to lists
     for line in coursefile:
         info = line.split(";")
         courses.append(inf.Course(info[0], int(info[1]), int(info[2]), int(info[3]),\
@@ -115,7 +97,7 @@ for l in range(runs):
 
     course_names = [course.name for course in courses]
 
-    # return total score
+    # return total score of schedule using the score calculator
     day_sch.total_schedule(rooms, courses, course_names, matrix)
     score = sc.matrix_checker(courses, course_names, matrix) + sc.order_checker(courses)
     score += sc.student_checker(rooms, courses, course_names)
@@ -124,23 +106,24 @@ for l in range(runs):
     score += sc.evening_checker(rooms, courses, course_names)
 
     # print scores before hillclimber
-    print("Score before hillclimber:", score)
+    if not course_optim_type == "none":
+        print("Courses score before optimization:", score)
 
-    # for course in courses:
-    #     if course.goodbad < - 1000:
-    #         score = hill.course_climber(courses[0], courses, rooms, course_names, 1000, score, matrix)
-    #         print("Score after 1 course_climb: ", score)
+        # for course in courses:
+        #     if course.goodbad < - 1000:
+        #         score = hill.course_climber(courses[0], courses, rooms, course_names, 1000, score, matrix)
+        #         print("Score after 1 course_climb: ", score)
 
-    # run hillclimber if specified by user
-    if A_type == "hillclimber" and students_inc == "courses only":
-        score = hill.random_climber(courses, rooms, course_names, max_iterations, score, matrix)
+        # run hillclimber if specified by user
+        if course_optim_type == "hillclimber":
+            score = hill.random_climber(courses, rooms, course_names, c_max_iterations, score, matrix)
 
-    # run simulated annealing if specified by user, with specified type
-    if A_type == "sim annealing" and students_inc == "courses only":
-        score = hill.sim_annealing(courses, rooms, course_names, max_iterations, score, matrix, 20, 0.001, SA_type)
+        # run simulated annealing if specified by user, with specified type
+        elif course_optim_type == "sim annealing":
+            score = hill.sim_annealing(courses, rooms, course_names, c_max_iterations, score, matrix, 20, 0.001, course_SA_type)
 
-    # print score after optimization and save obtained score in list
-    print("Score after hillclimber: ", score)
+        # print score after optimization and save obtained score in list
+        print("Courses score after optimization: ", score)
     score_list.append(score)
 
     # check parts
@@ -160,7 +143,7 @@ for l in range(runs):
             print(colored(course.name + ":", 'red'), colored(course.goodbad, 'red'))
 
     # user specified to include students in scheduling
-    if students_inc == "students inc":
+    if students_inc == "yes":
 
         # distribute all students over the courses
         stu.distribute_all_students(students, rooms, courses, course_names)
@@ -175,7 +158,7 @@ for l in range(runs):
         student_score = student_bonus + student_malus
 
         # append score to list if no optimization is specified
-        if A_type == "none":
+        if stud_optim_type == "none":
             score_list_students.append(student_score + score)
 
         # pre-filter the relevant courses
@@ -190,15 +173,20 @@ for l in range(runs):
             if len(poss_group_ids) > 1:
                 student_courses.append([course, poss_group_ids])
 
-        # run hillclimber if specified
-        if A_type == "hillclimber":
+        # follow student score improvement when using optimization
+        if stud_optim == "yes":
+            print("STUDENT SCORE BEFORE OPTIMIZING:", student_score)
 
-            # watch student hillclimber and save final score
-            print("SCORE BEFORE CLIMBER:", student_score)
-            student_climb_score = sthl.students_hillclimber(student_courses, students, student_score, max_iterations)
-            # DEZE IS VOOR DE STUDENTS MET SIMULATED ANNEALING
-            # student_climb_score = sthl.students_sim_annealing(student_courses, students, student_score, 20000, 10, 0.001)
-            print("SCORE AFTER CLIMBER:", student_climb_score)
+            # run hillclimber if specified
+            if stud_optim_type == "hillclimber":
+                student_climb_score = sthl.students_hillclimber(student_courses, students, student_score, s_max_iterations)
+
+            # run sim annealing if specified
+            elif stud_optim_type == "sim annealing":
+                student_climb_score = sthl.students_sim_annealing(student_courses, students, student_score, s_max_iterations, 10, 0.001, stud_SA_type)
+
+            # print student score improvement and save final score of the schedule
+            print("STUDENT SCORE AFTER OPTIMIZING:", student_climb_score)
             print(colored("FINAL SCORE: {}".format(student_climb_score + score), 'green'))
             score_list_students.append(student_climb_score + score)
 
@@ -207,7 +195,7 @@ for l in range(runs):
     bas_sch.clear_schedule(rooms, courses)
 
 # print scores in list
-if students_inc == "courses only":
-    print(score_list)
-elif students_inc == "students inc":
-    print(score_list_students)
+print("\nFinished scheduling")
+print("\nScores after scheduling courses: ", score_list)
+if students_inc == "yes":
+    print("Scores after including students in schedule: ", score_list_students)

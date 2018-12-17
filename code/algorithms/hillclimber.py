@@ -8,10 +8,10 @@ constrain relaxation.
 """
 
 import random as rd
-import information as inf
-import schedule_basics as bas
+#import information as inf
+#import schedule_basics as bas
 import score as sc
-import schedule_basics as bas_sch
+#import schedule_basics as bas_sch
 from termcolor import colored, cprint
 import math
 
@@ -35,7 +35,7 @@ def random_hour_finder(rooms):
         randh = rd.randint(0, 3)
 
     # choose randomly timeslot in the selected day and room and remember the slot
-    hour = day.hours[randh]
+    #hour = day.hours[randh]
     date = int("{}{}".format(randd, randh))
 
     return room, date
@@ -265,6 +265,7 @@ def sim_annealing(courses, rooms, course_names, max_iterations, old_score, matri
         elif SA_type == "geman":
             temperature = geman(start_temp, counter)
 
+        # make decision to keep new score based on acceptance factor
         decrease = new_score - old_score
 
         if new_score >= old_score:
