@@ -35,7 +35,6 @@ def random_hour_finder(rooms):
         randh = rd.randint(0, 3)
 
     # choose randomly timeslot in the selected day and room and remember the slot
-    #hour = day.hours[randh]
     date = int("{}{}".format(randd, randh))
 
     return room, date
@@ -64,6 +63,7 @@ def switcher2(room1, date1, room2, date2, courses, course_names):
     hour1 = room1.days[date1 // 10].hours[date1 % 10]
     hour2 = room2.days[date2 // 10].hours[date2 % 10]
 
+    # check if picked hours are scheduled or not
     if (not hour1.scheduled and not hour2.scheduled):
         return True
 
@@ -85,6 +85,7 @@ def switcher2(room1, date1, room2, date2, courses, course_names):
         course1 = courses[course_names.index(hour1.course.split(" | ")[0])]
         course2 = courses[course_names.index(hour2.course.split(" | ")[0])]
 
+    # make sure the right activity is switched
     for activity in course2.activities:
         if activity.date == date1 and activity.room == room1.name:
             activity.date = date2
@@ -93,6 +94,7 @@ def switcher2(room1, date1, room2, date2, courses, course_names):
             activity.date = date1
             activity.room = room1
 
+    # switch the activities
     temp_course = hour1.course
     temp_bool = hour1.scheduled
     hour1.course = hour2.course
@@ -109,6 +111,7 @@ def switcher(room1, date1, room2, date2, courses, course_names):
     hour1 = room1.days[date1 // 10].hours[date1 % 10]
     hour2 = room2.days[date2 // 10].hours[date2 % 10]
 
+    # check if picked hours are scheduled or not to act apropriate
     if (not hour1.scheduled and not hour2.scheduled):
         return True
 
@@ -126,6 +129,7 @@ def switcher(room1, date1, room2, date2, courses, course_names):
         activity_switcher(course1, date1, room1, date2, room2)
         activity_switcher(course2, date1, room1, date2, room2)
 
+    # switch the activities
     temp_course = hour1.course
     temp_bool = hour1.scheduled
     hour1.course = hour2.course
@@ -139,9 +143,11 @@ def calc_score(courses, rooms, course_names, matrix):
     Score calculation.
     """
 
+    #  iterate through courses and set all scores to zero
     for course in courses:
         course.goodbad = 0
 
+    # calculate points for all categories and add them
     points = 0
     points += sc.matrix_checker(courses, course_names, matrix) + sc.order_checker(courses)
     points += sc.student_checker(rooms, courses, course_names)
@@ -188,15 +194,24 @@ def random_climber(courses, rooms, course_names, max_iterations, old_score, matr
     """
 
     i = 0
+
+    #  repeat untill no better score is found for the length of max_iterations
     while i < max_iterations:
+
+        # choose two random rooms on a random date and switch them
         room1, date1 = random_hour_finder(rooms)
         room2, date2 = random_hour_finder(rooms)
         switcher(room1, date1, room2, date2, courses, course_names)
+
+        # calculate score for new schedule
         new_score = calc_score(courses, rooms, course_names, matrix)
 
+        # keep scedule if score is higher
         if new_score > old_score:
             old_score = new_score
             i = 0
+
+        # switch back if score is not higher
         else:
             switcher(room1, date1, room2, date2, courses, course_names)
             i += 1
@@ -250,9 +265,13 @@ def sim_annealing(courses, rooms, course_names, max_iterations, old_score, matri
     counter = 0
 
     for i in range(max_iterations):
+
+        # choose two random rooms on a random date and switch them
         room1, date1 = random_hour_finder(rooms)
         room2, date2 = random_hour_finder(rooms)
         switcher(room1, date1, room2, date2, courses, course_names)
+
+        # calculate score for new schedule
         new_score = calc_score(courses, rooms, course_names, matrix)
 
         # use specified type of simulated annealing
